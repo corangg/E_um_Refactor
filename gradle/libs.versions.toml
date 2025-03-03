@@ -18,6 +18,13 @@ activity = "1.9.3"
 constraintlayout = "2.2.0"
 navigation = "2.8.3"
 glide = "4.15.1"
+firebase-bom = "32.2.0" # Firebase BoM 최신 버전
+firebase-auth = "22.2.0"
+firebase-database = "20.2.1"
+firebase-firestore = "24.9.1"
+firebase-messaging = "23.2.1"
+firebase-analytics = "21.4.1"
+google-services = "4.4.2"
 
 
 [libraries]
@@ -46,6 +53,13 @@ retrofit-converter-gson = { group = "com.squareup.retrofit2", name = "converter-
 retrofit-converter-scalars = { group = "com.squareup.retrofit2", name = "converter-scalars", version.ref = "retrofit" }
 glide = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide" }
 glide-compiler = { group = "com.github.bumptech.glide", name = "compiler", version.ref = "glide" }
+firebase-bom = { module = "com.google.firebase:firebase-bom", version.ref = "firebase-bom" }
+firebase-auth = { module = "com.google.firebase:firebase-auth-ktx", version.ref = "firebase-auth" }
+firebase-database = { module = "com.google.firebase:firebase-database-ktx", version.ref = "firebase-database" }
+firebase-firestore = { module = "com.google.firebase:firebase-firestore-ktx", version.ref = "firebase-firestore" }
+firebase-messaging = { module = "com.google.firebase:firebase-messaging-ktx", version.ref = "firebase-messaging" }
+firebase-analytics = { module = "com.google.firebase:firebase-analytics-ktx", version.ref = "firebase-analytics" }
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -54,4 +68,5 @@ android-library = { id = "com.android.library", version.ref = "agp" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 navigation-safeargs-kotlin = { id = "androidx.navigation.safeargs.kotlin", version.ref = "navigation" }
+google-services = {id = "com.google.gms.google-services", version.ref = "google-services"}
 

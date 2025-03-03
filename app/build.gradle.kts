@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
     alias(libs.plugins.navigation.safeargs.kotlin)
+    alias(libs.plugins.google.services)
 }
 
 android {
@@ -73,4 +74,11 @@ dependencies {
     ksp(libs.glide.compiler)
 
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
+
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.auth)
+    implementation(libs.firebase.database)
+    implementation(libs.firebase.firestore)
+    implementation(libs.firebase.messaging)
+    implementation(libs.firebase.analytics)
 }

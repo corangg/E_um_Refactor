@@ -5,6 +5,9 @@
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="com.presentation.LoginViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -32,6 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/margin_login_edit_horizontal"
             android:layout_marginTop="@dimen/margin_login_edit_email_top"
+            android:text="@={viewModel.loginEmail}"
             android:autofillHints="emailAddress"
             android:background="@drawable/edit_default"
             android:hint="@string/id_hint"
@@ -50,6 +54,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/margin_login_edit_horizontal"
             android:layout_marginTop="@dimen/margin_login_edit_password_top"
+            android:text="@={viewModel.loginPassword}"
             android:autofillHints="password"
             android:background="@drawable/edit_default"
             android:hint="@string/password_hint"
