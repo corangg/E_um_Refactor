@@ -20,8 +20,8 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "E_um"
-include(":app")
 include(":core")
 include(":data")
 include(":domain")
 include(":presentation")
+include(":app")

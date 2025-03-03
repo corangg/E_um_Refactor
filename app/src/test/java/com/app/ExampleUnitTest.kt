@@ -1,4 +1,4 @@
-package com.example.e_um
+package com.app
 
 import org.junit.Test
 

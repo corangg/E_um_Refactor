@@ -7,11 +7,11 @@ plugins {
 }
 
 android {
-    namespace = "com.e_um"
+    namespace = "com.app"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.e_um"
+        applicationId = "com.app"
         minSdk = 26
         targetSdk = 34
         versionCode = 1
@@ -36,9 +36,15 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+
+    dataBinding {
+        enable = true
+        enableForTests = true
+    }
 }
 
 dependencies {
+
     implementation(project(":core"))
     implementation(project(":data"))
     implementation(project(":domain"))

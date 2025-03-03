@@ -1,4 +1,4 @@
-package com.example.e_um
+package com.app
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
