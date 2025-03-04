@@ -53,7 +53,7 @@
 
     <!--Sign Up Activity-->
     <dimen name="margin_signup_edit_horizontal">28dp</dimen>
-    <dimen name="margin_signup_email_edit_top">20dp</dimen>
+    <dimen name="margin_signup_email_edit_top">28dp</dimen>
     <dimen name="margin_signup_edit_to_edit">12dp</dimen>
     <dimen name="margin_signup_name_edit_top">24dp</dimen>
     <dimen name="margin_signup_phone_edit_top">24dp</dimen>

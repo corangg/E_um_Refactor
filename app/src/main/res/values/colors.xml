@@ -5,6 +5,6 @@
 
     <color name="theme_color">#4488FF</color>
     <color name="edit_line_color">#E3E7EA</color>
-    <color name="edit_default_color">#E3E7EA</color>
+    <color name="edit_hint_color">#A3A7AA</color>
     <color name="transparent">#00ff0000</color>
 </resources>
