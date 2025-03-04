@@ -3,11 +3,25 @@
 
     <string name="description_title">앱 타이틀</string>
 
+    <!--Log In Activity-->
     <string name="id_hint">이메일</string>
     <string name="password_hint">비밀번호</string>
 
     <string name="login">로그인</string>
     <string name="signup">회원가입</string>
 
+    <!--Sign Up Activity-->
+    <string name="signup_title">회원가입</string>
+    <string name="signup_email">이메일</string>
+    <string name="signup_password">비밀번호</string>
+    <string name="signup_password_check">비밀번호 확인</string>
+    <string name="signup_name">이름</string>
+    <string name="signup_nick_name">닉네임</string>
+    <string name="signup_phone_number">휴대폰</string>
+    <string name="signup_address_number">우편번호</string>
+    <string name="signup_search">찾기</string>
+    <string name="signup_address">주소</string>
+    <string name="signup_address_detail">상세주소</string>
+    <string name="signup_btn">회원가입</string>
 
 </resources>

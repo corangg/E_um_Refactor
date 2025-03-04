@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.E_um">
         <activity
-            android:name=".ui.activity.SplashActivity"
+            android:name=".ui.activity.SignUpActivity"
             android:exported="false" />
         <activity
             android:name=".ui.activity.LoginActivity"

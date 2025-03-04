@@ -1,9 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!--Drawable-->
     <dimen name="button_corner_radius">12dp</dimen>
+    <dimen name="edit_corner_radius">4dp</dimen>
+    <dimen name="edit_stroke_width">1dp</dimen>
+    <dimen name="btn_hollow_stroke_width">2dp</dimen>
+
+    <!--Default-->
+    <dimen name="layout_default_guideline_height">2dp</dimen>
+    <dimen name="layout_default_">0sp</dimen>
+
+    <dimen name="margin_default_">0dp</dimen>
+
+    <dimen name="padding_default_">0dp</dimen>
+
+    <dimen name="img_default_">32dp</dimen>
+
+    <dimen name="text_default_">0sp</dimen>
+
+    <!--Toolbar-->
+    <dimen name="layout_toolbar_">0sp</dimen>
+
+    <dimen name="margin_toolbar_back_btn">10dp</dimen>
+    <dimen name="margin_toolbar_title_start">12dp</dimen>
+
+    <dimen name="padding_toolbar_">0dp</dimen>
+
+    <dimen name="img_toolbar_back_button_size">32dp</dimen>
+
+    <dimen name="text_toolbar_size">20sp</dimen>
+    <dimen name="text_toolbar_">0sp</dimen>
+
 
     <!--Log In Activity-->
     <dimen name="img_login_title_height">240dp</dimen>
+
     <dimen name="margin_login_title_horizontal">60dp</dimen>
     <dimen name="margin_login_title_top">60dp</dimen>
     <dimen name="margin_login_edit_horizontal">40dp</dimen>
@@ -18,4 +50,32 @@
 
     <dimen name="text_login_hint">20sp</dimen>
     <dimen name="text_login">20sp</dimen>
+
+    <!--Sign Up Activity-->
+    <dimen name="margin_signup_edit_horizontal">28dp</dimen>
+    <dimen name="margin_signup_email_edit_top">20dp</dimen>
+    <dimen name="margin_signup_edit_to_edit">12dp</dimen>
+    <dimen name="margin_signup_name_edit_top">24dp</dimen>
+    <dimen name="margin_signup_phone_edit_top">24dp</dimen>
+    <dimen name="margin_signup_address_edit_top">24dp</dimen>
+    <dimen name="margin_signup_address_num_to_search">16dp</dimen>
+    <dimen name="margin_signup_btn_top">24dp</dimen>
+
+    <dimen name="padding_signup_edit">12dp</dimen>
+
+    <dimen name="text_signup_edit">16sp</dimen>
+    <dimen name="text_signup_search">16sp</dimen>
+
+
+    <!-- <dimen name="margin_">0dp</dimen>
+
+     <dimen name="padding_sign_up_edit">12dp</dimen>
+     <dimen name="padding_">0dp</dimen>
+
+     <dimen name="img_">32dp</dimen>
+
+     <dimen name="text_sign_up_">0sp</dimen>
+     <dimen name="text_">0sp</dimen>-->
+
+
 </resources>
