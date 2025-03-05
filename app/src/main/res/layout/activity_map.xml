@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.activity.MapActivity">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_toolbar"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.08" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/img_btn_back_activity"
+            android:layout_width="@dimen/img_toolbar_back_button_size"
+            android:layout_height="@dimen/img_toolbar_back_button_size"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/ic_back"
+            android:backgroundTint="@color/theme_color"
+            app:layout_constraintBottom_toTopOf="@id/guideline_toolbar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_toolbar_title_start"
+            android:text="@string/address_search_title"
+            android:textColor="@color/theme_color"
+            android:textSize="@dimen/text_toolbar_size"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/guideline_toolbar"
+            app:layout_constraintStart_toEndOf="@id/img_btn_back_activity"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/layout_default_guideline_height"
+            android:id="@+id/view_guideline"
+            android:background="@color/theme_color"
+            app:layout_constraintEnd_toEndOf="@id/guideline_toolbar"
+            app:layout_constraintStart_toStartOf="@id/guideline_toolbar"
+            app:layout_constraintTop_toTopOf="@id/guideline_toolbar" />
+
+        <WebView
+            android:id="@+id/web_view"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view_guideline" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

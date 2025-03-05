@@ -24,4 +24,13 @@
     <string name="signup_address_detail">상세주소</string>
     <string name="signup_btn">회원가입</string>
 
+    <!--Address Search-->
+    <string name="address_search_title">주소 검색</string>
+
+    <string name="js_name">Android</string>
+    <string name="js_url">javascript:sample2_execDaumPostcode();</string>
+    <string name="web_view_url">https://e-um-c6abf.web.app/</string>
+
+
+
 </resources>
