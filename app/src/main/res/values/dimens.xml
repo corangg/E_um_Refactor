@@ -7,6 +7,11 @@
     <dimen name="edit_stroke_width">1dp</dimen>
     <dimen name="btn_hollow_stroke_width">2dp</dimen>
 
+    <dimen name="size_toast_text">16sp</dimen>
+    <dimen name="padding_toast_text_vertical">12dp</dimen>
+    <dimen name="padding_toast_text_horizontal">20dp</dimen>
+    <dimen name="bg_toast_corner_radius">24dp</dimen>
+
     <!--Default-->
     <dimen name="layout_default_guideline_height">2dp</dimen>
     <dimen name="layout_default_">0sp</dimen>
