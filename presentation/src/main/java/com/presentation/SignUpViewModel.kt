@@ -5,7 +5,10 @@ import com.core.di.DefaultDispatcher
 import com.core.di.IoDispatcher
 import com.core.di.MainDispatcher
 import com.core.viewmodel.BaseViewModel
+import com.domain.model.SignUpResult
 import com.domain.model.UserInfo
+import com.domain.usecase.SetUserInfo
+import com.domain.usecase.TrySignUp
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.MainCoroutineDispatcher
@@ -13,6 +16,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SignUpViewModel @Inject constructor(
+    private val trySignUp: TrySignUp,
+    private val setUserInfo: SetUserInfo,
     @MainDispatcher mainDispatcher: MainCoroutineDispatcher,
     @DefaultDispatcher defaultDispatcher: CoroutineDispatcher,
     @IoDispatcher ioDispatcher: CoroutineDispatcher
@@ -44,12 +49,25 @@ class SignUpViewModel @Inject constructor(
             zoneCode = checkZoneCode() ?: return@onUiWork,
             address = checkAddress() ?: return@onUiWork
         )
+        when (trySignUp(userInfo)) {
+            is SignUpResult.Success -> setFireStoreUserInfo(userInfo)
+            is SignUpResult.AlreadyExists -> trySignUpResult.value = 3
+            is SignUpResult.Failure -> trySignUpResult.value = 5
+        }
+    }
+
+    private suspend fun setFireStoreUserInfo(userInfo: UserInfo) {
+        if (setUserInfo(userInfo)) {
+            trySignUpResult.value = 6
+        } else {
+            trySignUpResult.value = 5
+        }
     }
 
     private fun checkEmail(): String? {
         val email = emailLiveData.value.orEmpty()
         return when {
-            email.isEmpty() -> trySignUpResult.value = 5
+            email.isEmpty() -> trySignUpResult.value = 4
             !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches() -> trySignUpResult.value = 1
             else -> return email
         }.let { null }
@@ -58,7 +76,7 @@ class SignUpViewModel @Inject constructor(
     private fun checkPassword(): String? {
         val password = passwordLiveData.value.orEmpty()
         return when {
-            password.isEmpty() -> trySignUpResult.value = 5
+            password.isEmpty() -> trySignUpResult.value = 4
             password != passwordCheckLiveData.value -> trySignUpResult.value = 2
             else -> return password
         }.let { null }
@@ -67,7 +85,7 @@ class SignUpViewModel @Inject constructor(
     private fun checkName(): String? {
         val name = nameLiveData.value.orEmpty()
         return when {
-            name.isEmpty() -> trySignUpResult.value = 5
+            name.isEmpty() -> trySignUpResult.value = 4
             else -> return name
         }.let { null }
     }
@@ -75,7 +93,7 @@ class SignUpViewModel @Inject constructor(
     private fun checkNickName(): String? {
         val nickName = nicknameLiveData.value.orEmpty()
         return when {
-            nickName.isEmpty() -> trySignUpResult.value = 5
+            nickName.isEmpty() -> trySignUpResult.value = 4
             else -> return nickName
         }.let { null }
     }
@@ -83,7 +101,7 @@ class SignUpViewModel @Inject constructor(
     private fun checkPhone(): Int? {
         val phone = phoneLiveData.value.orEmpty()
         return when {
-            phone.isEmpty() -> trySignUpResult.value = 5
+            phone.isEmpty() -> trySignUpResult.value = 4
             else -> return phone.toIntOrNull()
         }.let { null }
     }
@@ -91,7 +109,7 @@ class SignUpViewModel @Inject constructor(
     private fun checkZoneCode(): Int? {
         val zonCode = zoneCodeLiveData.value.orEmpty()
         return when {
-            zonCode.isEmpty() -> trySignUpResult.value = 5
+            zonCode.isEmpty() -> trySignUpResult.value = 4
             else -> return zonCode.toIntOrNull()
         }.let { null }
     }
@@ -100,8 +118,8 @@ class SignUpViewModel @Inject constructor(
         val address = addressLiveData.value.orEmpty()
         val detailAddress = detailAddressLiveData.value.orEmpty()
         return when {
-            address.isEmpty() -> trySignUpResult.value = 5
-            detailAddress.isEmpty() -> trySignUpResult.value = 5
+            address.isEmpty() -> trySignUpResult.value = 4
+            detailAddress.isEmpty() -> trySignUpResult.value = 4
             else -> return "$address , $detailAddress"
         }.let { null }
     }

@@ -8,4 +8,13 @@ data class UserInfo(
     val phone: Int,
     val zoneCode: Int,
     val address: String,
+    val imgUrl: String = "",
+    val statusMessage: String = "",
+    val timeStamp: String = ""
 )
+
+sealed class SignUpResult {
+    data object Success : SignUpResult()
+    data object AlreadyExists : SignUpResult()
+    data object Failure : SignUpResult()
+}

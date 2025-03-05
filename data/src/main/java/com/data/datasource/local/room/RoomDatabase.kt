@@ -10,5 +10,5 @@ import androidx.room.RoomDatabase
 )
 
 abstract class Database : RoomDatabase() {
-    abstract fun accountDataDao(): AccountDao
+    abstract fun accountDao(): AccountDao
 }

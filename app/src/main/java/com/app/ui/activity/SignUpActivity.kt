@@ -55,9 +55,6 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(ActivitySignUpBinding
                 this.showCustomToast(getString(R.string.signup_toast_6))
                 finish()
             }
-
-            7 -> this.showCustomToast(getString(R.string.signup_toast_7))
         }
-
     }
 }

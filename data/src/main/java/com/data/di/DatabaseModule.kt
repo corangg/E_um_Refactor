@@ -2,6 +2,7 @@ package com.data.di
 
 import android.content.Context
 import androidx.room.Room
+import com.data.datasource.local.room.AccountDao
 import com.data.datasource.local.room.Database
 import dagger.Module
 import dagger.Provides
@@ -23,4 +24,6 @@ object DatabaseModule {
         )
             .build()
 
+    @Provides
+    fun provideAccountDao(database: Database): AccountDao = database.accountDao()
 }
