@@ -18,3 +18,11 @@ sealed class SignUpResult {
     data object AlreadyExists : SignUpResult()
     data object Failure : SignUpResult()
 }
+
+sealed class SignInResult(val code: Int) {
+    data object Success : SignInResult(1)
+    data object InvalidEmail : SignInResult(2)
+    data object UserNotFound : SignInResult(3)
+    data object InvalidPassword : SignInResult(4)
+    data object Failure : SignInResult(5)
+}

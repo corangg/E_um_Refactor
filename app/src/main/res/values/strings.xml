@@ -10,6 +10,11 @@
     <string name="login">로그인</string>
     <string name="signup">회원가입</string>
 
+    <string name="sign_in_invalid_email">잘못된 이메일 형식 입니다.</string>
+    <string name="sign_in_not_found_email">이메일을 확인해 주세요.</string>
+    <string name="sign_in_error_password">비밀번호를 확인해 주세요.</string>
+    <string name="sign_in_error">다시 시도해 주세요.</string>
+
     <!--Sign Up Activity-->
     <string name="signup_title">회원가입</string>
     <string name="signup_email">이메일</string>
@@ -37,7 +42,6 @@
     <string name="js_name">Android</string>
     <string name="js_url">javascript:sample2_execDaumPostcode();</string>
     <string name="web_view_url">https://e-um-c6abf.web.app/</string>
-
 
 
 </resources>

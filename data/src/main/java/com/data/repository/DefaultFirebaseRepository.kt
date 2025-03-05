@@ -4,14 +4,17 @@ import android.content.Context
 import com.core.di.IoDispatcher
 import com.core.di.LocalDataSources
 import com.data.datasource.LocalDataSource
+import com.domain.model.SignInResult
 import com.domain.model.SignUpResult
 import com.domain.model.UserInfo
 import com.domain.repository.FirebaseRepository
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -23,6 +26,10 @@ class DefaultFirebaseRepository @Inject constructor(
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
     @ApplicationContext private val context: Context
 ) : FirebaseRepository {
+    override fun isUserLoggedIn() = flow {
+        val auth = FirebaseAuth.getInstance()
+        emit(auth.currentUser != null)
+    }
 
     override suspend fun trySignUp(email: String, password: String) = withContext(ioDispatcher) {
         return@withContext try {
@@ -42,6 +49,26 @@ class DefaultFirebaseRepository @Inject constructor(
             true
         } catch (e: Exception) {
             false
+        }
+    }
+
+    override suspend fun trySignIn(email: String, password: String) = withContext(ioDispatcher) {
+        return@withContext try {
+            val result = auth.signInWithEmailAndPassword(email, password).await()
+            if (result.user != null) {
+                SignInResult.Success
+            } else {
+                SignInResult.Failure
+            }
+        } catch (e: FirebaseAuthException) {
+            when (e.errorCode) {
+                "ERROR_INVALID_EMAIL" -> SignInResult.InvalidEmail
+                "ERROR_USER_NOT_FOUND" -> SignInResult.UserNotFound
+                "ERROR_WRONG_PASSWORD" -> SignInResult.InvalidPassword
+                else -> SignInResult.Failure
+            }
+        } catch (e: Exception) {
+            SignInResult.Failure
         }
     }
 }
