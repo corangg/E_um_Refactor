@@ -13,14 +13,68 @@
         android:layout_height="match_parent"
         tools:context=".ui.activity.MainActivity">
 
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_toolbar"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.07" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Hello World!"
+            android:layout_marginStart="@dimen/margin_toolbar_title_start"
+            android:textColor="@color/theme_color"
+            android:textSize="@dimen/text_toolbar_size"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/guideline_toolbar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/view_guideline"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/layout_default_guideline_height"
+            android:background="@color/theme_color"
+            app:layout_constraintEnd_toEndOf="@id/guideline_toolbar"
+            app:layout_constraintStart_toStartOf="@id/guideline_toolbar"
+            app:layout_constraintTop_toTopOf="@id/guideline_toolbar" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_navigation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.9" />
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/nav_host_fragment"
+            android:name="androidx.navigation.fragment.NavHostFragment"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:defaultNavHost="true"
+            app:layout_constraintBottom_toTopOf="@id/guideline_navigation"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/guideline_toolbar"
+            app:navGraph="@navigation/main_navigation" />
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/bottom_navigation"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/white"
+            app:itemActiveIndicatorStyle="@color/transparent"
+            app:itemIconTint="@color/theme_color"
+            app:itemRippleColor="@android:color/transparent"
+            app:itemTextColor="@color/theme_color"
+            app:labelVisibilityMode="auto"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/guideline_navigation"
+            app:menu="@menu/navigation_menu" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

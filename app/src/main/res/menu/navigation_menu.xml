@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menu_navi_profile"
+        android:enabled="true"
+        android:icon="@drawable/ic_tab_profile"
+        android:title="@string/main_nav_menu_profile" />
+
+    <item
+        android:id="@+id/menu_navi_friends"
+        android:enabled="true"
+        android:icon="@drawable/ic_tab_friends"
+        android:title="@string/main_nav_menu_friend" />
+
+    <item
+        android:id="@+id/menu_navi_chat"
+        android:enabled="true"
+        android:icon="@drawable/ic_tab_chat"
+        android:title="@string/main_nav_menu_chat" />
+
+    <item
+        android:id="@+id/menu_navi_schedule"
+        android:enabled="true"
+        android:icon="@drawable/ic_tab_schedule"
+        android:title="@string/main_nav_menu_schedule" />
+</menu>
