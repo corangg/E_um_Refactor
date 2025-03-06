@@ -7,4 +7,5 @@
     <color name="edit_line_color">#E3E7EA</color>
     <color name="edit_hint_color">#A3A7AA</color>
     <color name="transparent">#00ff0000</color>
+    <color name="btn_gray">#dddddd</color>
 </resources>

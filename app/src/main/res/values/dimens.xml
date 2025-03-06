@@ -6,6 +6,7 @@
     <dimen name="edit_corner_radius">4dp</dimen>
     <dimen name="edit_stroke_width">1dp</dimen>
     <dimen name="btn_hollow_stroke_width">2dp</dimen>
+    <dimen name="btn_conner_open_gallery_radius">16dp</dimen>
 
     <dimen name="size_toast_text">16sp</dimen>
     <dimen name="padding_toast_text_vertical">12dp</dimen>
@@ -29,6 +30,7 @@
 
     <dimen name="margin_toolbar_back_btn">10dp</dimen>
     <dimen name="margin_toolbar_title_start">12dp</dimen>
+    <dimen name="margin_main_toolbar_title_start">24dp</dimen>
 
     <dimen name="padding_toolbar_">0dp</dimen>
 
@@ -71,16 +73,52 @@
     <dimen name="text_signup_edit">16sp</dimen>
     <dimen name="text_signup_search">16sp</dimen>
 
+    <!--Profile Fragment-->
+    <dimen name="margin_profile_btn_edit_end">16dp</dimen>
+    <dimen name="margin_profile_img_vertical">20dp</dimen>
+    <dimen name="margin_profile_img_start">10dp</dimen>
+    <dimen name="margin_profile_nick_name_start">16dp</dimen>
+    <dimen name="margin_profile_nick_name_end">24dp</dimen>
+    <dimen name="margin_profile_nick_name_top">28dp</dimen>
+    <dimen name="margin_profile_status_message_top">16dp</dimen>
+    <dimen name="margin_profile_status_message_bottom">16dp</dimen>
+    <dimen name="margin_profile_view_horizontal">14dp</dimen>
+    <dimen name="margin_profile_view_top">16dp</dimen>
+    <dimen name="margin_profile_btn_open_gallery_end">16dp</dimen>
+    <dimen name="margin_profile_btn_open_gallery_bottom">14dp</dimen>
+    <dimen name="margin_profile_text_name_top">24dp</dimen>
+    <dimen name="margin_profile_text_item_title_horizontal">24dp</dimen>
+    <dimen name="margin_profile_text_item_start">24dp</dimen>
+    <dimen name="margin_profile_text_item_top">8dp</dimen>
+    <dimen name="margin_profile_btn_item_edit_start">10dp</dimen>
+    <dimen name="margin_profile_text_item_title_top">24dp</dimen>
+    <dimen name="margin_profile_bottom">24dp</dimen>
 
-    <!-- <dimen name="margin_">0dp</dimen>
+    <dimen name="img_profile_size">116dp</dimen>
+    <dimen name="img_profile_item_edit_size">32dp</dimen>
+    <dimen name="img_profile_open_gallery_size">20dp</dimen>
 
-     <dimen name="padding_sign_up_edit">12dp</dimen>
+    <dimen name="text_profile_nick_name">22sp</dimen>
+    <dimen name="text_profile_status_message">16sp</dimen>
+    <dimen name="text_profile_item_title">24sp</dimen>
+    <dimen name="text_profile_item">20sp</dimen>
+
+    <dimen name="value_profile_img_radius">50dp</dimen>
+    <dimen name="value_profile_view_guide_line">1dp</dimen>
+    <dimen name="value_profile_btn_open_gallery_elevation">12dp</dimen>
+
+
+    <!--
+    <dimen name="margin_">0dp</dimen>
+
      <dimen name="padding_">0dp</dimen>
 
      <dimen name="img_">32dp</dimen>
 
-     <dimen name="text_sign_up_">0sp</dimen>
-     <dimen name="text_">0sp</dimen>-->
+     <dimen name="text_">0sp</dimen>
+
+     <dimen name="value_">0dp</dimen>
+     -->
 
 
 </resources>
