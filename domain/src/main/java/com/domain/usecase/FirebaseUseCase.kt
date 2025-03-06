@@ -21,3 +21,7 @@ class TrySignIn @Inject constructor(private val firebaseRepository: FirebaseRepo
     suspend operator fun invoke(email: String, password: String) =
         firebaseRepository.trySignIn(email, password).code
 }
+
+class GetProfileInfo @Inject constructor(private val firebaseRepository: FirebaseRepository) {
+    suspend operator fun invoke() = firebaseRepository.getUserInfo()
+}

@@ -71,4 +71,25 @@ class DefaultFirebaseRepository @Inject constructor(
             SignInResult.Failure
         }
     }
+
+    override suspend fun getUserInfo() = withContext(ioDispatcher) {
+        return@withContext try {
+            val userEmail = auth.currentUser?.email ?: return@withContext null
+            val docRef = firestore.collection("UserInfo").document(userEmail).get().await()
+            val userDataMap = docRef.data ?: return@withContext null
+            UserInfo(
+                email = userDataMap["email"] as? String ?: "",
+                password = userDataMap["password"] as? String ?: "",
+                name = userDataMap["name"] as? String ?: "",
+                nickname = userDataMap["nickname"] as? String ?: "",
+                phone = userDataMap["phone"] as? String ?: "",
+                zoneCode = userDataMap["zoneCode"] as? String ?: "",
+                address = userDataMap["address"] as? String ?: "",
+                imgUrl = userDataMap["imgUrl"] as? String ?: "",
+                statusMessage = userDataMap["statusMessage"] as? String ?: "",
+            )
+        } catch (e: Exception) {
+            null
+        }
+    }
 }

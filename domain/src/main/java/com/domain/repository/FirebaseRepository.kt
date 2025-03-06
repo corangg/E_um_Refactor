@@ -13,4 +13,6 @@ interface FirebaseRepository {
     suspend fun setUserData(userInfo: UserInfo): Boolean
 
     suspend fun trySignIn(email: String, password: String): SignInResult
+
+    suspend fun getUserInfo(): UserInfo?
 }
