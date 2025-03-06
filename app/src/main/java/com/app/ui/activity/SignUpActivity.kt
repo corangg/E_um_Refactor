@@ -7,12 +7,12 @@ import com.app.R
 import com.app.databinding.ActivitySignUpBinding
 import com.app.ui.custom.showCustomToast
 import com.core.ui.BaseActivity
-import com.presentation.SignUpViewModel
+import com.presentation.SignUpActivityViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class SignUpActivity : BaseActivity<ActivitySignUpBinding>(ActivitySignUpBinding::inflate) {
-    private val viewModel: SignUpViewModel by viewModels()
+    private val viewModel: SignUpActivityViewModel by viewModels()
     private val addressResultLauncher = registerForActivityResultHandler { result ->
         if (result.resultCode == RESULT_OK) {
             val zoneCode = result.data?.getStringExtra("zoneCode") ?: ""

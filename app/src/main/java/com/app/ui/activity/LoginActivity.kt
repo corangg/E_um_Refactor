@@ -7,12 +7,12 @@ import com.app.R
 import com.app.databinding.ActivityLogInBinding
 import com.app.ui.custom.showCustomToast
 import com.core.ui.BaseActivity
-import com.presentation.LoginViewModel
+import com.presentation.LoginActivityViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class LoginActivity : BaseActivity<ActivityLogInBinding>(ActivityLogInBinding::inflate) {
-    private val viewModel: LoginViewModel by viewModels()
+    private val viewModel: LoginActivityViewModel by viewModels()
     override fun setUi() {
         binding.viewModel = viewModel
         setBinding()

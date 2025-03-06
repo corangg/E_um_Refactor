@@ -9,12 +9,12 @@ import androidx.navigation.ui.setupWithNavController
 import com.app.R
 import com.app.databinding.ActivityMainBinding
 import com.core.ui.BaseActivity
-import com.presentation.MainViewModel
+import com.presentation.MainActivityViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : BaseActivity<ActivityMainBinding>(ActivityMainBinding::inflate) {
-    private val viewModel: MainViewModel by viewModels()
+    private val viewModel: MainActivityViewModel by viewModels()
     override fun setUi() {
         bindingNavigation()
     }

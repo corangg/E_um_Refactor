@@ -15,7 +15,7 @@ import kotlinx.coroutines.MainCoroutineDispatcher
 import javax.inject.Inject
 
 @HiltViewModel
-class SignUpViewModel @Inject constructor(
+class SignUpActivityViewModel @Inject constructor(
     private val trySignUp: TrySignUp,
     private val setUserInfo: SetUserInfo,
     @MainDispatcher mainDispatcher: MainCoroutineDispatcher,
@@ -68,7 +68,9 @@ class SignUpViewModel @Inject constructor(
         val email = emailLiveData.value.orEmpty()
         return when {
             email.isEmpty() -> trySignUpResult.value = 4
-            !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches() -> trySignUpResult.value = 1
+            !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches() -> trySignUpResult.value =
+                1
+
             else -> return email
         }.let { null }
     }
@@ -98,19 +100,19 @@ class SignUpViewModel @Inject constructor(
         }.let { null }
     }
 
-    private fun checkPhone(): Int? {
+    private fun checkPhone(): String? {
         val phone = phoneLiveData.value.orEmpty()
         return when {
             phone.isEmpty() -> trySignUpResult.value = 4
-            else -> return phone.toIntOrNull()
+            else -> return phone
         }.let { null }
     }
 
-    private fun checkZoneCode(): Int? {
+    private fun checkZoneCode(): String? {
         val zonCode = zoneCodeLiveData.value.orEmpty()
         return when {
             zonCode.isEmpty() -> trySignUpResult.value = 4
-            else -> return zonCode.toIntOrNull()
+            else -> return zonCode
         }.let { null }
     }
 
