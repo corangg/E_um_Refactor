@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.presentation.SignUpViewModel" />
+            type="com.presentation.SignUpActivityViewModel" />
 
     </data>
 
