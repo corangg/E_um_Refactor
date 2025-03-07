@@ -1,24 +1,35 @@
 package com.app.ui.fragment
 
+import android.app.Activity
 import android.view.View
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleOwner
 import com.app.databinding.FragmentProfileBinding
 import com.bumptech.glide.Glide
 import com.core.ui.BaseFragment
+import com.core.util.openGallery
 import com.presentation.ProfileFragmentViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBinding::inflate) {
     private val viewModel: ProfileFragmentViewModel by viewModels()
+
+    private var imagePickerLauncher = registerForActivityResult(
+        ActivityResultContracts.StartActivityForResult()
+    ) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            viewModel.setImageProfileUri(result.data?.data.toString())
+        }
+    }
+
     override fun setUi() {
         binding.viewModel = viewModel
-        bindBtn()
+        bindingOnClick()
     }
 
     override fun setUpDate() {
-
     }
 
     override fun setObserve(lifecycleOwner: LifecycleOwner) {
@@ -26,12 +37,15 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
         viewModel.successUerInfoEdit.observe(lifecycleOwner, ::offEditMode)
     }
 
-    private fun bindBtn() {
+    private fun bindingOnClick() {
         binding.btnEditProfile.setOnClickListener {
             onEditMode()
         }
         binding.layoutOpenGallery.setOnClickListener {
-
+            openGallery(imagePickerLauncher)
+        }
+        binding.imgProfile.setOnClickListener {
+            openGallery(imagePickerLauncher)
         }
         binding.layoutEditPassword.setOnClickListener {
 
@@ -41,9 +55,9 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
         }
     }
 
-    private fun setProfileImage(url: String) {
-        if (url.isEmpty()) return
-        Glide.with(binding.root).load(url).into(binding.imgProfile)
+    private fun setProfileImage(uri: String) {
+        if (uri.isEmpty()) return
+        Glide.with(binding.root).load(uri).into(binding.imgProfile)
     }
 
     private fun onEditMode() {
