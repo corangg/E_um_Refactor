@@ -22,6 +22,7 @@ firebase-bom = "33.10.0" # Firebase BoM 최신 버전
 firebase-auth = "23.2.0"
 firebase-database = "21.0.0"
 firebase-firestore = "25.1.2"
+firebase-storage = "21.0.1"
 firebase-messaging = "24.1.0"
 firebase-analytics = "22.3.0"
 google-services = "4.4.2"
@@ -59,6 +60,7 @@ firebase-database = { module = "com.google.firebase:firebase-database-ktx", vers
 firebase-firestore = { module = "com.google.firebase:firebase-firestore-ktx", version.ref = "firebase-firestore" }
 firebase-messaging = { module = "com.google.firebase:firebase-messaging-ktx", version.ref = "firebase-messaging" }
 firebase-analytics = { module = "com.google.firebase:firebase-analytics-ktx", version.ref = "firebase-analytics" }
+firebase-storage = { module = "com.google.firebase:firebase-storage-ktx", version.ref = "firebase-storage"}
 
 
 [plugins]
