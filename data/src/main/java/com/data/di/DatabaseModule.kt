@@ -2,8 +2,8 @@ package com.data.di
 
 import android.content.Context
 import androidx.room.Room
-import com.data.datasource.local.room.AccountDao
 import com.data.datasource.local.room.Database
+import com.data.datasource.local.room.UserInfoDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,5 +25,5 @@ object DatabaseModule {
             .build()
 
     @Provides
-    fun provideAccountDao(database: Database): AccountDao = database.accountDao()
+    fun provideUserInfoDao(database: Database): UserInfoDao = database.userInfoDao()
 }

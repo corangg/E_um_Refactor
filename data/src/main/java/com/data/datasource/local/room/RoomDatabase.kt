@@ -4,11 +4,11 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 
 @Database(
-    entities = [LocalAccountData::class],
+    entities = [LocalUserInfoData::class],
     version = 1,
     exportSchema = false
 )
 
 abstract class Database : RoomDatabase() {
-    abstract fun accountDao(): AccountDao
+    abstract fun userInfoDao(): UserInfoDao
 }

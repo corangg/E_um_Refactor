@@ -4,16 +4,23 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Upsert
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface AccountDao {
+interface UserInfoDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertAccountData(entity: LocalAccountData)
+    suspend fun insertUserInfoData(entity: LocalUserInfoData)
 
-    @Query("SELECT * FROM LocalAccountData")
-    fun getAccountDataFlow(): Flow<LocalAccountData>
+    @Query("SELECT * FROM LocalUserInfoData")
+    fun getUserInfoData(): LocalUserInfoData?
 
-    @Query("DELETE FROM LocalAccountData")
-    suspend fun deleteAccountData()
+    @Query("SELECT * FROM LocalUserInfoData")
+    fun getUserInfoDataFlow(): Flow<LocalUserInfoData>
+
+    @Upsert
+    suspend fun upsertUserInfoData(entity: LocalUserInfoData)
+
+    @Query("DELETE FROM LocalUserInfoData")
+    suspend fun deleteUserInfoData()
 }
