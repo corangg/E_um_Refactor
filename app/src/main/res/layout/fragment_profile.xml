@@ -62,6 +62,7 @@
                 android:backgroundTint="@color/theme_color"
                 android:contentDescription="@null"
                 android:visibility="gone"
+                android:onClick="@{()->viewModel.updateUserInfoData()}"
                 app:layout_constraintBottom_toTopOf="@id/guideline_toolbar"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -137,7 +138,7 @@
                 android:ellipsize="end"
                 android:focusable="false"
                 android:hint="@string/profile_status_message"
-                android:inputType="text"
+                android:inputType="textMultiLine"
                 android:maxLines="3"
                 android:text="@={viewModel.profileStatusMessage}"
                 android:textColor="@color/black"
@@ -195,7 +196,7 @@
                 android:id="@+id/edit_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_profile_text_item_start"
+                android:layout_marginHorizontal="@dimen/margin_profile_text_item_horizontal"
                 android:layout_marginTop="@dimen/margin_profile_text_item_top"
                 android:autofillHints="name"
                 android:background="@color/transparent"
@@ -204,27 +205,9 @@
                 android:inputType="text"
                 android:text="@={viewModel.profileName}"
                 android:textSize="@dimen/text_profile_item"
-                app:layout_constraintEnd_toStartOf="@id/layout_edit_name"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/text_name" />
-
-            <FrameLayout
-                android:id="@+id/layout_edit_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="@id/edit_name"
-                app:layout_constraintEnd_toEndOf="@id/text_name">
-
-                <ImageView
-                    android:layout_width="@dimen/img_profile_item_edit_size"
-                    android:layout_height="@dimen/img_profile_item_edit_size"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="@dimen/margin_profile_btn_item_edit_start"
-                    android:contentDescription="@null"
-                    android:src="@drawable/ic_edit"
-                    app:tint="@color/theme_color" />
-            </FrameLayout>
 
             <TextView
                 android:id="@+id/text_phone"
@@ -243,7 +226,7 @@
                 android:id="@+id/edit_phone"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_profile_text_item_start"
+                android:layout_marginHorizontal="@dimen/margin_profile_text_item_horizontal"
                 android:layout_marginTop="@dimen/margin_profile_text_item_top"
                 android:autofillHints="phone"
                 android:background="@color/transparent"
@@ -252,28 +235,10 @@
                 android:inputType="phone"
                 android:text="@={viewModel.profilePhone}"
                 android:textSize="@dimen/text_profile_item"
-                app:layout_constraintEnd_toStartOf="@id/layout_edit_phone"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/text_phone"
                 tools:text="" />
-
-            <FrameLayout
-                android:id="@+id/layout_edit_phone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="@id/edit_phone"
-                app:layout_constraintEnd_toEndOf="@id/text_phone">
-
-                <ImageView
-                    android:layout_width="@dimen/img_profile_item_edit_size"
-                    android:layout_height="@dimen/img_profile_item_edit_size"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="@dimen/margin_profile_btn_item_edit_start"
-                    android:contentDescription="@null"
-                    android:src="@drawable/ic_edit"
-                    app:tint="@color/theme_color" />
-            </FrameLayout>
 
             <TextView
                 android:id="@+id/text_email"
@@ -292,7 +257,7 @@
                 android:id="@+id/edit_email"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin_profile_text_item_start"
+                android:layout_marginHorizontal="@dimen/margin_profile_text_item_horizontal"
                 android:layout_marginTop="@dimen/margin_profile_text_item_top"
                 android:autofillHints="name"
                 android:background="@color/transparent"
@@ -301,28 +266,10 @@
                 android:inputType="textEmailAddress"
                 android:text="@={viewModel.profileEmail}"
                 android:textSize="@dimen/text_profile_item"
-                app:layout_constraintEnd_toStartOf="@id/layout_edit_email"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/text_email"
                 tools:text="" />
-
-            <FrameLayout
-                android:id="@+id/layout_edit_email"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="@id/edit_email"
-                app:layout_constraintEnd_toEndOf="@id/text_email">
-
-                <ImageView
-                    android:layout_width="@dimen/img_profile_item_edit_size"
-                    android:layout_height="@dimen/img_profile_item_edit_size"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="@dimen/margin_profile_btn_item_edit_start"
-                    android:contentDescription="@null"
-                    android:src="@drawable/ic_edit"
-                    app:tint="@color/theme_color" />
-            </FrameLayout>
 
             <TextView
                 android:id="@+id/text_password"
@@ -396,8 +343,9 @@
                 android:autofillHints="postalAddress"
                 android:background="@color/transparent"
                 android:focusable="false"
+                android:maxLines="2"
                 android:hint="@string/profile_address"
-                android:inputType="text"
+                android:inputType="textMultiLine"
                 android:text="@={viewModel.profileAddress}"
                 android:textSize="@dimen/text_profile_item"
                 app:layout_constraintBottom_toBottomOf="parent"

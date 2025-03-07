@@ -88,6 +88,7 @@
     <dimen name="margin_profile_btn_open_gallery_bottom">14dp</dimen>
     <dimen name="margin_profile_text_name_top">24dp</dimen>
     <dimen name="margin_profile_text_item_title_horizontal">24dp</dimen>
+    <dimen name="margin_profile_text_item_horizontal">24dp</dimen>
     <dimen name="margin_profile_text_item_start">24dp</dimen>
     <dimen name="margin_profile_text_item_top">8dp</dimen>
     <dimen name="margin_profile_btn_item_edit_start">10dp</dimen>

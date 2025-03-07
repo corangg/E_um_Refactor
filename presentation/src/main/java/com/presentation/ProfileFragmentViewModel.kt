@@ -5,7 +5,9 @@ import com.core.di.DefaultDispatcher
 import com.core.di.IoDispatcher
 import com.core.di.MainDispatcher
 import com.core.viewmodel.BaseViewModel
-import com.domain.usecase.GetProfileInfo
+import com.domain.model.UserInfo
+import com.domain.usecase.GetUserInfoData
+import com.domain.usecase.UpsertUserInfoData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.MainCoroutineDispatcher
@@ -13,7 +15,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProfileFragmentViewModel @Inject constructor(
-    private val getUserInfo: GetProfileInfo,
+    private val getUserInfo: GetUserInfoData,
+    private val updateUserInfo: UpsertUserInfoData,
     @MainDispatcher mainDispatcher: MainCoroutineDispatcher,
     @DefaultDispatcher defaultDispatcher: CoroutineDispatcher,
     @IoDispatcher ioDispatcher: CoroutineDispatcher
@@ -25,21 +28,39 @@ class ProfileFragmentViewModel @Inject constructor(
     val profileEmail = MutableLiveData("")
     val profilePassword = MutableLiveData("")
     val profileAddress = MutableLiveData("")
-    val profileImageUrl = MutableLiveData(null)
+    val profileImageUrl = MutableLiveData("")
+
+    val successUerInfoEdit = MutableLiveData(false)
 
     init {
-        setProfileData()
+        initProfileData()
     }
 
-    private fun setProfileData() = onUiWork {
-        val userInfo = getUserInfo() ?: return@onUiWork
+    private fun initProfileData() = onUiWork {
+        val userInfo = getUserInfo()?:return@onUiWork
         profileNickname.value = userInfo.nickname
         profileStatusMessage.value = userInfo.statusMessage
         profileName.value = userInfo.name
-        profilePhone.value = userInfo.phone.toString()
+        profilePhone.value = userInfo.phone
         profileEmail.value = userInfo.email
         profilePassword.value = userInfo.password
         profileAddress.value = "${userInfo.address}, ${userInfo.zoneCode}"
-        profileAddress.value = userInfo.imgUrl
+        profileImageUrl.value = userInfo.imgUrl
+    }
+
+    fun updateUserInfoData() = onUiWork {
+        val addressData = profileAddress.value?.split(",") ?: listOf()
+        val userInfo = UserInfo(
+            nickname = profileNickname.value ?: "",
+            statusMessage = profileStatusMessage.value ?: "",
+            name = profileName.value ?: "",
+            phone = profilePhone.value ?: "",
+            email = profileEmail.value ?: "",
+            password = profilePassword.value ?: "",
+            address = addressData[0],
+            zoneCode = addressData[1],
+            imgUrl = profileImageUrl.value ?: ""
+        )
+        successUerInfoEdit.value = updateUserInfo(userInfo)
     }
 }
