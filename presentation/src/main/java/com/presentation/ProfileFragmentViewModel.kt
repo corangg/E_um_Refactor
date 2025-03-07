@@ -7,7 +7,7 @@ import com.core.di.MainDispatcher
 import com.core.viewmodel.BaseViewModel
 import com.domain.model.UserInfo
 import com.domain.usecase.GetUserInfoData
-import com.domain.usecase.UpsertUserInfoData
+import com.domain.usecase.UpdateUserInfoData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.MainCoroutineDispatcher
@@ -16,7 +16,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ProfileFragmentViewModel @Inject constructor(
     private val getUserInfo: GetUserInfoData,
-    private val updateUserInfo: UpsertUserInfoData,
+    private val updateUserInfo: UpdateUserInfoData,
     @MainDispatcher mainDispatcher: MainCoroutineDispatcher,
     @DefaultDispatcher defaultDispatcher: CoroutineDispatcher,
     @IoDispatcher ioDispatcher: CoroutineDispatcher
@@ -62,5 +62,9 @@ class ProfileFragmentViewModel @Inject constructor(
             imgUrl = profileImageUrl.value ?: ""
         )
         successUerInfoEdit.value = updateUserInfo(userInfo)
+    }
+
+    fun setImageProfileUri(uri: String){
+        profileImageUrl.value = uri
     }
 }

@@ -1,10 +1,10 @@
 package com.data.repository
 
 import android.content.Context
+import androidx.core.net.toUri
 import com.core.di.IoDispatcher
 import com.core.di.LocalDataSources
 import com.data.datasource.LocalDataSource
-import com.data.mapper.toExternal
 import com.domain.model.SignInResult
 import com.domain.model.SignUpResult
 import com.domain.model.UserInfo
@@ -13,6 +13,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.flow
@@ -23,6 +24,7 @@ import javax.inject.Inject
 class DefaultFirebaseRepository @Inject constructor(
     private val auth: FirebaseAuth,
     private val firestore: FirebaseFirestore,
+    private val firebaseStorage: FirebaseStorage,
     @LocalDataSources private val localDataSource: LocalDataSource,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
     @ApplicationContext private val context: Context
@@ -91,6 +93,17 @@ class DefaultFirebaseRepository @Inject constructor(
             )
         } catch (e: Exception) {
             null
+        }
+    }
+
+    override suspend fun updateProfileImage(uri: String) = withContext(ioDispatcher) {
+        return@withContext try {
+            val userEmail = auth.currentUser?.email ?: return@withContext ""
+            val storagePath = firebaseStorage.reference.child("userProfile").child(userEmail).child("profile_img.jpg")
+            storagePath.putFile(uri.toUri()).await()
+            storagePath.downloadUrl.await().toString()
+        } catch (e: Exception) {
+            ""
         }
     }
 }

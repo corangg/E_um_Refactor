@@ -7,13 +7,18 @@ import javax.inject.Inject
 class GetUserInfoData @Inject constructor(private val repository: Repository) {
     suspend operator fun invoke() = repository.getUserInfo()
 }
-class UpsertUserInfoData @Inject constructor(
+
+class UpdateUserInfoData @Inject constructor(
     private val repository: Repository,
-    private val setUserInfo: SetUserInfo
+    private val setUserInfo: SetUserInfo,
+    private val updateUserProfileImage: UpdateUserProfileImage
 ) {
     suspend operator fun invoke(userInfo: UserInfo): Boolean {
-        return setUserInfo(userInfo).also {
-            if (it) repository.upsertUserInfo(userInfo)
+        val firebaseProfileImageUrl = updateUserProfileImage(userInfo.imgUrl)
+        val updateUserInfoData = userInfo.copy(imgUrl = firebaseProfileImageUrl)
+
+        return setUserInfo(updateUserInfoData).also {
+            if (it) repository.upsertUserInfo(updateUserInfoData)
         }
     }
 }

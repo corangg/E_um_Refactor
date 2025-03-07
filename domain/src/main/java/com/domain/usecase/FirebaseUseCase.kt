@@ -11,7 +11,8 @@ class CheckLoggedIn @Inject constructor(private val firebaseRepository: Firebase
 }
 
 class TrySignUp @Inject constructor(private val firebaseRepository: FirebaseRepository) {
-    suspend operator fun invoke(userInfo: UserInfo) = firebaseRepository.trySignUp(userInfo.email, userInfo.password)
+    suspend operator fun invoke(userInfo: UserInfo) =
+        firebaseRepository.trySignUp(userInfo.email, userInfo.password)
 }
 
 class SetUserInfo @Inject constructor(private val firebaseRepository: FirebaseRepository) {
@@ -35,4 +36,8 @@ class TrySignIn @Inject constructor(
 
 class GetFireBaseUserInfo @Inject constructor(private val firebaseRepository: FirebaseRepository) {
     suspend operator fun invoke() = firebaseRepository.getUserInfo()
+}
+
+class UpdateUserProfileImage @Inject constructor(private val firebaseRepository: FirebaseRepository) {
+    suspend operator fun invoke(uri: String) = firebaseRepository.updateProfileImage(uri)
 }
