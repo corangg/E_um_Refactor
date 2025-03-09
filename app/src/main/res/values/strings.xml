@@ -61,6 +61,25 @@
     <string name="profile_password">비밀번호</string>
     <string name="profile_address">주소</string>
 
+    <!--Password Edit-->
+    <string name="password_edit_title">비밀번호 변경</string>
+    <string name="password_edit_existing_title">기존 비밀번호 확인</string>
+    <string name="password_edit_existing_hint">기존 비밀번호</string>
+    <string name="password_edit_btn_check">확인</string>
+    <string name="password_edit_new_title">새 비밀번호</string>
+    <string name="password_edit_new_hint">새 비밀번호</string>
+    <string name="password_edit_new_hint_check">비밀번호 확인</string>
+    <string name="password_edit_btn_edit">변경</string>
+
+    <string name="password_edit_toast_1">비밀번호 확인 완료</string>
+    <string name="password_edit_toast_2">비밀번호가 틀립니다.</string>
+    <string name="password_edit_toast_3">기존 비밀번호 확인이 필요합니다.</string>
+    <string name="password_edit_toast_4">새 비밀번호가 일치하지 않습니다.</string>
+    <string name="password_edit_toast_5">비밀번호 변경 완료</string>
+    <string name="password_edit_toast_6">비밀번호 변경에 실패했습니다.</string>
+
+    <string name="password_edit_key">newPassword</string>
+
     <!--Friends-->
     <string name="friends_fragment_label">friendsFragment</string>
 

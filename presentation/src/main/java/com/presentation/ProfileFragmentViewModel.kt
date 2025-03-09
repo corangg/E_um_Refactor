@@ -37,7 +37,7 @@ class ProfileFragmentViewModel @Inject constructor(
     }
 
     private fun initProfileData() = onUiWork {
-        val userInfo = getUserInfo()?:return@onUiWork
+        val userInfo = getUserInfo() ?: return@onUiWork
         profileNickname.value = userInfo.nickname
         profileStatusMessage.value = userInfo.statusMessage
         profileName.value = userInfo.name
@@ -64,7 +64,11 @@ class ProfileFragmentViewModel @Inject constructor(
         successUerInfoEdit.value = updateUserInfo(userInfo)
     }
 
-    fun setImageProfileUri(uri: String){
+    fun setImageProfileUri(uri: String) {
         profileImageUrl.value = uri
+    }
+
+    fun setPassword(password: String) {
+        profilePassword.value = password
     }
 }

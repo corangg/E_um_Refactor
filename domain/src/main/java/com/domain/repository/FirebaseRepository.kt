@@ -17,4 +17,8 @@ interface FirebaseRepository {
     suspend fun getUserInfo(): UserInfo?
 
     suspend fun updateProfileImage(uri: String): String
+
+    suspend fun checkPassword(password: String): Boolean
+
+    suspend fun changePassword(password: String): Boolean
 }

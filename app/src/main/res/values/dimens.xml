@@ -39,7 +39,6 @@
     <dimen name="text_toolbar_size">20sp</dimen>
     <dimen name="text_toolbar_">0sp</dimen>
 
-
     <!--Log In Activity-->
     <dimen name="img_login_title_height">240dp</dimen>
 
@@ -107,6 +106,21 @@
     <dimen name="value_profile_img_radius">50dp</dimen>
     <dimen name="value_profile_view_guide_line">1dp</dimen>
     <dimen name="value_profile_btn_open_gallery_elevation">12dp</dimen>
+
+    <!--Password Edit Activity-->
+    <dimen name="margin_edit_password_item_title_horizontal">32dp</dimen>
+    <dimen name="margin_edit_password_item_title_top">32dp</dimen>
+    <dimen name="margin_edit_password_item_horizontal">32dp</dimen>
+    <dimen name="margin_edit_password_item_start">32dp</dimen>
+    <dimen name="margin_edit_password_item_end">32dp</dimen>
+    <dimen name="margin_edit_password_item_top">20dp</dimen>
+    <dimen name="margin_edit_password_btn_check_start">20dp</dimen>
+    <dimen name="margin_edit_password_btn_top">32dp</dimen>
+
+    <dimen name="padding_edit_password_edit_box">9dp</dimen>
+
+    <dimen name="text_edit_password_item_title">20sp</dimen>
+    <dimen name="text_edit_password">20sp</dimen>
 
 
     <!--

@@ -9,6 +9,7 @@ import com.domain.model.SignInResult
 import com.domain.model.SignUpResult
 import com.domain.model.UserInfo
 import com.domain.repository.FirebaseRepository
+import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
@@ -99,11 +100,32 @@ class DefaultFirebaseRepository @Inject constructor(
     override suspend fun updateProfileImage(uri: String) = withContext(ioDispatcher) {
         return@withContext try {
             val userEmail = auth.currentUser?.email ?: return@withContext ""
-            val storagePath = firebaseStorage.reference.child("userProfile").child(userEmail).child("profile_img.jpg")
+            val storagePath = firebaseStorage.reference.child("userProfile").child(userEmail)
+                .child("profile_img.jpg")
             storagePath.putFile(uri.toUri()).await()
             storagePath.downloadUrl.await().toString()
         } catch (e: Exception) {
             ""
+        }
+    }
+
+    override suspend fun checkPassword(password: String) = withContext(ioDispatcher) {
+        val userEmail = auth.currentUser?.email ?: return@withContext false
+        val credential = EmailAuthProvider.getCredential(userEmail, password)
+        return@withContext try {
+            auth.currentUser?.reauthenticate(credential)?.await()
+            true
+        } catch (e: Exception) {
+            false
+        }
+    }
+
+    override suspend fun changePassword(password: String) = withContext(ioDispatcher) {
+        return@withContext try {
+            auth.currentUser?.updatePassword(password)?.await()
+            true
+        } catch (e: Exception) {
+            false
         }
     }
 }

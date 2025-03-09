@@ -1,11 +1,14 @@
 package com.app.ui.fragment
 
 import android.app.Activity
+import android.content.Intent
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleOwner
+import com.app.R
 import com.app.databinding.FragmentProfileBinding
+import com.app.ui.activity.profile.PasswordEditActivity
 import com.bumptech.glide.Glide
 import com.core.ui.BaseFragment
 import com.core.util.openGallery
@@ -16,13 +19,20 @@ import dagger.hilt.android.AndroidEntryPoint
 class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBinding::inflate) {
     private val viewModel: ProfileFragmentViewModel by viewModels()
 
-    private var imagePickerLauncher = registerForActivityResult(
-        ActivityResultContracts.StartActivityForResult()
-    ) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            viewModel.setImageProfileUri(result.data?.data.toString())
+    private var imagePickerLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                viewModel.setImageProfileUri(result.data?.data.toString())
+            }
         }
-    }
+
+    private val editPasswordLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val data = result.data?.getStringExtra(getString(R.string.password_edit_key)) ?: return@registerForActivityResult
+                viewModel.setPassword(data)
+            }
+        }
 
     override fun setUi() {
         binding.viewModel = viewModel
@@ -48,7 +58,7 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
             openGallery(imagePickerLauncher)
         }
         binding.layoutEditPassword.setOnClickListener {
-
+            startEditPasswordActivity()
         }
         binding.layoutEditAddress.setOnClickListener {
 
@@ -86,5 +96,10 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
         binding.editStatusMessage.isFocusable = false
         binding.editName.isFocusable = false
         binding.editPhone.isFocusable = false
+    }
+
+    private fun startEditPasswordActivity() {
+        val intent = Intent(requireContext(), PasswordEditActivity::class.java)
+        editPasswordLauncher.launch(intent)
     }
 }

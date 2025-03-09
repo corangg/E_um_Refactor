@@ -41,3 +41,11 @@ class GetFireBaseUserInfo @Inject constructor(private val firebaseRepository: Fi
 class UpdateUserProfileImage @Inject constructor(private val firebaseRepository: FirebaseRepository) {
     suspend operator fun invoke(uri: String) = firebaseRepository.updateProfileImage(uri)
 }
+
+class CheckExistingPassword @Inject constructor(private val firebaseRepository: FirebaseRepository) {
+    suspend operator fun invoke(password: String) = firebaseRepository.checkPassword(password)
+}
+
+class ChangePassword @Inject constructor(private val firebaseRepository: FirebaseRepository) {
+    suspend operator fun invoke(password: String) = firebaseRepository.changePassword(password)
+}
