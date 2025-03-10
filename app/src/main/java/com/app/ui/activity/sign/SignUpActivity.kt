@@ -1,10 +1,11 @@
-package com.app.ui.activity
+package com.app.ui.activity.sign
 
 import android.content.Intent
 import androidx.activity.viewModels
 import androidx.lifecycle.LifecycleOwner
 import com.app.R
 import com.app.databinding.ActivitySignUpBinding
+import com.app.ui.activity.MapActivity
 import com.app.ui.custom.showCustomToast
 import com.core.ui.BaseActivity
 import com.presentation.SignUpActivityViewModel

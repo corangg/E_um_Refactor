@@ -19,7 +19,7 @@
             android:id="@+id/main"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:context=".ui.activity.SignUpActivity">
+            tools:context=".ui.activity.sign.SignUpActivity">
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guideline_toolbar"

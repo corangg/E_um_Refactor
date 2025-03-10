@@ -8,6 +8,7 @@ import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.setupWithNavController
 import com.app.R
 import com.app.databinding.ActivityMainBinding
+import com.app.ui.activity.sign.LoginActivity
 import com.core.ui.BaseActivity
 import com.presentation.MainActivityViewModel
 import dagger.hilt.android.AndroidEntryPoint

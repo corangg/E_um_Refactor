@@ -8,7 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleOwner
 import com.app.R
 import com.app.databinding.FragmentProfileBinding
-import com.app.ui.activity.LoginActivity
+import com.app.ui.activity.sign.LoginActivity
 import com.app.ui.activity.profile.AddressListActivity
 import com.app.ui.activity.profile.PasswordEditActivity
 import com.bumptech.glide.Glide

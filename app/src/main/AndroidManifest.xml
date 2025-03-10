@@ -31,10 +31,10 @@
             android:name=".ui.activity.MapActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activity.SignUpActivity"
+            android:name=".ui.activity.sign.SignUpActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.activity.LoginActivity"
+            android:name=".ui.activity.sign.LoginActivity"
             android:exported="false" />
         <activity
             android:name=".ui.activity.MainActivity"
