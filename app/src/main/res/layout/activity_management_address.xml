@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.presentation.AddressManagementViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.activity.profile.AddressManagementActivity">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_toolbar"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.08" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_back_activity"
+            android:layout_width="@dimen/img_toolbar_back_button_size"
+            android:layout_height="@dimen/img_toolbar_back_button_size"
+            android:layout_marginStart="@dimen/margin_toolbar_back_btn"
+            android:background="@drawable/ic_back"
+            android:backgroundTint="@color/theme_color"
+            app:layout_constraintBottom_toTopOf="@id/guideline_toolbar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_toolbar_title_start"
+            android:text="@string/address_management_title"
+            android:textColor="@color/theme_color"
+            android:textSize="@dimen/text_toolbar_size"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/guideline_toolbar"
+            app:layout_constraintStart_toEndOf="@id/btn_back_activity"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/view_guideline"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/layout_default_guideline_height"
+            android:background="@color/theme_color"
+            app:layout_constraintEnd_toEndOf="@id/guideline_toolbar"
+            app:layout_constraintStart_toStartOf="@id/guideline_toolbar"
+            app:layout_constraintTop_toTopOf="@id/guideline_toolbar" />
+
+        <TextView
+            android:id="@+id/text_address_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_address_management_default_horizontal"
+            android:layout_marginTop="@dimen/margin_address_management_title_top"
+            android:text="@string/address_management_title"
+            android:textSize="@dimen/text_address_management_title"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/guideline_toolbar" />
+
+        <EditText
+            android:id="@+id/edit_address_num"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_address_management_start"
+            android:layout_marginTop="@dimen/margin_address_management_title_top"
+            android:autofillHints=""
+            android:text="@={viewModel.zoneCodeLiveData}"
+            android:background="@drawable/bg_edit_default"
+            android:focusable="false"
+            android:hint="@string/address_management_zone_code"
+            android:inputType="number"
+            android:padding="@dimen/padding_signup_edit"
+            android:textColor="@color/theme_color"
+            android:textColorHint="@color/edit_hint_color"
+            android:textSize="@dimen/text_address_management_edit"
+            app:layout_constraintEnd_toStartOf="@id/btn_search"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_address_title" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_address_management_btn_start"
+            android:layout_marginEnd="@dimen/margin_address_management_start"
+            android:background="@drawable/bg_btn_round_hollow"
+            android:text="@string/address_management_search"
+            android:textColor="@color/theme_color"
+            android:textSize="@dimen/text_address_management_edit"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/edit_address_num"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/edit_address_num"
+            app:layout_constraintTop_toTopOf="@id/edit_address_num" />
+
+
+        <EditText
+            android:id="@+id/edit_address"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@={viewModel.addressLiveData}"
+            android:layout_marginHorizontal="@dimen/margin_address_management_default_horizontal"
+            android:layout_marginTop="@dimen/margin_address_management_edit_top"
+            android:autofillHints="postalAddress"
+            android:background="@drawable/bg_edit_default"
+            android:focusable="false"
+            android:hint="@string/address_management_address"
+            android:inputType="text"
+            android:padding="@dimen/padding_address_management_edit"
+            android:textColor="@color/theme_color"
+            android:textColorHint="@color/edit_hint_color"
+            android:textSize="@dimen/text_address_management_edit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edit_address_num" />
+
+        <EditText
+            android:id="@+id/edit_address_detail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@={viewModel.detailAddressLiveData}"
+            android:layout_marginHorizontal="@dimen/margin_address_management_default_horizontal"
+            android:layout_marginTop="@dimen/margin_address_management_edit_top"
+            android:autofillHints="postalAddress"
+            android:background="@drawable/bg_edit_default"
+            android:hint="@string/address_management_detail_address"
+            android:inputType="text"
+            android:padding="@dimen/padding_address_management_edit"
+            android:textColor="@color/theme_color"
+            android:textColorHint="@color/edit_hint_color"
+            android:textSize="@dimen/text_address_management_edit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edit_address" />
+
+        <TextView
+            android:id="@+id/text_address_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_address_management_default_horizontal"
+            android:layout_marginTop="@dimen/margin_address_management_title_top"
+            android:text="@string/address_management_name_title"
+            android:textSize="@dimen/text_address_management_title"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edit_address_detail" />
+
+        <EditText
+            android:id="@+id/edit_address_name"
+            android:layout_width="0dp"
+            android:text="@={viewModel.addressNameLiveData}"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_address_management_default_horizontal"
+            android:layout_marginTop="@dimen/margin_address_management_title_top"
+            android:autofillHints=""
+            android:background="@drawable/bg_edit_default"
+            android:hint="@string/address_management_name"
+            android:inputType="text"
+            android:padding="@dimen/padding_signup_edit"
+            android:textColor="@color/theme_color"
+            android:textColorHint="@color/edit_hint_color"
+            android:textSize="@dimen/text_address_management_edit"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_address_name" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_sign_out"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="@{()->viewModel.saveAddress()}"
+            android:layout_marginHorizontal="@dimen/margin_address_management_default_horizontal"
+            android:layout_marginTop="@dimen/margin_address_management_title_top"
+            android:background="@drawable/bg_btn_round_hollow"
+            android:text="@string/address_management_save"
+            android:textColor="@color/theme_color"
+            android:textSize="@dimen/text_address_management_btn"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edit_address_name" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

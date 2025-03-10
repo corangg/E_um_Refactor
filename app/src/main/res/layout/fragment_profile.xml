@@ -61,8 +61,8 @@
                 android:background="@drawable/ic_complete"
                 android:backgroundTint="@color/theme_color"
                 android:contentDescription="@null"
-                android:visibility="gone"
                 android:onClick="@{()->viewModel.updateUserInfoData()}"
+                android:visibility="gone"
                 app:layout_constraintBottom_toTopOf="@id/guideline_toolbar"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -339,16 +339,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_profile_text_item_start"
                 android:layout_marginTop="@dimen/margin_profile_text_item_top"
-                android:layout_marginBottom="@dimen/margin_profile_bottom"
+
                 android:autofillHints="postalAddress"
                 android:background="@color/transparent"
                 android:focusable="false"
-                android:maxLines="2"
                 android:hint="@string/profile_address"
                 android:inputType="textMultiLine"
+                android:maxLines="2"
                 android:text="@={viewModel.profileAddress}"
                 android:textSize="@dimen/text_profile_item"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/layout_edit_address"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/text_address"
@@ -371,6 +370,23 @@
                     android:src="@drawable/ic_edit"
                     app:tint="@color/theme_color" />
             </FrameLayout>
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/btn_sign_out"
+                android:layout_marginHorizontal="@dimen/margin_profile_text_item_title_horizontal"
+                android:layout_marginTop="@dimen/margin_profile_text_item_title_top"
+                android:textSize="@dimen/text_profile_item"
+                android:textStyle="bold"
+                android:layout_marginBottom="@dimen/margin_profile_bottom"
+                android:background="@drawable/bg_btn_round_hollow"
+                android:text="@string/profile_sign_out"
+                android:textColor="@color/theme_color"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/edit_address" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </layout>

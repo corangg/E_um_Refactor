@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/layout_item"
+        android:padding="@dimen/padding_address_item">
+
+        <TextView
+            android:id="@+id/text_address_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_address_item_text_end"
+            android:background="@color/transparent"
+            android:ellipsize="end"
+            android:focusable="false"
+            android:maxWidth="@dimen/value_address_item_title_max_width"
+            android:maxLines="1"
+            android:textSize="@dimen/text_address_item_title"
+            android:textStyle="bold"
+            app:layout_constrainedWidth="true"
+            app:layout_constraintEnd_toStartOf="@id/text_main"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="집" />
+
+        <TextView
+            android:id="@+id/text_main"
+            android:layout_width="@dimen/value_address_item_main_width"
+            android:layout_height="@dimen/value_address_item_btn_height"
+            android:layout_marginStart="@dimen/margin_address_item_main_start"
+            android:background="@drawable/bg_btn_round"
+            android:gravity="center"
+            android:text="@string/address_item_main"
+            android:textColor="@color/white"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/text_address_title"
+            app:layout_constraintStart_toEndOf="@id/text_address_title"
+            app:layout_constraintTop_toTopOf="@id/text_address_title"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <TextView
+            android:id="@+id/text_address"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_address_item_address_top"
+            android:layout_marginEnd="@dimen/margin_address_item_text_end"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textSize="@dimen/text_address_item_address"
+            app:layout_constraintEnd_toStartOf="@id/btn_address_edit"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_address_title"
+            tools:text="(111111), 경기도 포천시 일동면 수입로 141번길. 대문앞" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_address_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/value_address_item_btn_height"
+            android:background="@drawable/bg_btn_round_hollow"
+            android:text="@string/address_item_edit"
+            android:textColor="@color/theme_color"
+            app:layout_constraintBottom_toBottomOf="@id/text_address_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/text_address_title" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_delete_address"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/value_address_item_btn_height"
+            android:background="@drawable/bg_btn_round_hollow"
+            android:text="@string/address_item_delete"
+            android:textColor="@color/theme_color"
+            app:layout_constraintBottom_toBottomOf="@id/text_address"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/btn_address_edit"
+            app:layout_constraintTop_toTopOf="@id/text_address" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

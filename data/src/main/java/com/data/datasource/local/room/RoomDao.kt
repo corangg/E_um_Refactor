@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import androidx.room.Upsert
 import kotlinx.coroutines.flow.Flow
 
@@ -23,4 +24,25 @@ interface UserInfoDao {
 
     @Query("DELETE FROM LocalUserInfoData")
     suspend fun deleteUserInfoData()
+}
+
+@Dao
+interface AddressDao {
+    @Query("SELECT * FROM LocalAddressItemData")
+    fun getUserInfoData(): List<LocalAddressItemData>
+
+    @Query("SELECT * FROM LocalAddressItemData")
+    fun getUserInfoDataFlow(): Flow<List<LocalAddressItemData>>
+
+    @Upsert
+    suspend fun upsertAddressData(entity: LocalAddressItemData)
+
+    @Update
+    suspend fun updateAddressDataList(entityList: List<LocalAddressItemData>)
+
+    @Query("DELETE FROM LocalAddressItemData WHERE address = :address")
+    suspend fun deleteAddressData(address: String)
+
+    @Query("DELETE FROM LocalAddressItemData")
+    suspend fun deleteAddressAllData()
 }

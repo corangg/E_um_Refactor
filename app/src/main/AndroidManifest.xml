@@ -19,6 +19,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.E_um">
         <activity
+            android:name=".ui.activity.profile.AddressManagementActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activity.profile.AddressListActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.activity.profile.PasswordEditActivity"
             android:exported="false" />
         <activity

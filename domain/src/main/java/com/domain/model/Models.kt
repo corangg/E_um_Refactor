@@ -13,6 +13,13 @@ data class UserInfo(
     val timeStamp: String = ""
 )
 
+data class AddressItemData(
+    val title: String = "집",
+    val address: String,
+    val zoneCode: String,
+    val mainValue: Boolean = false
+)
+
 sealed class SignUpResult {
     data object Success : SignUpResult()
     data object AlreadyExists : SignUpResult()
@@ -25,4 +32,10 @@ sealed class SignInResult(val code: Int) {
     data object UserNotFound : SignInResult(3)
     data object InvalidPassword : SignInResult(4)
     data object Failure : SignInResult(5)
+}
+
+sealed class AddressSaveResult(val code: Int) {
+    data object DuplicateAddress : SignInResult(1)
+    data object DuplicateName : SignInResult(2)
+    data object Success : SignInResult(3)
 }

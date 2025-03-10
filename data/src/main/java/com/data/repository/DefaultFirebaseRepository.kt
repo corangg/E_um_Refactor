@@ -128,4 +128,8 @@ class DefaultFirebaseRepository @Inject constructor(
             false
         }
     }
+
+    override suspend fun trySignOut() = withContext(ioDispatcher){
+        auth.signOut()
+    }
 }

@@ -1,6 +1,8 @@
 package com.data.mapper
 
+import com.data.datasource.local.room.LocalAddressItemData
 import com.data.datasource.local.room.LocalUserInfoData
+import com.domain.model.AddressItemData
 import com.domain.model.UserInfo
 
 fun UserInfo.toLocal() = LocalUserInfoData(
@@ -27,4 +29,18 @@ fun LocalUserInfoData.toExternal() = UserInfo(
     imgUrl = this.imgUrl,
     statusMessage = this.statusMessage,
     timeStamp = this.timeStamp
+)
+
+fun LocalAddressItemData.toExternal() = AddressItemData(
+    address = this.address,
+    title = this.title,
+    zoneCode = this.zoneCode,
+    mainValue = this.mainValue
+)
+
+fun AddressItemData.toLocal() = LocalAddressItemData(
+    address = this.address,
+    title = this.title,
+    zoneCode = this.zoneCode,
+    mainValue = this.mainValue
 )

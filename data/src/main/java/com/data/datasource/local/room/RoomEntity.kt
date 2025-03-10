@@ -17,3 +17,11 @@ data class LocalUserInfoData(
     val statusMessage: String = "",
     val timeStamp: String = ""
 )
+
+@Entity
+data class LocalAddressItemData(
+    @PrimaryKey val address: String,
+    val title: String,
+    val zoneCode: String,
+    val mainValue: Boolean
+)

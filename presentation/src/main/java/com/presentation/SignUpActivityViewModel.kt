@@ -7,8 +7,8 @@ import com.core.di.MainDispatcher
 import com.core.viewmodel.BaseViewModel
 import com.domain.model.SignUpResult
 import com.domain.model.UserInfo
-import com.domain.usecase.SetUserInfo
-import com.domain.usecase.TrySignUp
+import com.domain.usecase.SetUserInfoUseCase
+import com.domain.usecase.TrySignUpUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.MainCoroutineDispatcher
@@ -16,8 +16,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SignUpActivityViewModel @Inject constructor(
-    private val trySignUp: TrySignUp,
-    private val setUserInfo: SetUserInfo,
+    private val trySignUpUseCase: TrySignUpUseCase,
+    private val setUserInfoUseCase: SetUserInfoUseCase,
     @MainDispatcher mainDispatcher: MainCoroutineDispatcher,
     @DefaultDispatcher defaultDispatcher: CoroutineDispatcher,
     @IoDispatcher ioDispatcher: CoroutineDispatcher
@@ -34,8 +34,8 @@ class SignUpActivityViewModel @Inject constructor(
 
     val trySignUpResult = MutableLiveData(-1)
 
-    fun setAddress(zonCode: String, address: String) {
-        zoneCodeLiveData.value = zonCode
+    fun setAddress(zoneCode: String, address: String) {
+        zoneCodeLiveData.value = zoneCode
         addressLiveData.value = address
     }
 
@@ -49,7 +49,7 @@ class SignUpActivityViewModel @Inject constructor(
             zoneCode = checkZoneCode() ?: return@onUiWork,
             address = checkAddress() ?: return@onUiWork
         )
-        when (trySignUp(userInfo)) {
+        when (trySignUpUseCase(userInfo)) {
             is SignUpResult.Success -> setFireStoreUserInfo(userInfo)
             is SignUpResult.AlreadyExists -> trySignUpResult.value = 3
             is SignUpResult.Failure -> trySignUpResult.value = 5
@@ -57,7 +57,7 @@ class SignUpActivityViewModel @Inject constructor(
     }
 
     private suspend fun setFireStoreUserInfo(userInfo: UserInfo) {
-        if (setUserInfo(userInfo)) {
+        if (setUserInfoUseCase(userInfo)) {
             trySignUpResult.value = 6
         } else {
             trySignUpResult.value = 5

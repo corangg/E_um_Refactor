@@ -5,8 +5,8 @@ import com.core.di.DefaultDispatcher
 import com.core.di.IoDispatcher
 import com.core.di.MainDispatcher
 import com.core.viewmodel.BaseViewModel
-import com.domain.usecase.ChangePassword
-import com.domain.usecase.CheckExistingPassword
+import com.domain.usecase.ChangePasswordUseCase
+import com.domain.usecase.CheckExistingPasswordUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.MainCoroutineDispatcher
@@ -14,8 +14,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class EditPasswordViewModel @Inject constructor(
-    private val checkExistingPassword: CheckExistingPassword,
-    private val changePassword: ChangePassword,
+    private val checkExistingPasswordUseCase: CheckExistingPasswordUseCase,
+    private val changePasswordUseCase: ChangePasswordUseCase,
     @MainDispatcher mainDispatcher: MainCoroutineDispatcher,
     @DefaultDispatcher defaultDispatcher: CoroutineDispatcher,
     @IoDispatcher ioDispatcher: CoroutineDispatcher
@@ -28,7 +28,7 @@ class EditPasswordViewModel @Inject constructor(
     private var checkExistingPasswordResult = false
 
     fun checkExistingPassword() = onUiWork {
-        if (checkExistingPassword(existingPassword.value ?: return@onUiWork)) {
+        if (checkExistingPasswordUseCase(existingPassword.value ?: return@onUiWork)) {
             checkExistingPasswordResult = true
             passwordEditResult.value = 1
         } else {
@@ -41,7 +41,7 @@ class EditPasswordViewModel @Inject constructor(
         passwordEditResult.value = when {
             !checkExistingPasswordResult -> 3
             newPassword.value != newCheckPassword.value -> 4
-            changePassword(newPassword.value ?: return@onUiWork) -> 5
+            changePasswordUseCase(newPassword.value ?: return@onUiWork) -> 5
             else -> 6
         }
     }

@@ -31,10 +31,12 @@
     <dimen name="margin_toolbar_back_btn">10dp</dimen>
     <dimen name="margin_toolbar_title_start">12dp</dimen>
     <dimen name="margin_main_toolbar_title_start">24dp</dimen>
+    <dimen name="margin_toolbar_item_end">16dp</dimen>
 
     <dimen name="padding_toolbar_">0dp</dimen>
 
     <dimen name="img_toolbar_back_button_size">32dp</dimen>
+    <dimen name="img_toolbar_item_size">32dp</dimen>
 
     <dimen name="text_toolbar_size">20sp</dimen>
     <dimen name="text_toolbar_">0sp</dimen>
@@ -122,6 +124,37 @@
     <dimen name="text_edit_password_item_title">20sp</dimen>
     <dimen name="text_edit_password">20sp</dimen>
 
+    <!--Address List Activity-->
+    <dimen name="margin_address_item_text_end">16dp</dimen>
+    <dimen name="margin_address_item_address_top">12dp</dimen>
+    <dimen name="margin_address_item_main_start">16dp</dimen>
+
+    <dimen name="padding_address_item">16dp</dimen>
+
+    <dimen name="text_address_item_title">20sp</dimen>
+    <dimen name="text_address_item_address">16sp</dimen>
+
+    <dimen name="value_address_item_btn_height">28dp</dimen>
+    <dimen name="value_address_item_title_max_width">160dp</dimen>
+    <dimen name="value_address_item_main_width">80dp</dimen>
+
+    <!--Address Management Activity-->
+    <dimen name="margin_address_management_default_horizontal">24dp</dimen>
+    <dimen name="margin_address_management_title_top">24dp</dimen>
+    <dimen name="margin_address_management_start">24dp</dimen>
+    <dimen name="margin_address_management_btn_start">16dp</dimen>
+    <dimen name="margin_address_management_edit_top">12dp</dimen>
+    <dimen name="margin_address_management_">0dp</dimen>
+
+    <dimen name="padding_address_management_edit">12dp</dimen>
+
+    <dimen name="img_address_management_">32dp</dimen>
+
+    <dimen name="text_address_management_title">20sp</dimen>
+    <dimen name="text_address_management_edit">16sp</dimen>
+    <dimen name="text_address_management_btn">20sp</dimen>
+
+    <dimen name="value_address_management_">0dp</dimen>
 
     <!--
     <dimen name="margin_">0dp</dimen>

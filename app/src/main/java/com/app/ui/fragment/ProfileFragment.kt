@@ -8,6 +8,8 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleOwner
 import com.app.R
 import com.app.databinding.FragmentProfileBinding
+import com.app.ui.activity.LoginActivity
+import com.app.ui.activity.profile.AddressListActivity
 import com.app.ui.activity.profile.PasswordEditActivity
 import com.bumptech.glide.Glide
 import com.core.ui.BaseFragment
@@ -19,20 +21,27 @@ import dagger.hilt.android.AndroidEntryPoint
 class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBinding::inflate) {
     private val viewModel: ProfileFragmentViewModel by viewModels()
 
-    private var imagePickerLauncher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                viewModel.setImageProfileUri(result.data?.data.toString())
-            }
+    private var imagePickerLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            viewModel.setImageProfileUri(result.data?.data.toString())
         }
+    }
 
-    private val editPasswordLauncher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                val data = result.data?.getStringExtra(getString(R.string.password_edit_key)) ?: return@registerForActivityResult
-                viewModel.setPassword(data)
-            }
+    private val editPasswordLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val data = result.data?.getStringExtra(getString(R.string.password_edit_key))
+                ?: return@registerForActivityResult
+            viewModel.setPassword(data)
         }
+    }
+
+    private val editAddressLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val position = result.data?.getIntExtra(getString(R.string.address_position_key), -1)
+                ?: return@registerForActivityResult
+            viewModel.setAddress(position)
+        }
+    }
 
     override fun setUi() {
         binding.viewModel = viewModel
@@ -61,7 +70,13 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
             startEditPasswordActivity()
         }
         binding.layoutEditAddress.setOnClickListener {
-
+            startEditAddressActivity()
+        }
+        binding.btnSignOut.setOnClickListener {
+            viewModel.trySignOut()
+            val intent = Intent(requireContext(), LoginActivity::class.java)
+            startActivity(intent)
+            requireActivity().finish()
         }
     }
 
@@ -101,5 +116,10 @@ class ProfileFragment : BaseFragment<FragmentProfileBinding>(FragmentProfileBind
     private fun startEditPasswordActivity() {
         val intent = Intent(requireContext(), PasswordEditActivity::class.java)
         editPasswordLauncher.launch(intent)
+    }
+
+    private fun startEditAddressActivity() {
+        val intent = Intent(requireContext(), AddressListActivity::class.java)
+        editAddressLauncher.launch(intent)
     }
 }

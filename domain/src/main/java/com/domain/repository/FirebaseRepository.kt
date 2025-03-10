@@ -21,4 +21,6 @@ interface FirebaseRepository {
     suspend fun checkPassword(password: String): Boolean
 
     suspend fun changePassword(password: String): Boolean
+
+    suspend fun trySignOut()
 }
