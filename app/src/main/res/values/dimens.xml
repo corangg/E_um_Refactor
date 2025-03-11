@@ -7,6 +7,8 @@
     <dimen name="edit_stroke_width">1dp</dimen>
     <dimen name="btn_hollow_stroke_width">2dp</dimen>
     <dimen name="btn_conner_open_gallery_radius">16dp</dimen>
+    <dimen name="img_alarm_point_radius">5dp</dimen>
+    <dimen name="img_alarm_point_size">10dp</dimen>
 
     <dimen name="size_toast_text">16sp</dimen>
     <dimen name="padding_toast_text_vertical">12dp</dimen>
@@ -144,18 +146,42 @@
     <dimen name="margin_address_management_start">24dp</dimen>
     <dimen name="margin_address_management_btn_start">16dp</dimen>
     <dimen name="margin_address_management_edit_top">12dp</dimen>
-    <dimen name="margin_address_management_">0dp</dimen>
 
     <dimen name="padding_address_management_edit">12dp</dimen>
-
-    <dimen name="img_address_management_">32dp</dimen>
 
     <dimen name="text_address_management_title">20sp</dimen>
     <dimen name="text_address_management_edit">16sp</dimen>
     <dimen name="text_address_management_btn">20sp</dimen>
 
-    <dimen name="value_address_management_">0dp</dimen>
+    <!--Friends Fragment-->
+    <dimen name="margin_friend_alarm_point_end">14dp</dimen>
+    <dimen name="margin_friend_alarm_point_top">12dp</dimen>
+    <dimen name="margin_friend_my_profile">20dp</dimen>
+    <dimen name="margin_friend_my_nickname_start">14dp</dimen>
+    <dimen name="margin_friend_my_nickname_top">28dp</dimen>
+    <dimen name="margin_friend_my_nickname_end">20dp</dimen>
+    <dimen name="margin_friend_my_status_message_top">6dp</dimen>
+    <dimen name="margin_friend_view_horizontal">14dp</dimen>
+    <dimen name="margin_friend_view_top">16dp</dimen>
+    <dimen name="margin_friend_text_start">24dp</dimen>
+    <dimen name="margin_friend_text_top">6dp</dimen>
+    <dimen name="margin_friend_text_number_start">6dp</dimen>
+    <dimen name="margin_friend_recycler_top">6dp</dimen>
 
+    <dimen name="padding_friend_recycler_horizontal">24dp</dimen>
+    <dimen name="padding_friend_">0dp</dimen>
+
+    <dimen name="img_friend_item_size">32dp</dimen>
+    <dimen name="img_friend_my_profile">64dp</dimen>
+
+    <dimen name="text_friend_my_nickname">18sp</dimen>
+    <dimen name="text_friend_my_status_message">12sp</dimen>
+    <dimen name="text_friend">16sp</dimen>
+    <dimen name="text_friend_">0sp</dimen>
+
+    <dimen name="value_friend_my_profile_radius">28dp</dimen>
+    <dimen name="value_friend_view_guide_line">1dp</dimen>
+    <dimen name="value_friend_">0dp</dimen>
     <!--
     <dimen name="margin_">0dp</dimen>
 

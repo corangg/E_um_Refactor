@@ -44,7 +44,6 @@
     <string name="web_view_url">https://e-um-c6abf.web.app/</string>
 
     <!--Main-->
-    <string name="main_nav_menu_friend">친구</string>
     <string name="main_nav_menu_chat">채팅</string>
     <string name="main_nav_menu_schedule">일정</string>
 
@@ -109,9 +108,11 @@
     <string name="address_management_toast_4">주소를 입력해 주세요.</string>
     <string name="address_management_toast_5">주소 이름을 입력해 주세요.</string>
 
-
     <!--Friends-->
+    <string name="main_nav_menu_friend">친구</string>
     <string name="friends_fragment_label">friendsFragment</string>
+    <string name="friends_fragment_text">친구</string>
+    <string name="friends_fragment_">friendsFragment</string>
 
     <!--Chat-->
     <string name="chat_fragment_label">chatFragment</string>
