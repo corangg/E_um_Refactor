@@ -23,4 +23,6 @@ interface FirebaseRepository {
     suspend fun changePassword(password: String): Boolean
 
     suspend fun trySignOut()
+
+    suspend fun getFriendList():List<String>
 }

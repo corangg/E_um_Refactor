@@ -46,3 +46,24 @@ interface AddressDao {
     @Query("DELETE FROM LocalAddressItemData")
     suspend fun deleteAddressAllData()
 }
+
+@Dao
+interface FriendDao {
+    @Query("SELECT * FROM LocalFriendData")
+    fun getFriendDataList(): List<LocalFriendData>
+
+    @Query("SELECT * FROM LocalFriendData")
+    fun getFriendDataFlow(): Flow<List<LocalFriendData>>
+
+    @Upsert
+    suspend fun upsertFriendData(entity: LocalFriendData)
+
+    @Update
+    suspend fun updateFriendDataList(entityList: List<LocalFriendData>)
+
+    @Query("DELETE FROM LocalFriendData WHERE email = :email")
+    suspend fun deleteFriendData(email: String)
+
+    @Query("DELETE FROM LocalFriendData")
+    suspend fun deleteFriendAllData()
+}

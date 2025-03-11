@@ -1,8 +1,10 @@
 package com.data.mapper
 
 import com.data.datasource.local.room.LocalAddressItemData
+import com.data.datasource.local.room.LocalFriendData
 import com.data.datasource.local.room.LocalUserInfoData
 import com.domain.model.AddressItemData
+import com.domain.model.FriendItemData
 import com.domain.model.UserInfo
 
 fun UserInfo.toLocal() = LocalUserInfoData(
@@ -43,4 +45,17 @@ fun AddressItemData.toLocal() = LocalAddressItemData(
     title = this.title,
     zoneCode = this.zoneCode,
     mainValue = this.mainValue
+)
+
+fun LocalFriendData.toExternal() = FriendItemData(
+    nickName = this.nickname,
+    statusMessage = this.statusMessage,
+    profileUrl = this.imgUrl
+)
+
+fun FriendItemData.toLocal(email: String) = LocalFriendData(
+    email = email,
+    nickname = this.nickName,
+    statusMessage = this.statusMessage,
+    imgUrl = this.profileUrl
 )

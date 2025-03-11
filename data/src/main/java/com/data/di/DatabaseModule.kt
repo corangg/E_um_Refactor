@@ -6,6 +6,7 @@ import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.data.datasource.local.room.AddressDao
 import com.data.datasource.local.room.Database
+import com.data.datasource.local.room.FriendDao
 import com.data.datasource.local.room.UserInfoDao
 import dagger.Module
 import dagger.Provides
@@ -25,6 +26,14 @@ object DatabaseModule {
         }
     }
 
+    private val MIGRATION_2_3 = object : Migration(2, 3) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL(
+                "CREATE TABLE LocalFriendData (email TEXT PRIMARY KEY NOT NULL, nickname TEXT NOT NULL, statusMessage TEXT NOT NULL, imgUrl TEXT NOT NULL)"
+            )
+        }
+    }
+
     @Provides
     @Singleton
     fun provideDatabase(@ApplicationContext context: Context) =
@@ -33,7 +42,7 @@ object DatabaseModule {
             Database::class.java,
             "Database.db"
         )
-            .addMigrations(MIGRATION_1_2)
+            .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
             .build()
 
     @Provides
@@ -41,4 +50,7 @@ object DatabaseModule {
 
     @Provides
     fun provideAddressDao(database: Database): AddressDao = database.addressDao()
+
+    @Provides
+    fun provideFriendDao(database: Database): FriendDao = database.friendDao()
 }

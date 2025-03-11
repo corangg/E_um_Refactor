@@ -25,3 +25,11 @@ data class LocalAddressItemData(
     val zoneCode: String,
     val mainValue: Boolean
 )
+
+@Entity
+data class LocalFriendData(
+    @PrimaryKey val email: String,
+    val nickname: String,
+    val statusMessage: String,
+    val imgUrl: String
+)

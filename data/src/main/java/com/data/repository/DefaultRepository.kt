@@ -8,6 +8,7 @@ import com.data.mapper.toExternal
 import com.data.mapper.toLocal
 import com.domain.model.AddressItemData
 import com.domain.model.AddressSaveResult
+import com.domain.model.FriendItemData
 import com.domain.model.UserInfo
 import com.domain.repository.Repository
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -63,5 +64,19 @@ class DefaultRepository @Inject constructor(
 
     override suspend fun updateAddressDataList(addressDataList: List<AddressItemData>) = withContext(ioDispatcher) {
         localDataSource.updateAddressDataList(addressDataList.map { it.toLocal() })
+    }
+
+    override fun getFriendListFlow() = localDataSource.getFriendDataListFlow().map { list -> list.map { it.toExternal() } }
+
+    override suspend fun upsertFriendData(email: String, friendItemData: FriendItemData) = withContext(ioDispatcher) {
+        localDataSource.upsertFriendData(friendItemData.toLocal(email))
+    }
+
+    override suspend fun deleteAllFriendData() = withContext(ioDispatcher) {
+        localDataSource.deleteAllFriendData()
+    }
+
+    override suspend fun deleteFriendData(email: String) = withContext(ioDispatcher) {
+        localDataSource.deleteFriendData(email)
     }
 }

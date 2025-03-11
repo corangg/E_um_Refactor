@@ -2,15 +2,17 @@ package com.data.datasource.local
 
 import com.data.datasource.LocalDataSource
 import com.data.datasource.local.room.AddressDao
+import com.data.datasource.local.room.FriendDao
 import com.data.datasource.local.room.LocalAddressItemData
+import com.data.datasource.local.room.LocalFriendData
 import com.data.datasource.local.room.LocalUserInfoData
 import com.data.datasource.local.room.UserInfoDao
-import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class DefaultLocalDataSource @Inject constructor(
     private val userInfoDao: UserInfoDao,
-    private val addressDao: AddressDao
+    private val addressDao: AddressDao,
+    private val friendDao: FriendDao
 ) : LocalDataSource {
     override suspend fun insertUserInfoData(entity: LocalUserInfoData) = userInfoDao.insertUserInfoData(entity)
     override suspend fun getUserInfoData() = userInfoDao.getUserInfoData()
@@ -24,4 +26,11 @@ class DefaultLocalDataSource @Inject constructor(
     override fun getAddressDataListFlow() = addressDao.getUserInfoDataFlow()
     override suspend fun deleteAddressData(address: String) = addressDao.deleteAddressData(address)
     override suspend fun deleteAddressAllData() = addressDao.deleteAddressAllData()
+
+    override suspend fun upsertFriendData(entity: LocalFriendData) = friendDao.upsertFriendData(entity)
+    override suspend fun updateFriendDataList(entityList: List<LocalFriendData>) = friendDao.updateFriendDataList(entityList)
+    override suspend fun getFriendDataList() = friendDao.getFriendDataList()
+    override fun getFriendDataListFlow() = friendDao.getFriendDataFlow()
+    override suspend fun deleteFriendData(email: String) = friendDao.deleteFriendData(email)
+    override suspend fun deleteAllFriendData() = friendDao.deleteFriendAllData()
 }

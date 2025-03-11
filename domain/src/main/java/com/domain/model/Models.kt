@@ -20,6 +20,12 @@ data class AddressItemData(
     val mainValue: Boolean = false
 )
 
+data class FriendItemData(
+    val nickName: String,
+    val statusMessage: String,
+    val profileUrl: String
+)
+
 sealed class SignUpResult {
     data object Success : SignUpResult()
     data object AlreadyExists : SignUpResult()
