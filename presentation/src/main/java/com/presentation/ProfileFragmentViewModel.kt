@@ -7,6 +7,7 @@ import com.core.di.MainDispatcher
 import com.core.viewmodel.BaseViewModel
 import com.domain.model.UserInfo
 import com.domain.usecase.DeleteAllAddressUseCase
+import com.domain.usecase.DeleteAllFriendListUseCase
 import com.domain.usecase.GetChoiceAddressDataUseCase
 import com.domain.usecase.GetUserInfoDataUseCase
 import com.domain.usecase.TrySignOutUseCase
@@ -22,6 +23,7 @@ class ProfileFragmentViewModel @Inject constructor(
     private val updateUserInfoUseCase: UpdateUserInfoDataUseCase,
     private val trySignOutUseCase: TrySignOutUseCase,
     private val deleteAllAddressUseCase: DeleteAllAddressUseCase,
+    private val deleteAllFriendListUseCase: DeleteAllFriendListUseCase,
     private val getChoiceAddressDataUseCase: GetChoiceAddressDataUseCase,
     @MainDispatcher mainDispatcher: MainCoroutineDispatcher,
     @DefaultDispatcher defaultDispatcher: CoroutineDispatcher,
@@ -89,6 +91,7 @@ class ProfileFragmentViewModel @Inject constructor(
 
     fun trySignOut() = onUiWork {
         deleteAllAddressUseCase()
+        deleteAllFriendListUseCase
         trySignOutUseCase()
     }
 }
