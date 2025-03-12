@@ -27,4 +27,8 @@ interface FirebaseRepository {
     suspend fun getFriendList():List<String>
 
     suspend fun requestFriend(email: String): Boolean
+
+    suspend fun getEmailInfo(email: String): UserInfo?
+
+    fun getFirebaseRequestFriendAlarmData(): Flow<List<String>>
 }

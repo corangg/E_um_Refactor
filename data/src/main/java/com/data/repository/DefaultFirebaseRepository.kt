@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.core.net.toUri
 import com.core.di.IoDispatcher
 import com.core.di.LocalDataSources
+import com.core.util.getLocalTimeToString
 import com.data.datasource.LocalDataSource
 import com.domain.model.SignInResult
 import com.domain.model.SignUpResult
@@ -13,11 +14,16 @@ import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.channels.awaitClose
+import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
@@ -129,12 +135,16 @@ class DefaultFirebaseRepository @Inject constructor(
         val replaceUserEmail = auth.currentUser?.email?.replace(".", "_") ?: return@withContext false
         val replaceEmail = email.replace(".", "_")
         try {
-            val reference = database.getReference("friendRequest").child(replaceEmail)
-            reference.setValue(replaceUserEmail)
+            val reference = database.reference.child("friendRequest").child(replaceEmail).child(replaceUserEmail)
+            reference.setValue(getLocalTimeToString()).await()
             true
         } catch (e: Exception) {
             false
         }
+    }
+
+    override suspend fun getEmailInfo(email: String) = withContext(ioDispatcher) {
+        getFirebaseUserInfo(email)
     }
 
     private suspend fun getFirebaseUserInfo(email: String) = withContext(ioDispatcher) {
@@ -155,5 +165,24 @@ class DefaultFirebaseRepository @Inject constructor(
         } catch (e: Exception) {
             null
         }
+    }
+
+    override fun getFirebaseRequestFriendAlarmData() = callbackFlow {
+        val replaceUserEmail = auth.currentUser?.email?.replace(".", "_") ?: return@callbackFlow
+        val reference = database.getReference("friendRequest").child(replaceUserEmail)
+
+        val listener = object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val dataList = snapshot.children.mapNotNull { it.key }
+                trySend(dataList).isSuccess
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                close(error.toException())
+            }
+        }
+
+        reference.addValueEventListener(listener)
+        awaitClose { reference.removeEventListener(listener) }
     }
 }

@@ -26,3 +26,7 @@ class UpdateUserInfoDataUseCase @Inject constructor(
         }
     }
 }
+
+class GetUserInfoDataFlowUseCase @Inject constructor(private val repository: Repository) {
+    operator fun invoke() = repository.getUserInfoFlow()
+}

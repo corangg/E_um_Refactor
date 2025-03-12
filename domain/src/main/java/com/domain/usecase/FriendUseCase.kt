@@ -31,3 +31,7 @@ class UpsertFriendListUseCase @Inject constructor(
 class DeleteAllFriendListUseCase @Inject constructor(private val repository: Repository) {
     suspend operator fun invoke() = repository.deleteAllFriendData()
 }
+
+class GetFriendRequestDataFlow @Inject constructor(private val firebaseRepository: FirebaseRepository) {
+    operator fun invoke() = firebaseRepository.getFirebaseRequestFriendAlarmData()
+}

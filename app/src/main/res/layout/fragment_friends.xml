@@ -59,10 +59,12 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <View
+            android:id="@+id/view_friend_request_alarm"
             android:layout_width="@dimen/img_alarm_point_size"
             android:layout_height="@dimen/img_alarm_point_size"
             android:layout_marginTop="@dimen/margin_friend_alarm_point_top"
             android:layout_marginEnd="@dimen/margin_friend_alarm_point_end"
+            android:visibility="gone"
             android:background="@drawable/img_alarm_point"
             app:layout_constraintBottom_toTopOf="@id/btn_alarm_friend"
             app:layout_constraintEnd_toEndOf="parent"
@@ -116,6 +118,7 @@
                     android:layout_marginEnd="@dimen/margin_friend_my_nickname_end"
                     android:ellipsize="end"
                     android:maxLines="1"
+                    android:text="@{viewModel.userNicknameLiveData}"
                     android:textSize="@dimen/text_friend_my_nickname"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -132,6 +135,7 @@
                     android:layout_marginEnd="@dimen/margin_friend_my_nickname_end"
                     android:ellipsize="end"
                     android:maxLines="1"
+                    android:text="@{viewModel.userStatusMessageLiveData}"
                     android:textSize="@dimen/text_friend_my_status_message"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@id/view_profile_img"

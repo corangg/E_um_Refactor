@@ -60,3 +60,11 @@ class ChangePasswordUseCase @Inject constructor(private val firebaseRepository: 
 class TrySignOutUseCase @Inject constructor(private val firebaseRepository: FirebaseRepository) {
     suspend operator fun invoke() = firebaseRepository.trySignOut()
 }
+
+class GetFireBaseEmailInfoUseCase @Inject constructor(private val firebaseRepository: FirebaseRepository) {
+    suspend operator fun invoke(email: String) = firebaseRepository.getEmailInfo(email)
+}
+
+class TryFriendRequestUseCase @Inject constructor(private val firebaseRepository: FirebaseRepository) {
+    suspend operator fun invoke(email: String) = firebaseRepository.requestFriend(email)
+}

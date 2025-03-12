@@ -64,7 +64,6 @@
             android:layout_marginTop="@dimen/margin_add_friend_search_edit_top"
             android:autofillHints="emailAddress"
             android:background="@drawable/bg_edit_default"
-            android:focusable="false"
             android:hint="@string/add_friend_search_hint"
             android:inputType="textEmailAddress"
             android:padding="@dimen/padding_signup_edit"
