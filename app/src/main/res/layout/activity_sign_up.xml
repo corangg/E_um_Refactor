@@ -174,7 +174,7 @@
                 app:layout_constraintTop_toBottomOf="@id/edit_nick_name" />
 
             <EditText
-                android:id="@+id/edit_address_num"
+                android:id="@+id/edit_search_email"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin_signup_edit_horizontal"
@@ -204,10 +204,10 @@
                 android:textColor="@color/theme_color"
                 android:textSize="@dimen/text_signup_search"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@id/edit_address_num"
+                app:layout_constraintBottom_toBottomOf="@id/edit_search_email"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/edit_address_num"
-                app:layout_constraintTop_toTopOf="@id/edit_address_num" />
+                app:layout_constraintStart_toEndOf="@id/edit_search_email"
+                app:layout_constraintTop_toTopOf="@id/edit_search_email" />
 
 
             <EditText
@@ -228,7 +228,7 @@
                 android:textSize="@dimen/text_signup_edit"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/edit_address_num" />
+                app:layout_constraintTop_toBottomOf="@id/edit_search_email" />
 
             <EditText
                 android:id="@+id/edit_address_detail"

@@ -184,6 +184,31 @@
     <dimen name="value_friend_my_profile_radius">28dp</dimen>
     <dimen name="value_friend_view_guide_line">1dp</dimen>
     <dimen name="value_friend_item_profile_radius">21dp</dimen>
+
+    <!--Add Friend Activity-->
+    <dimen name="margin_add_friend_search_edit_top">24dp</dimen>
+    <dimen name="margin_add_friend_search_edit_start">24dp</dimen>
+    <dimen name="margin_add_friend_search_btn_start">24dp</dimen>
+    <dimen name="margin_add_friend_search_btn_end">24dp</dimen>
+    <dimen name="margin_add_friend_profile_start">24dp</dimen>
+    <dimen name="margin_add_friend_profile_top">32dp</dimen>
+    <dimen name="margin_add_friend_nickname_start">14dp</dimen>
+    <dimen name="margin_add_friend_nickname_end">24dp</dimen>
+    <dimen name="margin_add_friend_status_message_top">6dp</dimen>
+    <dimen name="margin_add_friend_message_horizontal">24dp</dimen>
+    <dimen name="margin_add_friend_message_top">20dp</dimen>
+    <dimen name="margin_add_friend_">16dp</dimen>
+
+    <dimen name="img_add_friend_search_profile">64dp</dimen>
+
+    <dimen name="text_add_friend_search">16sp</dimen>
+    <dimen name="text_add_friend_nickname">18sp</dimen>
+    <dimen name="text_add_friend_status_message">12sp</dimen>
+    <dimen name="text_add_friend_request_btn">20sp</dimen>
+
+    <dimen name="value_add_friend_profile_radius">28dp</dimen>
+
+
     <!--
     <dimen name="margin_">0dp</dimen>
 

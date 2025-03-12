@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.presentation.AddFriendActivityViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.activity.friend.AddFriendActivity">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_toolbar"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.08" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_back_activity"
+            android:layout_width="@dimen/img_toolbar_back_button_size"
+            android:layout_height="@dimen/img_toolbar_back_button_size"
+            android:layout_marginStart="@dimen/margin_toolbar_back_btn"
+            android:background="@drawable/ic_back"
+            android:backgroundTint="@color/theme_color"
+            app:layout_constraintBottom_toTopOf="@id/guideline_toolbar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_toolbar_title_start"
+            android:text="@string/add_friend_title"
+            android:textColor="@color/theme_color"
+            android:textSize="@dimen/text_toolbar_size"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/guideline_toolbar"
+            app:layout_constraintStart_toEndOf="@id/btn_back_activity"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/view_guideline"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/layout_default_guideline_height"
+            android:background="@color/theme_color"
+            app:layout_constraintEnd_toEndOf="@id/guideline_toolbar"
+            app:layout_constraintStart_toStartOf="@id/guideline_toolbar"
+            app:layout_constraintTop_toTopOf="@id/guideline_toolbar" />
+
+        <EditText
+            android:id="@+id/edit_search_email"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_add_friend_search_edit_start"
+            android:layout_marginTop="@dimen/margin_add_friend_search_edit_top"
+            android:autofillHints="emailAddress"
+            android:background="@drawable/bg_edit_default"
+            android:focusable="false"
+            android:hint="@string/add_friend_search_hint"
+            android:inputType="textEmailAddress"
+            android:padding="@dimen/padding_signup_edit"
+            android:text="@={viewModel.searchEmailLiveData}"
+            android:textColor="@color/theme_color"
+            android:textColorHint="@color/edit_hint_color"
+            android:textSize="@dimen/text_add_friend_search"
+            app:layout_constraintEnd_toStartOf="@id/btn_search"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/guideline_toolbar" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{()->viewModel.searchFriend()}"
+            android:layout_marginStart="@dimen/margin_add_friend_search_btn_start"
+            android:layout_marginEnd="@dimen/margin_add_friend_search_btn_end"
+            android:background="@drawable/bg_btn_round_hollow"
+            android:text="@string/add_friend_search"
+            android:textColor="@color/theme_color"
+            android:textSize="@dimen/text_add_friend_search"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/edit_search_email"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/edit_search_email"
+            app:layout_constraintTop_toTopOf="@id/edit_search_email" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/view_profile_img"
+            android:layout_width="@dimen/img_add_friend_search_profile"
+            android:layout_height="@dimen/img_add_friend_search_profile"
+            android:layout_marginStart="@dimen/margin_add_friend_profile_start"
+            android:layout_marginTop="@dimen/margin_add_friend_profile_top"
+            app:cardCornerRadius="@dimen/value_add_friend_profile_radius"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/edit_search_email">
+
+            <ImageView
+                android:id="@+id/img_Profile"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/description_profile_img"
+                android:scaleType="centerCrop"
+                android:src="@drawable/img_basic_profile" />
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:id="@+id/text_search_nickname"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_add_friend_nickname_start"
+            android:layout_marginEnd="@dimen/margin_add_friend_nickname_end"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@={viewModel.searchNickNameLiveData}"
+            android:textSize="@dimen/text_add_friend_nickname"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/text_search_status_massage"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/view_profile_img"
+            app:layout_constraintTop_toTopOf="@id/view_profile_img"
+            tools:text="이강현" />
+
+        <TextView
+            android:id="@+id/text_search_status_massage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_add_friend_nickname_start"
+            android:layout_marginTop="@dimen/margin_add_friend_status_message_top"
+            android:layout_marginEnd="@dimen/margin_add_friend_nickname_end"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@={viewModel.searchStatusMessageLiveData}"
+            android:textSize="@dimen/text_add_friend_status_message"
+            app:layout_constraintBottom_toBottomOf="@id/view_profile_img"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/view_profile_img"
+            app:layout_constraintTop_toBottomOf="@id/text_search_nickname"
+            tools:text="rkskfkslfjalfjlzjlfjlkzjflsafwsfasadfdasfesdfasfawefawefawfwefjdlkflsjef" />
+
+
+        <TextView
+            android:id="@+id/text_check_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_add_friend_message_horizontal"
+            android:layout_marginTop="@dimen/margin_add_friend_message_top"
+            android:text="@string/add_friend_check_message"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view_profile_img" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_request_friend"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_add_friend_message_horizontal"
+            android:layout_marginTop="@dimen/margin_add_friend_message_top"
+            android:background="@drawable/bg_btn_round_hollow"
+            android:text="@string/add_friend_request_btn"
+            android:textColor="@color/theme_color"
+            android:textSize="@dimen/text_add_friend_request_btn"
+            android:textStyle="bold"
+            android:onClick="@{()->viewModel.requestFriend()}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_check_message" />
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/requestGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:constraint_referenced_ids="view_profile_img, text_search_nickname, text_search_status_massage, text_check_message, btn_request_friend" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

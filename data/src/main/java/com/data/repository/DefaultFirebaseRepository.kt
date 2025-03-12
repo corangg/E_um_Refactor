@@ -13,6 +13,7 @@ import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -26,6 +27,7 @@ class DefaultFirebaseRepository @Inject constructor(
     private val auth: FirebaseAuth,
     private val firestore: FirebaseFirestore,
     private val firebaseStorage: FirebaseStorage,
+    private val database: FirebaseDatabase,
     @LocalDataSources private val localDataSource: LocalDataSource,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
     @ApplicationContext private val context: Context
@@ -121,6 +123,18 @@ class DefaultFirebaseRepository @Inject constructor(
         val userEmail = auth.currentUser?.email ?: return@withContext listOf()
         val docRef = firestore.collection("FriendList").document(userEmail).get().await()
         return@withContext docRef.data?.keys?.toList() ?: return@withContext listOf()
+    }
+
+    override suspend fun requestFriend(email: String) = withContext(ioDispatcher) {
+        val replaceUserEmail = auth.currentUser?.email?.replace(".", "_") ?: return@withContext false
+        val replaceEmail = email.replace(".", "_")
+        try {
+            val reference = database.getReference("friendRequest").child(replaceEmail)
+            reference.setValue(replaceUserEmail)
+            true
+        } catch (e: Exception) {
+            false
+        }
     }
 
     private suspend fun getFirebaseUserInfo(email: String) = withContext(ioDispatcher) {

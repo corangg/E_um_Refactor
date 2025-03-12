@@ -114,6 +114,16 @@
     <string name="friends_fragment_text">친구</string>
     <string name="friends_fragment_">friendsFragment</string>
 
+    <!--Add Friend-->
+    <string name="add_friend_title">친구 검색</string>
+    <string name="add_friend_search_hint">이메일</string>
+    <string name="add_friend_search">찾기</string>
+    <string name="add_friend_check_message">이 계정이 맞습니까?</string>
+    <string name="add_friend_request_btn">친구 요청</string>
+
+    <string name="add_friend_request_toast_1">친구 신청 완료.</string>
+    <string name="add_friend_request_toast_2">오류가 발생 했습니다.</string>
+
     <!--Chat-->
     <string name="chat_fragment_label">chatFragment</string>
 
