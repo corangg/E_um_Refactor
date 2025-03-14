@@ -5,9 +5,10 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.R
 import com.app.databinding.ActivityRequestFriendAlarmBinding
-import com.app.ui.adapter.RequestFriendAlarmAdapter
+import com.app.ui.adapter.ResponseFriendAlarmAdapter
 import com.app.ui.custom.showCustomToast
 import com.core.ui.BaseActivity
+import com.domain.model.AlarmData
 import com.presentation.RequestFriendAlarmViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -15,7 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class RequestFriendAlarmActivity :
     BaseActivity<ActivityRequestFriendAlarmBinding>(ActivityRequestFriendAlarmBinding::inflate) {
     private val viewModel: RequestFriendAlarmViewModel by viewModels()
-    private val adapter by lazy { RequestFriendAlarmAdapter() }
+    private val adapter by lazy { ResponseFriendAlarmAdapter() }
 
     override fun setUi() {
         bindingOnClick()
@@ -26,7 +27,7 @@ class RequestFriendAlarmActivity :
     }
 
     override fun setObserve(lifecycleOwner: LifecycleOwner) {
-        viewModel.friendRequestAlarm.observe(lifecycleOwner, ::setRecyclerViewList)
+        viewModel.alarmListLiveData.observe(lifecycleOwner, ::setRecyclerViewList)
         viewModel.onResponseResult.observe(lifecycleOwner, ::showResultMessage)
     }
 
@@ -45,7 +46,7 @@ class RequestFriendAlarmActivity :
         }
     }
 
-    private fun setRecyclerViewList(list: List<String>) {
+    private fun setRecyclerViewList(list: List<AlarmData>) {
         adapter.submitList(list)
     }
 

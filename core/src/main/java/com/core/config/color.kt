@@ -1,4 +1,4 @@
-package com.app.config
+package com.core.config
 
 import android.graphics.Color
 

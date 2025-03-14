@@ -32,7 +32,7 @@ class FriendsFragment : BaseFragment<FragmentFriendsBinding>(FragmentFriendsBind
     override fun setObserve(lifecycleOwner: LifecycleOwner) {
         viewModel.friendListData.observe(lifecycleOwner, ::updateFriendList)
         viewModel.userProfileUrlLiveData.observe(lifecycleOwner, ::setProfileImage)
-        viewModel.totalAlarmRequests.observe(lifecycleOwner,::setFriendRequestAlarm)
+        viewModel.alarmListLiveData.observe(lifecycleOwner,::setFriendRequestAlarm)
     }
 
     private fun bindingRecyclerView() {

@@ -26,10 +26,20 @@ data class FriendItemData(
     val profileUrl: String
 )
 
-data class ResponseFriendRequestData(
-    val email: String,
-    val value: Boolean
-)
+sealed class AlarmData(open val time: String) {
+    data class RequestFriendAlarmData(
+        val email: String,
+        val nickName: String,
+        override val time: String
+    ) : AlarmData(time)
+
+    data class ResponseFriendAlarmData(
+        val email: String,
+        val nickName: String,
+        val value: Boolean,
+        override val time: String
+    ) : AlarmData(time)
+}
 
 sealed class SignUpResult {
     data object Success : SignUpResult()

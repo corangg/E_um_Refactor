@@ -7,7 +7,8 @@ import com.core.di.DefaultDispatcher
 import com.core.di.IoDispatcher
 import com.core.di.MainDispatcher
 import com.core.viewmodel.BaseViewModel
-import com.domain.usecase.GetFriendRequestDataFlow
+import com.domain.model.AlarmData
+import com.domain.usecase.GetAlarmListFlow
 import com.domain.usecase.ResponseFriendRequestUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -16,18 +17,19 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RequestFriendAlarmViewModel @Inject constructor(
-    getFriendRequestDataFlow: GetFriendRequestDataFlow,
+    getAlarmListFlow: GetAlarmListFlow,
     private val responseFriendRequestUseCase: ResponseFriendRequestUseCase,
     @MainDispatcher mainDispatcher: MainCoroutineDispatcher,
     @DefaultDispatcher defaultDispatcher: CoroutineDispatcher,
     @IoDispatcher ioDispatcher: CoroutineDispatcher
 ) : BaseViewModel(mainDispatcher, defaultDispatcher, ioDispatcher) {
-    val friendRequestAlarm = getFriendRequestDataFlow().asLiveData(viewModelScope.coroutineContext)
+    val alarmListLiveData = getAlarmListFlow().asLiveData(viewModelScope.coroutineContext)
 
     val onResponseResult = MutableLiveData(false)
 
     fun responseFriendRequest(position: Int, value: Boolean) = onUiWork {
-        val email = friendRequestAlarm.value?.getOrNull(position) ?: return@onUiWork
-        onResponseResult.value = responseFriendRequestUseCase(email, value)
+        val requestAlarmData = alarmListLiveData.value?.getOrNull(position) as? AlarmData.RequestFriendAlarmData ?: return@onUiWork
+
+        onResponseResult.value = responseFriendRequestUseCase(requestAlarmData, value)
     }
 }
