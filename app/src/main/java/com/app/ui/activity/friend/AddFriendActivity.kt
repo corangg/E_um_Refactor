@@ -52,6 +52,7 @@ class AddFriendActivity : BaseActivity<ActivityAddFriendBinding>(ActivityAddFrie
             }
 
             2 -> this.showCustomToast(getString(R.string.add_friend_request_toast_2))
+            3 -> this.showCustomToast(getString(R.string.add_friend_request_toast_3))
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.domain.usecase
 
 import com.domain.model.AddressItemData
+import com.domain.model.FriendRequestResult
 import com.domain.model.SignInResult
 import com.domain.model.UserInfo
 import com.domain.repository.FirebaseRepository
@@ -65,6 +66,15 @@ class GetFireBaseEmailInfoUseCase @Inject constructor(private val firebaseReposi
     suspend operator fun invoke(email: String) = firebaseRepository.getEmailInfo(email)
 }
 
-class TryFriendRequestUseCase @Inject constructor(private val firebaseRepository: FirebaseRepository) {
-    suspend operator fun invoke(email: String) = firebaseRepository.requestFriend(email)
+class TryFriendRequestUseCase @Inject constructor(
+    private val repository: Repository,
+    private val firebaseRepository: FirebaseRepository
+) {
+    suspend operator fun invoke(email: String): Int {
+        return if (repository.getFriendList().any { it.email.contains(email) }) {
+            FriendRequestResult.DuplicateEmail.code
+        } else {
+            firebaseRepository.requestFriend(email)
+        }
+    }
 }

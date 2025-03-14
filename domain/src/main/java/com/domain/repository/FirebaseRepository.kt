@@ -31,7 +31,7 @@ interface FirebaseRepository {
 
     suspend fun updateFriendValue(email: String): Boolean
 
-    suspend fun requestFriend(email: String): Boolean
+    suspend fun requestFriend(email: String): Int
 
     suspend fun responseFriendRequest(email: String, value: Boolean): Boolean
 

@@ -30,7 +30,7 @@ class AddFriendActivityViewModel @Inject constructor(
 
     fun searchFriend() = onUiWork {
         val emailInfo = getFireBaseEmailInfoUseCase(searchEmailLiveData.value ?: return@onUiWork)
-        if(emailInfo != null){
+        if (emailInfo != null) {
             searchNickNameLiveData.value = emailInfo.nickname
             searchStatusMessageLiveData.value = emailInfo.statusMessage
             profileImageUrl.value = emailInfo.imgUrl
@@ -39,6 +39,6 @@ class AddFriendActivityViewModel @Inject constructor(
     }
 
     fun requestFriend() = onUiWork {
-        onFriendRequestValue.value = if (tryFriendRequestUseCase(searchEmailLiveData.value ?: "")) 1 else 2
+        onFriendRequestValue.value = tryFriendRequestUseCase(searchEmailLiveData.value ?: "")
     }
 }

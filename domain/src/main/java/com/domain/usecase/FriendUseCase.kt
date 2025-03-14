@@ -22,7 +22,8 @@ class UpsertFriendListUseCase @Inject constructor(
             val friendItemData = FriendItemData(
                 nickName = userInfo.nickname,
                 statusMessage = userInfo.statusMessage,
-                profileUrl = userInfo.imgUrl
+                profileUrl = userInfo.imgUrl,
+                email = userInfo.email
             )
             repository.upsertFriendData(email, friendItemData)
         }

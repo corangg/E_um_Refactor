@@ -68,6 +68,8 @@ class DefaultRepository @Inject constructor(
 
     override fun getFriendListFlow() = localDataSource.getFriendDataListFlow().map { list -> list.map { it.toExternal() } }
 
+    override suspend fun getFriendList() = localDataSource.getFriendDataList().map { it.toExternal()}
+
     override suspend fun upsertFriendData(email: String, friendItemData: FriendItemData) = withContext(ioDispatcher) {
         localDataSource.upsertFriendData(friendItemData.toLocal(email))
     }

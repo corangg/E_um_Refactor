@@ -9,6 +9,7 @@ import com.data.config.REQUEST_CODE
 import com.data.config.RESPONSE_CODE
 import com.data.datasource.LocalDataSource
 import com.domain.model.AlarmData
+import com.domain.model.FriendRequestResult
 import com.domain.model.SignInResult
 import com.domain.model.SignUpResult
 import com.domain.model.UserInfo
@@ -234,7 +235,7 @@ class DefaultFirebaseRepository @Inject constructor(
     }.distinctUntilChanged()
 
     override suspend fun requestFriend(email: String) = withContext(ioDispatcher) {
-        val userInfo = localDataSource.getUserInfoData()?: return@withContext false
+        val userInfo = localDataSource.getUserInfoData()?: return@withContext FriendRequestResult.Fail.code
         val replaceUserEmail = userInfo.email.replace(".", "_")
         val replaceEmail = email.replace(".", "_")
         try {
@@ -247,9 +248,9 @@ class DefaultFirebaseRepository @Inject constructor(
                     )
                 ).await()
             }
-            true
+            FriendRequestResult.Success.code
         } catch (e: Exception) {
-            false
+            FriendRequestResult.Fail.code
         }
     }
 

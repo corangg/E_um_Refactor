@@ -28,6 +28,8 @@ interface Repository {
 
     fun getFriendListFlow(): Flow<List<FriendItemData>>
 
+    suspend fun getFriendList(): List<FriendItemData>
+
     suspend fun upsertFriendData(email: String, friendItemData: FriendItemData)
 
     suspend fun deleteAllFriendData()

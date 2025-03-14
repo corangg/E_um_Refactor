@@ -123,6 +123,7 @@
 
     <string name="add_friend_request_toast_1">친구 신청 완료.</string>
     <string name="add_friend_request_toast_2">오류가 발생 했습니다.</string>
+    <string name="add_friend_request_toast_3">이미 친구 입니다.</string>
 
     <!--Alarm Friend-->
     <string name="add_friend_request_alarm_title">알람</string>

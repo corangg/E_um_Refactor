@@ -23,7 +23,8 @@ data class AddressItemData(
 data class FriendItemData(
     val nickName: String,
     val statusMessage: String,
-    val profileUrl: String
+    val profileUrl: String,
+    val email: String
 )
 
 sealed class AlarmData(open val time: String) {
@@ -59,4 +60,10 @@ sealed class AddressSaveResult(val code: Int) {
     data object DuplicateAddress : SignInResult(1)
     data object DuplicateName : SignInResult(2)
     data object Success : SignInResult(3)
+}
+
+sealed class FriendRequestResult(val code: Int) {
+    data object Success : SignInResult(1)
+    data object Fail : SignInResult(2)
+    data object DuplicateEmail : SignInResult(3)
 }

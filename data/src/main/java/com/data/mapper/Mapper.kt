@@ -50,7 +50,8 @@ fun AddressItemData.toLocal() = LocalAddressItemData(
 fun LocalFriendData.toExternal() = FriendItemData(
     nickName = this.nickname,
     statusMessage = this.statusMessage,
-    profileUrl = this.imgUrl
+    profileUrl = this.imgUrl,
+    email = this.email
 )
 
 fun FriendItemData.toLocal(email: String) = LocalFriendData(
