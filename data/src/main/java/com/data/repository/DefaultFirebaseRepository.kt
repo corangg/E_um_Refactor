@@ -21,6 +21,7 @@ import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -168,12 +169,14 @@ class DefaultFirebaseRepository @Inject constructor(
         val type = child("type").getValue(Int::class.java) ?: return null
         val email = child("email").getValue(String::class.java) ?: return null
         val nickname = child("nickname").getValue(String::class.java) ?: return null
-        val booleanValue = child("value").getValue(Boolean::class.java)?: return null
         val time = key ?: return null
 
         return when (type) {
             REQUEST_CODE -> AlarmData.RequestFriendAlarmData(email, nickname, time)
-            RESPONSE_CODE -> AlarmData.ResponseFriendAlarmData(email, nickname, booleanValue, time)
+            RESPONSE_CODE -> {
+                val booleanValue = child("value").getValue(Boolean::class.java) ?: false
+                AlarmData.ResponseFriendAlarmData(email, nickname, booleanValue, time)
+            }
             else -> null
         }
     }
@@ -181,14 +184,28 @@ class DefaultFirebaseRepository @Inject constructor(
     override fun getAlarmListFlow() = callbackFlow {
         val replaceUserEmail = auth.currentUser?.email?.replace(".", "_") ?: return@callbackFlow
         val reference = database.getReference("alarm").child(replaceUserEmail)
+        val alarmDataList = mutableListOf<AlarmData>()
+
+        val initialListener = object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                alarmDataList.clear()
+                alarmDataList.addAll(snapshot.children.mapNotNull { it.toAlarmData() })
+                trySend(alarmDataList.toList()).isSuccess
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                close(error.toException())
+            }
+        }
+        reference.addListenerForSingleValueEvent(initialListener)
 
         val listener = object : ChildEventListener {
-            val alarmDataList = mutableListOf<AlarmData>()
-
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
                 val newAlarm = snapshot.toAlarmData() ?: return
-                alarmDataList.add(newAlarm)
-                trySend(alarmDataList.toList()).isSuccess
+                if (!alarmDataList.any { it.time == newAlarm.time }) {
+                    alarmDataList.add(newAlarm)
+                    trySend(alarmDataList.toList()).isSuccess
+                }
             }
 
             override fun onChildRemoved(snapshot: DataSnapshot) {
@@ -197,12 +214,19 @@ class DefaultFirebaseRepository @Inject constructor(
                 trySend(alarmDataList.toList()).isSuccess
             }
 
+            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+                val updatedAlarm = snapshot.toAlarmData() ?: return
+                val index = alarmDataList.indexOfFirst { it.time == updatedAlarm.time }
+                if (index != -1) {
+                    alarmDataList[index] = updatedAlarm
+                    trySend(alarmDataList.toList()).isSuccess
+                }
+            }
+
+            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
             override fun onCancelled(error: DatabaseError) {
                 close(error.toException())
             }
-
-            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {}
-            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
         }
 
         reference.addChildEventListener(listener)
