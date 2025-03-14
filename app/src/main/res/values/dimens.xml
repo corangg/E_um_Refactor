@@ -169,6 +169,8 @@
     <dimen name="margin_friend_recycler_top">6dp</dimen>
 
     <dimen name="padding_friend_recycler_horizontal">24dp</dimen>
+    <dimen name="padding_friend_item_vertical">10dp</dimen>
+    <dimen name="padding_friend_item_horizontal">24dp</dimen>
 
     <dimen name="img_friend_item_size">32dp</dimen>
     <dimen name="img_friend_my_profile">64dp</dimen>

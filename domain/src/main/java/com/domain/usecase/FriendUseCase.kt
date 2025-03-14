@@ -56,3 +56,7 @@ class ResponseFriendRequestUseCase @Inject constructor(
         }
     }
 }
+
+class DeleteAlarmUseCase @Inject constructor(private val firebaseRepository: FirebaseRepository) {
+    suspend operator fun invoke(time: String) = firebaseRepository.deleteAlarmMessage(time)
+}

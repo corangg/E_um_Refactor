@@ -9,13 +9,15 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:paddingVertical="@dimen/padding_friend_item_vertical"
+        android:paddingHorizontal="@dimen/padding_friend_item_horizontal"
+        >
 
         <androidx.cardview.widget.CardView
             android:id="@+id/view_profile_img"
             android:layout_width="@dimen/img_friend_item_profile"
             android:layout_height="@dimen/img_friend_item_profile"
-            android:layout_margin="@dimen/margin_friend_my_profile"
             app:cardCornerRadius="@dimen/value_friend_item_profile_radius"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">

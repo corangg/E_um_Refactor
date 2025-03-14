@@ -8,6 +8,7 @@ import com.core.di.IoDispatcher
 import com.core.di.MainDispatcher
 import com.core.viewmodel.BaseViewModel
 import com.domain.model.AlarmData
+import com.domain.usecase.DeleteAlarmUseCase
 import com.domain.usecase.GetAlarmListFlow
 import com.domain.usecase.ResponseFriendRequestUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,6 +20,7 @@ import javax.inject.Inject
 class RequestFriendAlarmViewModel @Inject constructor(
     getAlarmListFlow: GetAlarmListFlow,
     private val responseFriendRequestUseCase: ResponseFriendRequestUseCase,
+    private val deleteAlarmUseCase: DeleteAlarmUseCase,
     @MainDispatcher mainDispatcher: MainCoroutineDispatcher,
     @DefaultDispatcher defaultDispatcher: CoroutineDispatcher,
     @IoDispatcher ioDispatcher: CoroutineDispatcher
@@ -29,7 +31,11 @@ class RequestFriendAlarmViewModel @Inject constructor(
 
     fun responseFriendRequest(position: Int, value: Boolean) = onUiWork {
         val requestAlarmData = alarmListLiveData.value?.getOrNull(position) as? AlarmData.RequestFriendAlarmData ?: return@onUiWork
-
         onResponseResult.value = responseFriendRequestUseCase(requestAlarmData, value)
+    }
+
+    fun checkFriendResponse(position: Int) = onUiWork {
+        val requestAlarmData = alarmListLiveData.value?.getOrNull(position) ?: return@onUiWork
+        deleteAlarmUseCase(requestAlarmData.time)
     }
 }
