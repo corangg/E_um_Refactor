@@ -7,6 +7,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.databinding.FragmentFriendsBinding
 import com.app.ui.activity.friend.AddFriendActivity
+import com.app.ui.activity.friend.RequestFriendAlarmActivity
 import com.app.ui.adapter.FriendListAdapter
 import com.bumptech.glide.Glide
 import com.core.ui.BaseFragment
@@ -31,7 +32,7 @@ class FriendsFragment : BaseFragment<FragmentFriendsBinding>(FragmentFriendsBind
     override fun setObserve(lifecycleOwner: LifecycleOwner) {
         viewModel.friendListData.observe(lifecycleOwner, ::updateFriendList)
         viewModel.userProfileUrlLiveData.observe(lifecycleOwner, ::setProfileImage)
-        viewModel.friendRequestAlarm.observe(lifecycleOwner,::setFriendRequestAlarm)
+        viewModel.totalAlarmRequests.observe(lifecycleOwner,::setFriendRequestAlarm)
     }
 
     private fun bindingRecyclerView() {
@@ -46,6 +47,10 @@ class FriendsFragment : BaseFragment<FragmentFriendsBinding>(FragmentFriendsBind
     private fun bindingOnClick() {
         binding.btnAddFriend.setOnClickListener {
             val intent = Intent(requireContext(), AddFriendActivity::class.java)
+            startActivity(intent)
+        }
+        binding.btnAlarmFriend.setOnClickListener {
+            val intent = Intent(requireContext(), RequestFriendAlarmActivity::class.java)
             startActivity(intent)
         }
     }

@@ -12,8 +12,7 @@ import com.presentation.AddFriendActivityViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class AddFriendActivity :
-    BaseActivity<ActivityAddFriendBinding>(ActivityAddFriendBinding::inflate) {
+class AddFriendActivity : BaseActivity<ActivityAddFriendBinding>(ActivityAddFriendBinding::inflate) {
     private val viewModel: AddFriendActivityViewModel by viewModels()
 
     override fun setUi() {

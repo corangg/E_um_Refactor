@@ -6,6 +6,7 @@ import com.core.di.IoDispatcher
 import com.core.di.LocalDataSources
 import com.core.util.getLocalTimeToString
 import com.data.datasource.LocalDataSource
+import com.domain.model.ResponseFriendRequestData
 import com.domain.model.SignInResult
 import com.domain.model.SignUpResult
 import com.domain.model.UserInfo
@@ -147,10 +148,10 @@ class DefaultFirebaseRepository @Inject constructor(
         getFirebaseUserInfo(email)
     }
 
-    private suspend fun getFirebaseUserInfo(email: String) = withContext(ioDispatcher) {
-        return@withContext try {
+    private suspend fun getFirebaseUserInfo(email: String): UserInfo? {
+        return try {
             val docRef = firestore.collection("UserInfo").document(email).get().await()
-            val userDataMap = docRef.data ?: return@withContext null
+            val userDataMap = docRef.data ?: return null
             UserInfo(
                 email = userDataMap["email"] as? String ?: "",
                 password = userDataMap["password"] as? String ?: "",
@@ -184,5 +185,65 @@ class DefaultFirebaseRepository @Inject constructor(
 
         reference.addValueEventListener(listener)
         awaitClose { reference.removeEventListener(listener) }
+    }
+
+    override suspend fun updateFriendValue(email: String) = withContext(ioDispatcher) {
+        val userEmail = auth.currentUser?.email ?: return@withContext false
+        return@withContext addFriend(userEmail, email) && addFriend(email, userEmail)
+    }
+
+    override suspend fun deleteRequestAlarmMessage(email: String) = withContext(ioDispatcher) {
+        return@withContext try {
+            val replaceUserEmail = auth.currentUser?.email?.replace(".", "_") ?: return@withContext false
+            database.getReference("friendRequest").child(replaceUserEmail).child(email).removeValue().await()
+            true
+        } catch (e: Exception) {
+            false
+        }
+    }
+
+    override suspend fun responseFriendRequest(email: String, value: Boolean) = withContext(ioDispatcher) {
+        val replaceUserEmail = auth.currentUser?.email?.replace(".", "_") ?: return@withContext false
+        try {
+            val reference = database.reference.child("responseFriendRequest").child(email)
+                .child(replaceUserEmail)
+            reference.setValue(value).await()
+            true
+        } catch (e: Exception) {
+            false
+        }
+    }
+
+    override fun getFirebaseResponseFriendRequestAlarmData() = callbackFlow {
+        val replaceUserEmail = auth.currentUser?.email?.replace(".", "_") ?: return@callbackFlow
+        val reference = database.getReference("responseFriendRequest").child(replaceUserEmail)
+
+        val listener = object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val dataList = snapshot.children.mapNotNull {
+                    ResponseFriendRequestData(
+                        it.key ?: "",
+                        it.getValue(Boolean::class.java) ?: false
+                    )
+                }
+                trySend(dataList).isSuccess
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                close(error.toException())
+            }
+        }
+
+        reference.addValueEventListener(listener)
+        awaitClose { reference.removeEventListener(listener) }
+    }
+
+    private suspend fun addFriend(userEmail: String, friendEmail: String): Boolean{
+        return try {
+            firestore.collection("FriendList").document(userEmail).set(mapOf(friendEmail to getLocalTimeToString())).await()
+            true
+        } catch (e: Exception) {
+            false
+        }
     }
 }

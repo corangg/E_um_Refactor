@@ -19,6 +19,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.E_um">
         <activity
+            android:name=".ui.activity.friend.RequestFriendAlarmActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.activity.friend.AddFriendActivity"
             android:exported="false" />
         <activity

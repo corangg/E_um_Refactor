@@ -91,7 +91,7 @@ class ProfileFragmentViewModel @Inject constructor(
 
     fun trySignOut() = onUiWork {
         deleteAllAddressUseCase()
-        deleteAllFriendListUseCase
+        deleteAllFriendListUseCase()
         trySignOutUseCase()
     }
 }

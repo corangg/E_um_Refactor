@@ -17,7 +17,7 @@ class UpsertFriendListUseCase @Inject constructor(
     suspend operator fun invoke() {
         val friendList = firebaseRepository.getFriendList()
         friendList.map { email ->
-            val userInfo = firebaseRepository.getUserInfo() ?: return@map
+            val userInfo = firebaseRepository.getEmailInfo(email) ?: return@map
             val friendItemData = FriendItemData(
                 nickName = userInfo.nickname,
                 statusMessage = userInfo.statusMessage,
@@ -34,4 +34,22 @@ class DeleteAllFriendListUseCase @Inject constructor(private val repository: Rep
 
 class GetFriendRequestDataFlow @Inject constructor(private val firebaseRepository: FirebaseRepository) {
     operator fun invoke() = firebaseRepository.getFirebaseRequestFriendAlarmData()
+}
+
+class ResponseFriendRequestUseCase @Inject constructor(
+    private val firebaseRepository: FirebaseRepository,
+    private val upsertFriendListUseCase: UpsertFriendListUseCase
+) {
+    suspend operator fun invoke(email: String, value: Boolean): Boolean {
+        val replaceEmail = email.replace("_", ".")
+        return if (value) {
+            firebaseRepository.updateFriendValue(replaceEmail) && firebaseRepository.deleteRequestAlarmMessage(email) && firebaseRepository.responseFriendRequest(email, true).also { upsertFriendListUseCase() }
+        } else {
+            firebaseRepository.deleteRequestAlarmMessage(email) && firebaseRepository.responseFriendRequest(email, false)
+        }
+    }
+}
+
+class GetResponseFriendRequestDataFlow @Inject constructor(private val firebaseRepository: FirebaseRepository) {
+    operator fun invoke() = firebaseRepository.getFirebaseResponseFriendRequestAlarmData()
 }

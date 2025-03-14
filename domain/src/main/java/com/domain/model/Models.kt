@@ -26,6 +26,11 @@ data class FriendItemData(
     val profileUrl: String
 )
 
+data class ResponseFriendRequestData(
+    val email: String,
+    val value: Boolean
+)
+
 sealed class SignUpResult {
     data object Success : SignUpResult()
     data object AlreadyExists : SignUpResult()

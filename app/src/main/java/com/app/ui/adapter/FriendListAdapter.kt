@@ -25,8 +25,6 @@ class FriendListAdapter :
     private lateinit var mContext: Context
     private var selectedPosition = 0
 
-    private var onEditModeFlag = false
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FriendListViewHolder {
         mContext = parent.context
         return FriendListViewHolder(

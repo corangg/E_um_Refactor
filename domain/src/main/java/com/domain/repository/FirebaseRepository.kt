@@ -1,5 +1,6 @@
 package com.domain.repository
 
+import com.domain.model.ResponseFriendRequestData
 import com.domain.model.SignInResult
 import com.domain.model.SignUpResult
 import com.domain.model.UserInfo
@@ -31,4 +32,12 @@ interface FirebaseRepository {
     suspend fun getEmailInfo(email: String): UserInfo?
 
     fun getFirebaseRequestFriendAlarmData(): Flow<List<String>>
+
+    suspend fun updateFriendValue(email: String): Boolean
+
+    suspend fun deleteRequestAlarmMessage(email: String): Boolean
+
+    suspend fun responseFriendRequest(email: String, value: Boolean): Boolean
+
+    fun getFirebaseResponseFriendRequestAlarmData(): Flow<List<ResponseFriendRequestData>>
 }

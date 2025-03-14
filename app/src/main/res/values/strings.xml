@@ -124,6 +124,14 @@
     <string name="add_friend_request_toast_1">친구 신청 완료.</string>
     <string name="add_friend_request_toast_2">오류가 발생 했습니다.</string>
 
+    <!--Request Friend-->
+    <string name="add_friend_request_alarm_title">알람</string>
+    <string name="add_friend_request_alarm_item_btn_ok">수락</string>
+    <string name="add_friend_request_alarm_item_btn_no">거절</string>
+    <string name="add_friend_request_alarm_item_message">님으로 부터 친구 요청이 들어 왔습니다.</string>
+
+    <string name="add_friend_request_alarm_toast">친구 요청을 수락 했습니다.</string>
+
     <!--Chat-->
     <string name="chat_fragment_label">chatFragment</string>
 
