@@ -24,6 +24,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.SetOptions
 import com.google.firebase.storage.FirebaseStorage
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineDispatcher
@@ -286,7 +287,7 @@ class DefaultFirebaseRepository @Inject constructor(
 
     private suspend fun addFriend(userEmail: String, friendEmail: String): Boolean{
         return try {
-            firestore.collection("FriendList").document(userEmail).set(mapOf(friendEmail to getLocalTimeToString())).await()
+            firestore.collection("FriendList").document(userEmail).set(mapOf(friendEmail to getLocalTimeToString()), SetOptions.merge()).await()
             true
         } catch (e: Exception) {
             false
