@@ -6,6 +6,7 @@
     <dimen name="edit_corner_radius">4dp</dimen>
     <dimen name="edit_stroke_width">1dp</dimen>
     <dimen name="btn_hollow_stroke_width">2dp</dimen>
+    <dimen name="btn_dialog_stroke_width">1dp</dimen>
     <dimen name="btn_conner_open_gallery_radius">16dp</dimen>
     <dimen name="img_alarm_point_radius">5dp</dimen>
     <dimen name="img_alarm_point_size">10dp</dimen>
@@ -210,7 +211,7 @@
 
     <dimen name="value_add_friend_profile_radius">28dp</dimen>
 
-    <!--Request Friend Alarm Activity-->
+    <!--Alarm Activity-->
     <dimen name="margin_request_friend_alarm_btn_top">16dp</dimen>
     <dimen name="margin_request_friend_alarm_btn_end">24dp</dimen>
 
@@ -222,6 +223,27 @@
 
     <dimen name="value_request_friend_alarm_btn_height">32dp</dimen>
 
+    <!--Friend Detail Dialog-->
+    <dimen name="margin_friend_detail_nickname_top">16dp</dimen>
+    <dimen name="margin_friend_detail_status_top">8dp</dimen>
+    <dimen name="margin_friend_detail_btn_top">10dp</dimen>
+    <dimen name="margin_friend_detail_btn_ic_top">6dp</dimen>
+    <dimen name="margin_friend_detail_btn_text_bottom">8dp</dimen>
+    <dimen name="margin_friend_detail_btn_1_start">24dp</dimen>
+    <dimen name="margin_friend_detail_btn_1_end">8dp</dimen>
+    <dimen name="margin_friend_detail_btn_2_horizontal">16dp</dimen>
+    <dimen name="margin_friend_detail_btn_3_start">8dp</dimen>
+    <dimen name="margin_friend_detail_btn_3_end">24dp</dimen>
+
+    <dimen name="padding_friend_detail_">0dp</dimen>
+
+    <dimen name="img_friend_detail_ic">20dp</dimen>
+
+    <dimen name="text_friend_detail_nickname">24sp</dimen>
+    <dimen name="text_friend_detail_status">14sp</dimen>
+    <dimen name="text_friend_detail_ic">12sp</dimen>
+
+    <dimen name="value_friend_detail_profile_radius">24dp</dimen>
 
     <!--
     <dimen name="margin_">0dp</dimen>

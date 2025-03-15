@@ -2,15 +2,24 @@ package com.app.ui.fragment
 
 import android.content.Intent
 import android.view.View
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.AppCompatButton
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.viewbinding.ViewBindings
+import com.app.R
 import com.app.databinding.FragmentFriendsBinding
 import com.app.ui.activity.friend.AddFriendActivity
 import com.app.ui.activity.friend.RequestFriendAlarmActivity
 import com.app.ui.adapter.FriendListAdapter
 import com.bumptech.glide.Glide
 import com.core.ui.BaseFragment
+import com.core.ui.custom.ThreeButtonCustomDialog
 import com.domain.model.FriendItemData
 import com.presentation.FriendsFragmentViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,6 +50,7 @@ class FriendsFragment : BaseFragment<FragmentFriendsBinding>(FragmentFriendsBind
         }
 
         adapter.setOnItemClickListener { item, position ->
+            showCustomDialog(item)
         }
     }
 
@@ -67,5 +77,24 @@ class FriendsFragment : BaseFragment<FragmentFriendsBinding>(FragmentFriendsBind
     private fun setProfileImage(uri: String) {
         if (uri.isEmpty()) return
         Glide.with(binding.root).load(uri).into(binding.imgProfile)
+    }
+
+    private fun showCustomDialog(data: FriendItemData) {
+        val customDialog = ThreeButtonCustomDialog(requireContext(), R.layout.dialog_friend_detail, width = 0.8f, height = 0.45f)
+        customDialog.setText(R.id.text_friend_detail_nickname,data.nickName)
+        customDialog.setText(R.id.text_friend_detail_status,data.statusMessage)
+        customDialog.setImage(R.id.img_friend_detail_Profile,data.profileUrl)
+
+        customDialog.setButtonClickListener(R.id.btn_1) {
+            customDialog.dismissDialog()
+        }
+        customDialog.setButtonClickListener(R.id.btn_2) {
+            customDialog.dismissDialog()
+        }
+        customDialog.setButtonClickListener(R.id.btn_3) {
+            customDialog.dismissDialog()
+        }
+
+        customDialog.showDialog()
     }
 }

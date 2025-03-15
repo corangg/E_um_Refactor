@@ -136,6 +136,12 @@
     <string name="add_friend_response_alarm_item_btn_ok">확인</string>
     <string name="add_friend_response_alarm_item_message">님이 친구 요청을 수락 했습니다</string>
 
+
+    <!--Friend Detail-->
+    <string name="friend_detail_chat">채팅</string>
+    <string name="friend_detail_schedule">일정</string>
+    <string name="friend_detail_delete">삭제</string>
+
     <!--Chat-->
     <string name="chat_fragment_label">chatFragment</string>
 

@@ -11,7 +11,8 @@ import com.core.recyclerview.BaseViewHolder
 import com.domain.model.FriendItemData
 
 class FriendListAdapter :
-    BaseRecyclerView<FriendItemData, FriendListAdapter.FriendListViewHolder>(object : DiffUtil.ItemCallback<FriendItemData>() {
+    BaseRecyclerView<FriendItemData, FriendListAdapter.FriendListViewHolder>(object :
+        DiffUtil.ItemCallback<FriendItemData>() {
         override fun areItemsTheSame(
             oldItem: FriendItemData,
             newItem: FriendItemData
@@ -46,6 +47,10 @@ class FriendListAdapter :
             Glide.with(binding.root).load(item.profileUrl).into(binding.imgProfile)
             binding.textItemNickname.text = item.nickName
             binding.textItemStatusMassage.text = item.statusMessage
+
+            binding.itemFriend.setOnClickListener {
+                clickListener?.invoke(item, position)
+            }
         }
     }
 }
