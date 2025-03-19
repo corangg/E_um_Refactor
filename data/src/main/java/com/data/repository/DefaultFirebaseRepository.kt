@@ -8,7 +8,9 @@ import com.core.util.getLocalTimeToString
 import com.data.config.REQUEST_CODE
 import com.data.config.RESPONSE_CODE
 import com.data.datasource.LocalDataSource
+import com.data.mapper.toExternal
 import com.domain.model.AlarmData
+import com.domain.model.ChatMessageData
 import com.domain.model.FriendRequestResult
 import com.domain.model.SignInResult
 import com.domain.model.SignUpResult
@@ -167,6 +169,15 @@ class DefaultFirebaseRepository @Inject constructor(
         return@withContext addFriend(userEmail, email) && addFriend(email, userEmail)
     }
 
+    private suspend fun addFriend(userEmail: String, friendEmail: String): Boolean{
+        return try {
+            firestore.collection("FriendList").document(userEmail).set(mapOf(friendEmail to getLocalTimeToString()), SetOptions.merge()).await()
+            true
+        } catch (e: Exception) {
+            false
+        }
+    }
+
     private fun DataSnapshot.toAlarmData(): AlarmData? {
         val type = child("type").getValue(Int::class.java) ?: return null
         val email = child("email").getValue(String::class.java) ?: return null
@@ -285,12 +296,85 @@ class DefaultFirebaseRepository @Inject constructor(
         }
     }
 
-    private suspend fun addFriend(userEmail: String, friendEmail: String): Boolean{
-        return try {
-            firestore.collection("FriendList").document(userEmail).set(mapOf(friendEmail to getLocalTimeToString()), SetOptions.merge()).await()
+
+    //Chat
+
+    override suspend fun getChatCode(email: String) = withContext(ioDispatcher) {
+        return@withContext try {
+            val userEmail = auth.currentUser?.email ?: return@withContext null
+            val docRef = firestore.collection("Chat").document(userEmail).get().await()
+            if (docRef.exists()) {
+                docRef.data?.get(email).toString()
+            } else {
+                null
+            }
+        } catch (e: Exception) {
+            null
+        }
+    }
+
+    override suspend fun getNewChatCode() = withContext(ioDispatcher) {
+        database.reference.child("chat").push().key
+    }
+
+
+    override suspend fun writeChatCode(email: String, code: String) = withContext(ioDispatcher) {
+        return@withContext try {
+            val userEmail = auth.currentUser?.email ?: return@withContext false
+            val reference = firestore.collection("Chat")
+            reference.document(userEmail).set(mapOf(email to code), SetOptions.merge()).await()
+            reference.document(email).set(mapOf(userEmail to code), SetOptions.merge()).await()
             true
         } catch (e: Exception) {
             false
+        }
+    }
+
+    override suspend fun getChatData(code: String) = withContext(ioDispatcher) {
+        try {
+            val reference = database.getReference("chat").child(code).get().await()
+            reference.children.mapNotNull { it.toExternal() }
+        }catch (e: Exception){
+            emptyList()
+        }
+    }
+
+    override fun collectChatData(code: String) = callbackFlow {
+        val reference = database.getReference("chat").child(code)
+
+        val listener = object : ChildEventListener {
+            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                val newChat = snapshot.toExternal()
+                trySend(newChat).isSuccess
+            }
+
+            override fun onChildRemoved(snapshot: DataSnapshot) {}
+            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {}
+            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
+            override fun onCancelled(error: DatabaseError) {
+                close(error.toException())
+            }
+        }
+
+        reference.addChildEventListener(listener)
+        awaitClose { reference.removeEventListener(listener) }
+    }.distinctUntilChanged()
+
+    override suspend fun sendChatMessage(message: String, code: String) = withContext(ioDispatcher){
+        val userInfo = localDataSource.getUserInfoData() ?: return@withContext
+        try {
+            val time = getLocalTimeToString()
+            val docRef = database.reference.child("chat").child(code)
+            val chatData = ChatMessageData(
+                email = userInfo.email,
+                nickname = userInfo.nickname,
+                time = time,
+                message = message
+            )
+            val updateMap = mapOf("/$time" to chatData)
+            docRef.updateChildren(updateMap).await()
+        } catch (e: Exception) {
+            return@withContext
         }
     }
 }

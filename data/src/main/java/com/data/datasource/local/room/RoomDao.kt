@@ -4,8 +4,10 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.TypeConverters
 import androidx.room.Update
 import androidx.room.Upsert
+import com.data.datasource.local.room.converter.ChatDataConverter
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -66,4 +68,20 @@ interface FriendDao {
 
     @Query("DELETE FROM LocalFriendData")
     suspend fun deleteFriendAllData()
+}
+
+@Dao
+@TypeConverters(ChatDataConverter::class)
+interface ChatDao {
+    @Upsert
+    suspend fun upsertChatData(entity: LocalChatData)
+
+    @Query("SELECT * FROM LocalChatData WHERE chatCode= :code")
+    suspend fun getChatData(code: String): LocalChatData?
+
+    @Query("SELECT * FROM LocalChatData WHERE chatCode= :code")
+    fun getChatDataFlow(code: String): Flow<LocalChatData?>
+
+    @Query("DELETE FROM LocalChatData")
+    suspend fun deleteChatAllData()
 }

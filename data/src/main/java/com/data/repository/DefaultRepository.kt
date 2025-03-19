@@ -4,16 +4,21 @@ import android.content.Context
 import com.core.di.IoDispatcher
 import com.core.di.LocalDataSources
 import com.data.datasource.LocalDataSource
+import com.data.datasource.local.room.LocalChatData
 import com.data.mapper.toExternal
 import com.data.mapper.toLocal
+import com.data.mapper.toLocalList
 import com.domain.model.AddressItemData
 import com.domain.model.AddressSaveResult
+import com.domain.model.ChatData
+import com.domain.model.ChatMessageData
 import com.domain.model.FriendItemData
 import com.domain.model.UserInfo
 import com.domain.repository.Repository
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapNotNull
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -82,5 +87,32 @@ class DefaultRepository @Inject constructor(
 
     override suspend fun deleteFriendData(email: String) = withContext(ioDispatcher) {
         localDataSource.deleteFriendData(email)
+    }
+
+    override suspend fun initChatData(data: ChatData) = withContext(ioDispatcher) {
+        localDataSource.upsertChatData(data.toLocal())
+    }
+
+    override suspend fun updateChatData(data: ChatMessageData, code: String) = withContext(ioDispatcher) {
+        val chatData = localDataSource.getChatData(code)
+        val newData = if (chatData != null) {
+            val chatList = chatData.chatList.toMutableList()
+            val newChat = data.toLocalList()
+            val newChatList = (chatList + newChat).distinctBy { it.time }
+            LocalChatData(chatCode = code, chatList = newChatList)
+        } else {
+            LocalChatData(chatCode = code, chatList = listOf(data.toLocalList()))
+        }
+        localDataSource.upsertChatData(newData)
+    }
+
+    override fun getChatList(code: String) = localDataSource.getChatDataFlow(code).mapNotNull { it?.toExternal() }
+
+    override suspend fun getChat(code: String) = withContext(ioDispatcher){
+        localDataSource.getChatData(code)?.toExternal()
+    }
+
+    override suspend fun deleteChat() = withContext(ioDispatcher){
+        localDataSource.deleteChatData()
     }
 }

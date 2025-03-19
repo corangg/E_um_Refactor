@@ -2,18 +2,12 @@ package com.app.ui.fragment
 
 import android.content.Intent
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.widget.AppCompatButton
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.viewbinding.ViewBindings
 import com.app.R
 import com.app.databinding.FragmentFriendsBinding
+import com.app.ui.activity.ChatActivity
 import com.app.ui.activity.friend.AddFriendActivity
 import com.app.ui.activity.friend.RequestFriendAlarmActivity
 import com.app.ui.adapter.FriendListAdapter
@@ -86,6 +80,10 @@ class FriendsFragment : BaseFragment<FragmentFriendsBinding>(FragmentFriendsBind
         customDialog.setImage(R.id.img_friend_detail_Profile,data.profileUrl)
 
         customDialog.setButtonClickListener(R.id.btn_1) {
+            val intent = Intent(requireContext(), ChatActivity::class.java)
+            intent.putExtra(getString(R.string.friend_detail_chat_extra_email_key), data.email)
+            intent.putExtra(getString(R.string.friend_detail_chat_extra_nickname_key), data.nickName)
+            startActivity(intent)
             customDialog.dismissDialog()
         }
         customDialog.setButtonClickListener(R.id.btn_2) {

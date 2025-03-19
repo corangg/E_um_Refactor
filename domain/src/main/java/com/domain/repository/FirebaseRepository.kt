@@ -1,6 +1,7 @@
 package com.domain.repository
 
 import com.domain.model.AlarmData
+import com.domain.model.ChatMessageData
 import com.domain.model.SignInResult
 import com.domain.model.SignUpResult
 import com.domain.model.UserInfo
@@ -38,4 +39,17 @@ interface FirebaseRepository {
     fun getAlarmListFlow(): Flow<List<AlarmData>>
 
     suspend fun deleteAlarmMessage(time: String): Boolean
+
+
+    suspend fun getChatCode(email: String): String?
+
+    suspend fun getNewChatCode(): String?
+
+    suspend fun writeChatCode(email: String, code: String): Boolean
+
+    suspend fun getChatData(code: String):List<ChatMessageData>
+
+    fun collectChatData(code: String): Flow<ChatMessageData>
+
+    suspend fun sendChatMessage(message: String, code: String)
 }

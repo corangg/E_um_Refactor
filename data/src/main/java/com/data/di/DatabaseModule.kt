@@ -5,6 +5,7 @@ import androidx.room.Room
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import com.data.datasource.local.room.AddressDao
+import com.data.datasource.local.room.ChatDao
 import com.data.datasource.local.room.Database
 import com.data.datasource.local.room.FriendDao
 import com.data.datasource.local.room.UserInfoDao
@@ -34,6 +35,14 @@ object DatabaseModule {
         }
     }
 
+    private val MIGRATION_3_4 = object : Migration(3, 4) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL(
+                "CREATE TABLE LocalChatData (chatCode TEXT PRIMARY KEY NOT NULL, chatList TEXT NOT NULL)"
+            )
+        }
+    }
+
     @Provides
     @Singleton
     fun provideDatabase(@ApplicationContext context: Context) =
@@ -42,7 +51,7 @@ object DatabaseModule {
             Database::class.java,
             "Database.db"
         )
-            .addMigrations(MIGRATION_1_2, MIGRATION_2_3)
+            .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4)
             .build()
 
     @Provides
@@ -53,4 +62,7 @@ object DatabaseModule {
 
     @Provides
     fun provideFriendDao(database: Database): FriendDao = database.friendDao()
+
+    @Provides
+    fun provideChatDa0(database: Database): ChatDao = database.chatDao()
 }

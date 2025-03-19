@@ -2,6 +2,8 @@ package com.data.datasource.local.room
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
+import com.data.datasource.local.room.converter.ChatDataConverter
 
 @Entity
 data class LocalUserInfoData(
@@ -32,4 +34,19 @@ data class LocalFriendData(
     val nickname: String,
     val statusMessage: String,
     val imgUrl: String
+)
+
+@Entity
+@TypeConverters(ChatDataConverter::class)
+data class LocalChatData(
+    @PrimaryKey val chatCode: String,
+    val chatList: List<LocalChatMessageData>
+)
+
+data class LocalChatMessageData(
+    val email: String,
+    val nickname: String,
+    val message: String,
+    val time: String,
+    val isRead: Boolean = false
 )

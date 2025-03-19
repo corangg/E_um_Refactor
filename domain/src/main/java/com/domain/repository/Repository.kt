@@ -1,6 +1,8 @@
 package com.domain.repository
 
 import com.domain.model.AddressItemData
+import com.domain.model.ChatData
+import com.domain.model.ChatMessageData
 import com.domain.model.FriendItemData
 import com.domain.model.UserInfo
 import kotlinx.coroutines.flow.Flow
@@ -35,4 +37,14 @@ interface Repository {
     suspend fun deleteAllFriendData()
 
     suspend fun deleteFriendData(email: String)
+
+    suspend fun initChatData(data: ChatData)
+
+    suspend fun updateChatData(data: ChatMessageData, code: String)
+
+    fun getChatList(code: String): Flow<ChatData?>
+
+    suspend fun getChat(code: String): ChatData?
+
+    suspend fun deleteChat()
 }

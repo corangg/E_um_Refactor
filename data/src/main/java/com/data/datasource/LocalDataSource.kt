@@ -1,6 +1,7 @@
 package com.data.datasource
 
 import com.data.datasource.local.room.LocalAddressItemData
+import com.data.datasource.local.room.LocalChatData
 import com.data.datasource.local.room.LocalFriendData
 import com.data.datasource.local.room.LocalUserInfoData
 import kotlinx.coroutines.flow.Flow
@@ -25,4 +26,9 @@ interface LocalDataSource {
     fun getFriendDataListFlow(): Flow<List<LocalFriendData>>
     suspend fun deleteFriendData(email: String)
     suspend fun deleteAllFriendData()
+
+    suspend fun upsertChatData(entity: LocalChatData)
+    suspend fun getChatData(code: String): LocalChatData?
+    fun getChatDataFlow(code: String): Flow<LocalChatData?>
+    suspend fun deleteChatData()
 }

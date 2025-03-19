@@ -27,6 +27,22 @@ data class FriendItemData(
     val email: String
 )
 
+data class ChatMessageData(
+    val email: String,
+    val nickname: String,
+    val message: String,
+    val time: String,
+    val isRead: Boolean = false,
+    val imgUrl: String = "",
+    val myMessage: Boolean = true,
+    val messageType: Int = 1
+)
+
+data class ChatData(
+    val chatCode: String,
+    val chatList: List<ChatMessageData>
+)
+
 sealed class AlarmData(open val time: String) {
     data class RequestFriendAlarmData(
         val email: String,
