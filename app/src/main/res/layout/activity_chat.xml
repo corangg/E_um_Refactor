@@ -39,6 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_toolbar_title_start"
+            android:text="@={viewModel.chatRoomName}"
             android:textColor="@color/theme_color"
             android:textSize="@dimen/text_toolbar_size"
             android:textStyle="bold"
@@ -56,13 +57,13 @@
             app:layout_constraintTop_toTopOf="@id/guideline_toolbar" />
 
         <ScrollView
+            android:id="@+id/scroll_chat"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:id="@+id/scroll_chat"
             android:layout_marginTop="1dp"
-            app:layout_constraintStart_toStartOf="parent"
             android:layout_marginBottom="6dp"
             app:layout_constraintBottom_toTopOf="@id/view_chat"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/guideline_toolbar">
 
             <androidx.recyclerview.widget.RecyclerView
@@ -76,9 +77,9 @@
             android:id="@+id/view_chat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingVertical="4dp"
             android:background="@color/theme_color"
             android:orientation="horizontal"
+            android:paddingVertical="4dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
@@ -86,27 +87,27 @@
                 android:id="@+id/edit_chat"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:minHeight="40dp"
-                android:maxHeight="150dp"
+                android:layout_gravity="center"
                 android:layout_weight="8"
                 android:autofillHints=""
                 android:background="@drawable/bg_edit_chat"
                 android:hint="@string/chat_fragment_edit_hint"
                 android:inputType="textMultiLine"
+                android:maxHeight="150dp"
                 android:maxLines="5"
-                android:scrollbars="vertical"
-                android:layout_gravity="center"
+                android:minHeight="40dp"
                 android:paddingHorizontal="@dimen/padding_chat_edit_horizontal"
                 android:paddingVertical="@dimen/padding_chat_edit_vertical"
+                android:scrollbars="vertical"
                 android:text="@={viewModel.chatText}" />
 
             <ImageView
+                android:id="@+id/btn_send"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/img_chat_send"
                 android:layout_gravity="bottom"
                 android:layout_margin="@dimen/margin_chat_btn"
                 android:layout_weight="1"
-                android:id="@+id/btn_send"
                 android:background="@drawable/bg_btn_white"
                 android:contentDescription="@null"
                 android:padding="@dimen/padding_chat_btn"

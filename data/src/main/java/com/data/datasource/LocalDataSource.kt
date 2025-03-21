@@ -28,6 +28,7 @@ interface LocalDataSource {
     suspend fun deleteAllFriendData()
 
     suspend fun upsertChatData(entity: LocalChatData)
+    fun getAllChatData(): Flow<List<LocalChatData>>
     suspend fun getChatData(code: String): LocalChatData?
     fun getChatDataFlow(code: String): Flow<LocalChatData?>
     suspend fun deleteChatData()

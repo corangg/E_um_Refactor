@@ -9,6 +9,7 @@ import com.data.datasource.local.room.LocalChatData
 import com.data.datasource.local.room.LocalFriendData
 import com.data.datasource.local.room.LocalUserInfoData
 import com.data.datasource.local.room.UserInfoDao
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class DefaultLocalDataSource @Inject constructor(
@@ -38,6 +39,7 @@ class DefaultLocalDataSource @Inject constructor(
     override suspend fun deleteAllFriendData() = friendDao.deleteFriendAllData()
 
     override suspend fun upsertChatData(entity: LocalChatData) = chatData.upsertChatData(entity)
+    override fun getAllChatData(): Flow<List<LocalChatData>> = chatData.getAllChatData()
     override suspend fun getChatData(code: String) = chatData.getChatData(code)
     override fun getChatDataFlow(code: String) = chatData.getChatDataFlow(code)
     override suspend fun deleteChatData() = chatData.deleteChatAllData()

@@ -52,4 +52,6 @@ interface FirebaseRepository {
     fun collectChatData(code: String): Flow<ChatMessageData>
 
     suspend fun sendChatMessage(message: String, code: String)
+
+    suspend fun getChatMemberEmail(code: String): String?
 }

@@ -6,8 +6,9 @@ import com.core.di.DefaultDispatcher
 import com.core.di.IoDispatcher
 import com.core.di.MainDispatcher
 import com.core.viewmodel.BaseViewModel
-import com.domain.usecase.GetFriendListUseCase
 import com.domain.usecase.GetAlarmListFlow
+import com.domain.usecase.GetChatCodeUseCase
+import com.domain.usecase.GetFriendListUseCase
 import com.domain.usecase.GetUserInfoDataFlowUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -20,6 +21,7 @@ class FriendsFragmentViewModel @Inject constructor(
     getFriendListUseCase: GetFriendListUseCase,
     getAlarmListFlow: GetAlarmListFlow,
     getUserInfoDataFlowUseCase: GetUserInfoDataFlowUseCase,
+    private val getChatCodeUseCase: GetChatCodeUseCase,
     @MainDispatcher mainDispatcher: MainCoroutineDispatcher,
     @DefaultDispatcher defaultDispatcher: CoroutineDispatcher,
     @IoDispatcher ioDispatcher: CoroutineDispatcher
@@ -29,4 +31,9 @@ class FriendsFragmentViewModel @Inject constructor(
     val userStatusMessageLiveData = getUserInfoDataFlowUseCase().map { it.statusMessage }.asLiveData(viewModelScope.coroutineContext)
     val userProfileUrlLiveData = getUserInfoDataFlowUseCase().map { it.imgUrl }.asLiveData(viewModelScope.coroutineContext)
     val alarmListLiveData = getAlarmListFlow().map { it.size }.asLiveData(viewModelScope.coroutineContext)
+
+    fun getChatCode(email: String, startActivity: (String) -> Unit) = onUiWork {
+        val code = getChatCodeUseCase(email) ?: return@onUiWork
+        startActivity(code)
+    }
 }

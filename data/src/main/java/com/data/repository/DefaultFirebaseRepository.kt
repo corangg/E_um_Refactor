@@ -16,6 +16,7 @@ import com.domain.model.SignInResult
 import com.domain.model.SignUpResult
 import com.domain.model.UserInfo
 import com.domain.repository.FirebaseRepository
+import com.google.android.play.integrity.internal.n
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
@@ -375,6 +376,19 @@ class DefaultFirebaseRepository @Inject constructor(
             docRef.updateChildren(updateMap).await()
         } catch (e: Exception) {
             return@withContext
+        }
+    }
+
+    override suspend fun getChatMemberEmail(code: String) = withContext(ioDispatcher) {
+        val userInfo = localDataSource.getUserInfoData() ?: return@withContext null
+        return@withContext try {
+            val document = firestore.collection("Chat").document(userInfo.email).get().await()
+            val dataList = document.data?.map { entry ->
+                entry.key to entry.value.toString()
+            } ?: emptyList()
+            dataList.first { it.second == code }.first
+        } catch (e: Exception) {
+            null
         }
     }
 }

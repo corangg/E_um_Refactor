@@ -262,6 +262,9 @@
 
     <dimen name="value_chat_item_max_with">300dp</dimen>
     <dimen name="value_chat_item_max_with_profile">252dp</dimen>
+
+    <dimen name="margin_chat_recycler_top">2dp</dimen>
+
     <!--
     <dimen name="margin_">0dp</dimen>
 

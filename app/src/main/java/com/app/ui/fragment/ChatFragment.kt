@@ -1,60 +1,35 @@
 package com.app.ui.fragment
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import com.app.R
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.LifecycleOwner
+import com.app.databinding.FragmentChatBinding
+import com.core.ui.BaseFragment
+import com.domain.model.ChatMessageData
+import com.domain.model.ChatRoomItemData
+import com.presentation.ChatFragmentViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+@AndroidEntryPoint
+class ChatFragment : BaseFragment<FragmentChatBinding>(FragmentChatBinding::inflate) {
+    val viewModel : ChatFragmentViewModel by viewModels()
 
-/**
- * A simple [Fragment] subclass.
- * Use the [ChatFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class ChatFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    override fun setUi() {
+        binding.viewModel = viewModel
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_chat, container, false)
+    override fun setUpDate() {
+
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ChatFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ChatFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    override fun setObserve(lifecycleOwner: LifecycleOwner) {
+        viewModel.chatRoomList.observe(lifecycleOwner, ::test)
+
     }
+
+    private fun test(list: List<ChatRoomItemData>){
+        list
+        true
+    }
+
 }

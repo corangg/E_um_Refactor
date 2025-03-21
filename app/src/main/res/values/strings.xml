@@ -2,6 +2,7 @@
     <string name="app_name">app</string>
 
     <string name="description_title">앱 타이틀</string>
+    <string name="error_toast">오류가 발생 했습니다.</string>
 
     <!--Log In Activity-->
     <string name="id_hint">이메일</string>
@@ -141,6 +142,7 @@
     <string name="friend_detail_chat">채팅</string>
     <string name="friend_detail_schedule">일정</string>
     <string name="friend_detail_delete">삭제</string>
+    <string name="friend_detail_chat_extra_code_key">code</string>
     <string name="friend_detail_chat_extra_email_key">email</string>
     <string name="friend_detail_chat_extra_nickname_key">nickname</string>
 

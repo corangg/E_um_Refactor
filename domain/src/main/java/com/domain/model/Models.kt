@@ -43,6 +43,14 @@ data class ChatData(
     val chatList: List<ChatMessageData>
 )
 
+data class ChatRoomItemData(
+    val chatCode: String,
+    val name: String,
+    val lastMessage: String,
+    val notReadCount: Int = 0,
+    val imgUrl: String
+)
+
 sealed class AlarmData(open val time: String) {
     data class RequestFriendAlarmData(
         val email: String,

@@ -80,10 +80,11 @@ class FriendsFragment : BaseFragment<FragmentFriendsBinding>(FragmentFriendsBind
         customDialog.setImage(R.id.img_friend_detail_Profile,data.profileUrl)
 
         customDialog.setButtonClickListener(R.id.btn_1) {
-            val intent = Intent(requireContext(), ChatActivity::class.java)
-            intent.putExtra(getString(R.string.friend_detail_chat_extra_email_key), data.email)
-            intent.putExtra(getString(R.string.friend_detail_chat_extra_nickname_key), data.nickName)
-            startActivity(intent)
+            viewModel.getChatCode(data.email) { code ->
+                val intent = Intent(requireContext(), ChatActivity::class.java)
+                intent.putExtra(getString(R.string.friend_detail_chat_extra_code_key), code)
+                startActivity(intent)
+            }
             customDialog.dismissDialog()
         }
         customDialog.setButtonClickListener(R.id.btn_2) {

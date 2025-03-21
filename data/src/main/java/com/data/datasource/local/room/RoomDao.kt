@@ -76,6 +76,9 @@ interface ChatDao {
     @Upsert
     suspend fun upsertChatData(entity: LocalChatData)
 
+    @Query("SELECT * FROM LocalChatData")
+    fun getAllChatData(): Flow<List<LocalChatData>>
+
     @Query("SELECT * FROM LocalChatData WHERE chatCode= :code")
     suspend fun getChatData(code: String): LocalChatData?
 

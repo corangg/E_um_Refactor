@@ -46,5 +46,7 @@ interface Repository {
 
     suspend fun getChat(code: String): ChatData?
 
+    fun getAllChatData(): Flow<List<ChatData>>
+
     suspend fun deleteChat()
 }

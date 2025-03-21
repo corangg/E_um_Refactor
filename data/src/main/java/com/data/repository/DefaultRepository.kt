@@ -112,6 +112,8 @@ class DefaultRepository @Inject constructor(
         localDataSource.getChatData(code)?.toExternal()
     }
 
+    override fun getAllChatData() = localDataSource.getAllChatData().mapNotNull { data -> data.map { it.toExternal() } }
+
     override suspend fun deleteChat() = withContext(ioDispatcher){
         localDataSource.deleteChatData()
     }
