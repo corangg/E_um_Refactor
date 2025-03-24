@@ -46,4 +46,8 @@ class ChatActivityViewModel @Inject constructor(
         sendChatUseCase(code, chatMessage)
         chatText.value = ""
     }
+
+    fun viewChat(code: String) = onUiWork {
+
+    }
 }

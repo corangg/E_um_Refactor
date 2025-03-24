@@ -16,6 +16,7 @@
     <dimen name="padding_toast_text_vertical">12dp</dimen>
     <dimen name="padding_toast_text_horizontal">20dp</dimen>
     <dimen name="bg_toast_corner_radius">24dp</dimen>
+    <dimen name="bg_num_alarm_corner_radius">64dp</dimen>
 
     <!--Default-->
     <dimen name="layout_default_guideline_height">2dp</dimen>
@@ -264,6 +265,21 @@
     <dimen name="value_chat_item_max_with_profile">252dp</dimen>
 
     <dimen name="margin_chat_recycler_top">2dp</dimen>
+
+    <!--Chat Fragment-->
+    <dimen name="img_chat_room_item_profile">64dp</dimen>
+
+    <dimen name="text_chat_room_item_nickname">18sp</dimen>
+    <dimen name="text_chat_room_item_status_message">12sp</dimen>
+
+    <dimen name="value_chat_room_item_profile_radius">28dp</dimen>
+
+
+
+    <dimen name="img_chat_room_item_size">32dp</dimen>
+    <dimen name="img_chat_room_my_profile">64dp</dimen>
+
+    <dimen name="img_chat_room_item_">64dp</dimen>
 
     <!--
     <dimen name="margin_">0dp</dimen>

@@ -16,7 +16,6 @@ import com.domain.model.SignInResult
 import com.domain.model.SignUpResult
 import com.domain.model.UserInfo
 import com.domain.repository.FirebaseRepository
-import com.google.android.play.integrity.internal.n
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
@@ -27,6 +26,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.storage.FirebaseStorage
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -350,7 +350,10 @@ class DefaultFirebaseRepository @Inject constructor(
             }
 
             override fun onChildRemoved(snapshot: DataSnapshot) {}
-            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {}
+            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+                val changedChat = snapshot.toExternal()
+                trySend(changedChat).isSuccess
+            }
             override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
             override fun onCancelled(error: DatabaseError) {
                 close(error.toException())
@@ -389,6 +392,28 @@ class DefaultFirebaseRepository @Inject constructor(
             dataList.first { it.second == code }.first
         } catch (e: Exception) {
             null
+        }
+    }
+
+    override fun collectChatRoomData(email: String) = callbackFlow {
+        val docRef = firestore.collection("Chat").document(email)
+
+        val listenerRegistration: ListenerRegistration =
+            docRef.addSnapshotListener { snapshots, e ->
+                if (e != null) {
+                    close(e)
+                    return@addSnapshotListener
+                }
+
+                if (snapshots != null && snapshots.exists()) {
+                    snapshots.data?.forEach { (key, value) ->
+                        trySend(key to value.toString())
+                    }
+                }
+            }
+
+        awaitClose {
+            listenerRegistration.remove()
         }
     }
 }

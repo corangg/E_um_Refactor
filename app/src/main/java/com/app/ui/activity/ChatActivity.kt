@@ -17,8 +17,6 @@ class ChatActivity : BaseActivity<ActivityChatBinding>(ActivityChatBinding::infl
     private val viewModel: ChatActivityViewModel by viewModels()
     private val adapter by lazy { ChatAdapter() }
 
-    private val chatCode = intent.getStringExtra(getString(R.string.friend_detail_chat_extra_code_key))
-
     override fun setUi() {
         bindingRecyclerView()
         binding.viewModel = viewModel
@@ -45,14 +43,14 @@ class ChatActivity : BaseActivity<ActivityChatBinding>(ActivityChatBinding::infl
     }
 
     private fun setChat(){
-        chatCode?.let {
+        intent.getStringExtra(getString(R.string.friend_detail_chat_extra_code_key))?.let {
             viewModel.setChatRoom(it)
             viewModel.updateChatList(it)
         }
     }
 
     private fun sendChat(){
-        chatCode?.let {
+        intent.getStringExtra(getString(R.string.friend_detail_chat_extra_code_key))?.let {
             binding.editChat.requestFocus()
             binding.scrollChat.fullScroll(View.FOCUS_DOWN)
             viewModel.sendChat(it)

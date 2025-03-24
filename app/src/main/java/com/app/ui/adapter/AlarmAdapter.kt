@@ -13,8 +13,7 @@ import com.data.config.REQUEST_CODE
 import com.data.config.RESPONSE_CODE
 import com.domain.model.AlarmData
 
-class AlarmAdapter :
-    BaseRecyclerView<AlarmData, BaseViewHolder<AlarmData>>(object :
+class AlarmAdapter : BaseRecyclerView<AlarmData, BaseViewHolder<AlarmData>>(object :
         DiffUtil.ItemCallback<AlarmData>() {
         override fun areItemsTheSame(
             oldItem: AlarmData,

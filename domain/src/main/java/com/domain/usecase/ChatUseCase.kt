@@ -40,8 +40,10 @@ class StartChatUseCase @Inject constructor(
     private val repository: Repository
 ) {
     suspend operator fun invoke(code: String) {
+        val userInfo = repository.getUserInfo() ?: return
         firebaseRepository.collectChatData(code).collect {
-            repository.updateChatData(it, code)
+            val data = it.copy(myMessage = userInfo.email == it.email)
+            repository.updateChatData(data, code)
         }
     }
 }
@@ -102,7 +104,7 @@ class GetChatListUseCase @Inject constructor(
             chatDataList.map { chatData ->
                 val opponentEmail = firebaseRepository.getChatMemberEmail(chatData.chatCode) ?: return@mapNotNull null
                 val opponentInfo = firebaseRepository.getEmailInfo(opponentEmail) ?: return@mapNotNull null
-                val notReadCount = chatData.chatList.count { !it.isRead }
+                val notReadCount =  countNotRead(chatData.chatList)
                 ChatRoomItemData(
                     chatCode = chatData.chatCode,
                     name = opponentInfo.nickname,
@@ -114,6 +116,23 @@ class GetChatListUseCase @Inject constructor(
         }
         chatRoomData.collect{
             emit(it)
+        }
+    }
+
+    private fun countNotRead(list: List<ChatMessageData>):Int{
+        return list.count { !it.isRead && !it.myMessage }
+    }
+}
+
+class CollectChatRoomDataUseCase @Inject constructor(
+    private val firebaseRepository: FirebaseRepository,
+    private val repository: Repository,
+    private val startChatUseCase: StartChatUseCase
+) {
+    suspend operator fun invoke() {
+        val userInfo = repository.getUserInfo()?: return
+        firebaseRepository.collectChatRoomData(userInfo.email).collect {
+            startChatUseCase(it.second)
         }
     }
 }
