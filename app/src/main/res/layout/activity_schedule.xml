@@ -1,0 +1,501 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.presentation.ScheduleActivityViewModel" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.activity.ScheduleActivity">
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_toolbar"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.08" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_vertical_1"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.04" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_vertical_2"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.32" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_vertical_3"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.36" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_vertical_4"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.64" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_vertical_5"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.68" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_vertical_6"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.96" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_back_activity"
+            android:layout_width="@dimen/img_toolbar_back_button_size"
+            android:layout_height="@dimen/img_toolbar_back_button_size"
+            android:layout_marginStart="@dimen/margin_toolbar_back_btn"
+            android:background="@drawable/ic_back"
+            android:backgroundTint="@color/theme_color"
+            app:layout_constraintBottom_toTopOf="@id/guideline_toolbar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_toolbar_title_start"
+            android:text="@string/schedule_activity_title"
+            android:textColor="@color/theme_color"
+            android:textSize="@dimen/text_toolbar_size"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/guideline_toolbar"
+            app:layout_constraintStart_toEndOf="@id/btn_back_activity"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <View
+            android:id="@+id/view_guideline"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/layout_default_guideline_height"
+            android:background="@color/theme_color"
+            app:layout_constraintEnd_toEndOf="@id/guideline_toolbar"
+            app:layout_constraintStart_toStartOf="@id/guideline_toolbar"
+            app:layout_constraintTop_toTopOf="@id/guideline_toolbar" />
+
+        <ImageView
+            android:id="@+id/img_calendar"
+            android:layout_width="@dimen/img_schedule_ic"
+            android:layout_height="@dimen/img_schedule_ic"
+            android:layout_marginStart="@dimen/margin_schedule_default_horizontal"
+            android:layout_marginTop="@dimen/margin_schedule_top"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_calendar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/guideline_toolbar"
+            app:tint="@color/theme_color" />
+
+        <TextView
+            android:id="@+id/text_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_schedule_start_date"
+            android:text="@={viewModel.dateText}"
+            android:textSize="@dimen/text_schedule_default"
+            app:layout_constraintBottom_toBottomOf="@id/img_calendar"
+            app:layout_constraintStart_toEndOf="@id/img_calendar"
+            app:layout_constraintTop_toTopOf="@id/img_calendar"
+            tools:text="2025-03-24" />
+
+        <ImageView
+            android:id="@+id/img_time"
+            android:layout_width="@dimen/img_schedule_clock"
+            android:layout_height="@dimen/img_schedule_clock"
+            android:layout_marginStart="@dimen/margin_schedule_start_clock"
+            android:layout_marginTop="@dimen/margin_schedule_top_clock"
+            android:contentDescription="@null"
+            android:padding="@dimen/padding_schedule_img_clock"
+            android:src="@drawable/ic_time"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/img_calendar"
+            app:tint="@color/theme_color" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_am"
+            android:layout_width="@dimen/value_schedule_am_pm_btn"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/margin_schedule_am_pm_start"
+            android:layout_marginBottom="@dimen/margin_schedule_am_pm_vertical"
+            android:background="@drawable/bg_btn_toggle_on"
+            android:onClick="@{()->viewModel.onAmPmButton(true)}"
+            android:text="@string/schedule_activity_am"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            app:layout_constraintBottom_toTopOf="@id/btn_pm"
+            app:layout_constraintStart_toEndOf="@id/img_time"
+            app:layout_constraintTop_toTopOf="@id/img_time" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_pm"
+            android:layout_width="@dimen/value_schedule_am_pm_btn"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/margin_schedule_am_pm_start"
+            android:layout_marginTop="@dimen/margin_schedule_am_pm_vertical"
+            android:background="@drawable/bg_btn_toggle_off"
+            android:onClick="@{()->viewModel.onAmPmButton(false)}"
+            android:text="@string/schedule_activity_pm"
+            android:textAllCaps="false"
+            android:textColor="@color/theme_color"
+            app:layout_constraintBottom_toBottomOf="@id/img_time"
+            app:layout_constraintStart_toEndOf="@id/img_time"
+            app:layout_constraintTop_toBottomOf="@id/btn_am" />
+
+        <EditText
+            android:id="@+id/edit_hour"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_schedule_hour_start"
+            android:autofillHints=""
+            android:hint="@string/schedule_activity_time_hint"
+            android:inputType="number"
+            android:text="@={viewModel.textScheduleHour}"
+            android:textSize="@dimen/text_schedule_default"
+            app:layout_constraintBottom_toBottomOf="@id/img_time"
+            app:layout_constraintStart_toEndOf="@id/btn_am"
+            app:layout_constraintTop_toTopOf="@id/img_time" />
+
+        <TextView
+            android:id="@+id/text_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_schedule_time_start"
+            android:gravity="center"
+            android:text="@string/schedule_activity_time"
+            android:textSize="@dimen/text_schedule_default"
+            app:layout_constraintBottom_toBottomOf="@id/img_time"
+            app:layout_constraintStart_toEndOf="@id/edit_hour"
+            app:layout_constraintTop_toTopOf="@id/img_time" />
+
+        <EditText
+            android:id="@+id/edit_minute"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_schedule_time_start"
+            android:autofillHints=""
+            android:hint="@string/schedule_activity_time_hint"
+            android:inputType="number"
+            android:text="@={viewModel.textScheduleMinute}"
+            android:textSize="@dimen/text_schedule_default"
+            app:layout_constraintBottom_toBottomOf="@id/img_time"
+            app:layout_constraintStart_toEndOf="@id/text_time"
+            app:layout_constraintTop_toTopOf="@id/img_time" />
+
+        <ImageView
+            android:id="@+id/img_start_location"
+            android:layout_width="@dimen/img_schedule_ic"
+            android:layout_height="@dimen/img_schedule_ic"
+            android:layout_marginStart="@dimen/margin_schedule_default_horizontal"
+            android:layout_marginTop="@dimen/margin_schedule_location_top"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_location"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/img_time"
+            app:tint="@color/theme_color" />
+
+        <EditText
+            android:id="@+id/text_start_location"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_schedule_location_start"
+            android:layout_marginEnd="@dimen/margin_schedule_default_horizontal"
+            android:autofillHints=""
+            android:hint="@string/schedule_activity_start_location_hint"
+            android:inputType="number"
+            android:focusable="false"
+            android:paddingStart="@dimen/padding_schedule_edit_horizontal"
+            android:paddingEnd="@dimen/padding_schedule_edit_horizontal"
+            android:text="@={viewModel.textStartLocation}"
+            android:onClick="@{()->viewModel.onSetStartLocation()}"
+            android:textSize="@dimen/text_schedule_location"
+            app:layout_constraintBottom_toBottomOf="@id/img_start_location"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/img_start_location"
+            app:layout_constraintTop_toTopOf="@id/img_start_location" />
+
+        <ImageView
+            android:id="@+id/img_schedule_location"
+            android:layout_width="@dimen/img_schedule_ic"
+            android:layout_height="@dimen/img_schedule_ic"
+            android:layout_marginStart="@dimen/margin_schedule_default_horizontal"
+            android:layout_marginTop="@dimen/margin_schedule_location_top"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_location"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/img_start_location"
+            app:tint="@color/theme_color" />
+
+        <EditText
+            android:id="@+id/text_schedule_location"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_schedule_location_start"
+            android:layout_marginEnd="@dimen/margin_schedule_default_horizontal"
+            android:autofillHints=""
+            android:hint="@string/schedule_activity_schedule_location_hint"
+            android:inputType="number"
+            android:onClick="@{()->viewModel.onSetScheduleLocation()}"
+            android:paddingStart="@dimen/padding_schedule_edit_horizontal"
+            android:paddingEnd="@dimen/padding_schedule_edit_horizontal"
+            android:text="@={viewModel.textScheduleLocation}"
+            android:textSize="@dimen/text_schedule_location"
+            android:focusable="false"
+            app:layout_constraintBottom_toBottomOf="@id/img_schedule_location"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/img_schedule_location"
+            app:layout_constraintTop_toTopOf="@id/img_schedule_location" />
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/btn_bus"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:onClick="@{()->viewModel.onCheckTransport(1)}"
+            android:layout_marginTop="@dimen/margin_schedule_img_btn_top"
+            android:background="@drawable/bg_btn_round_schedule_transport"
+            android:textColor="@color/theme_color"
+            app:layout_constraintEnd_toStartOf="@id/guideline_vertical_2"
+            app:layout_constraintStart_toEndOf="@id/guideline_vertical_1"
+            app:layout_constraintTop_toBottomOf="@id/img_schedule_location">
+
+            <ImageView
+                android:id="@+id/img_bus"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/img_schedule_transport"
+                android:layout_marginTop="@dimen/margin_schedule_transport_img_top"
+                android:contentDescription="@null"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_bus"
+                app:layout_constraintBottom_toTopOf="@id/text_bus"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/btn_gray" />
+
+            <TextView
+                android:id="@+id/text_bus"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/margin_schedule_transport_text_vertical"
+                android:gravity="center"
+                android:textColor="@color/btn_gray"
+                android:textSize="@dimen/text_schedule_transport"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/img_bus"
+                tools:text="12시간 24분" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/btn_car"
+            android:layout_width="0dp"
+            android:onClick="@{()->viewModel.onCheckTransport(2)}"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_schedule_img_btn_top"
+            android:background="@drawable/bg_btn_round_schedule_transport"
+            android:textColor="@color/theme_color"
+            app:layout_constraintEnd_toStartOf="@id/guideline_vertical_4"
+            app:layout_constraintStart_toEndOf="@id/guideline_vertical_3"
+            app:layout_constraintTop_toBottomOf="@id/img_schedule_location">
+
+            <ImageView
+                android:id="@+id/img_car"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/img_schedule_transport"
+                android:layout_marginTop="@dimen/margin_schedule_transport_img_top"
+                android:contentDescription="@null"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_car"
+                app:layout_constraintBottom_toTopOf="@id/text_car"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/btn_gray" />
+
+            <TextView
+                android:id="@+id/text_car"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/margin_schedule_transport_text_vertical"
+                android:gravity="center"
+                android:textColor="@color/btn_gray"
+                android:textSize="@dimen/text_schedule_transport"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/img_car"
+                tools:text="12시간 24분" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/btn_walk"
+            android:layout_width="0dp"
+            android:onClick="@{()->viewModel.onCheckTransport(3)}"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_schedule_img_btn_top"
+            android:background="@drawable/bg_btn_round_schedule_transport"
+            android:textColor="@color/theme_color"
+            app:layout_constraintEnd_toStartOf="@id/guideline_vertical_6"
+            app:layout_constraintStart_toEndOf="@id/guideline_vertical_5"
+            app:layout_constraintTop_toBottomOf="@id/img_schedule_location">
+
+            <ImageView
+                android:id="@+id/img_walk"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/img_schedule_transport"
+                android:layout_marginTop="@dimen/margin_schedule_transport_img_top"
+                android:contentDescription="@null"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_walk"
+                app:layout_constraintBottom_toTopOf="@id/text_walk"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/btn_gray" />
+
+            <TextView
+                android:id="@+id/text_walk"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/margin_schedule_transport_text_vertical"
+                android:gravity="center"
+                android:textColor="@color/btn_gray"
+                android:textSize="@dimen/text_schedule_transport"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/img_walk"
+                tools:text="12시간 24분" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ImageView
+            android:id="@+id/img_clock"
+            android:layout_width="@dimen/img_schedule_ic"
+            android:layout_height="@dimen/img_schedule_ic"
+            android:layout_marginStart="@dimen/margin_schedule_default_horizontal"
+            android:layout_marginTop="@dimen/margin_schedule_alarm_top"
+            android:contentDescription="@null"
+            android:src="@drawable/ic_clock"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_bus"
+            app:tint="@color/theme_color" />
+
+        <EditText
+            android:id="@+id/edit_alarm_hour"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_schedule_hour_start"
+            android:autofillHints=""
+            android:text="@={viewModel.textAlarmHour}"
+            android:hint="@string/schedule_activity_time_hint"
+            android:inputType="number"
+            android:textSize="@dimen/text_schedule_default"
+            app:layout_constraintBottom_toBottomOf="@id/img_clock"
+            app:layout_constraintStart_toEndOf="@id/img_clock"
+            app:layout_constraintTop_toTopOf="@id/img_clock" />
+
+        <TextView
+            android:id="@+id/text_alarm_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_schedule_time_start"
+            android:gravity="center"
+            android:text="@string/schedule_activity_time"
+            android:textSize="@dimen/text_schedule_default"
+            app:layout_constraintBottom_toBottomOf="@id/img_clock"
+            app:layout_constraintStart_toEndOf="@id/edit_alarm_hour"
+            app:layout_constraintTop_toTopOf="@id/img_clock" />
+
+        <EditText
+            android:id="@+id/edit_alarm_minute"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@={viewModel.textAlarmMinute}"
+            android:layout_marginStart="@dimen/margin_schedule_time_start"
+            android:autofillHints=""
+            android:hint="@string/schedule_activity_time_hint"
+            android:inputType="number"
+            android:textSize="@dimen/text_schedule_default"
+            app:layout_constraintBottom_toBottomOf="@id/img_clock"
+            app:layout_constraintStart_toEndOf="@id/text_alarm_time"
+            app:layout_constraintTop_toTopOf="@id/img_clock" />
+
+        <TextView
+            android:id="@+id/text_alarm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_schedule_time_start"
+            android:gravity="center"
+            android:text="@string/schedule_activity_schedule_before"
+            android:textSize="@dimen/text_schedule_default"
+            app:layout_constraintBottom_toBottomOf="@id/img_clock"
+            app:layout_constraintStart_toEndOf="@id/edit_alarm_minute"
+            app:layout_constraintTop_toTopOf="@id/img_clock" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_ok"
+            android:layout_width="0dp"
+            android:onClick="@{()->viewModel.onOk()}"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_schedule_default_horizontal"
+            android:layout_marginEnd="@dimen/margin_schedule_btn_horizontal"
+            android:layout_marginBottom="@dimen/margin_schedule_btn_bottom"
+            android:background="@drawable/bg_btn_round"
+            android:text="@string/schedule_activity_schedule_btn_ok"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btn_no"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/img_clock" />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_no"
+            android:layout_width="0dp"
+            android:onClick="@{()->viewModel.onNo()}"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_schedule_btn_horizontal"
+            android:layout_marginEnd="@dimen/margin_schedule_default_horizontal"
+            android:layout_marginBottom="@dimen/margin_schedule_btn_bottom"
+            android:background="@drawable/bg_btn_round"
+            android:text="@string/add_friend_request_alarm_item_btn_no"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/btn_ok"
+            app:layout_constraintTop_toBottomOf="@id/img_clock" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

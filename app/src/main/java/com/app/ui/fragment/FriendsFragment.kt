@@ -1,6 +1,9 @@
 package com.app.ui.fragment
 
+import android.app.DatePickerDialog
 import android.content.Intent
+import android.icu.util.Calendar
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleOwner
@@ -8,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.R
 import com.app.databinding.FragmentFriendsBinding
 import com.app.ui.activity.ChatActivity
+import com.app.ui.activity.ScheduleActivity
 import com.app.ui.activity.friend.AddFriendActivity
 import com.app.ui.activity.friend.RequestFriendAlarmActivity
 import com.app.ui.adapter.FriendListAdapter
@@ -88,12 +92,36 @@ class FriendsFragment : BaseFragment<FragmentFriendsBinding>(FragmentFriendsBind
             customDialog.dismissDialog()
         }
         customDialog.setButtonClickListener(R.id.btn_2) {
-            customDialog.dismissDialog()
+            showDatePicker(data.email)
         }
         customDialog.setButtonClickListener(R.id.btn_3) {
             customDialog.dismissDialog()
         }
 
         customDialog.showDialog()
+    }
+
+    private fun showDatePicker(email: String) {
+        val calendar = Calendar.getInstance()
+
+        val year = calendar.get(Calendar.YEAR)
+        val month = calendar.get(Calendar.MONTH)
+        val day = calendar.get(Calendar.DAY_OF_MONTH)
+
+        val datePickerDialog = DatePickerDialog(
+            requireContext(),
+            { _, selectedYear, selectedMonth, selectedDay ->
+                val selectedDate = "$selectedYear-${selectedMonth + 1}-$selectedDay"
+                val intent = Intent(requireContext(), ScheduleActivity::class.java)
+                intent.putExtra(getString(R.string.schedule_extra_date_key), selectedDate)
+                intent.putExtra(getString(R.string.schedule_extra_email_key), email)
+                startActivity(intent)
+            },
+            year, month, day
+        )
+
+        datePickerDialog.datePicker.minDate = System.currentTimeMillis() // 오늘 이후만 선택
+
+        datePickerDialog.show()
     }
 }

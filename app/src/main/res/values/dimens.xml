@@ -3,6 +3,7 @@
 
     <!--Drawable-->
     <dimen name="button_corner_radius">12dp</dimen>
+    <dimen name="button_corner_toggle">8dp</dimen>
     <dimen name="edit_corner_radius">4dp</dimen>
     <dimen name="edit_chat_corner_radius">12dp</dimen>
     <dimen name="edit_stroke_width">1dp</dimen>
@@ -267,19 +268,48 @@
     <dimen name="margin_chat_recycler_top">2dp</dimen>
 
     <!--Chat Fragment-->
-    <dimen name="img_chat_room_item_profile">64dp</dimen>
-
     <dimen name="text_chat_room_item_nickname">18sp</dimen>
     <dimen name="text_chat_room_item_status_message">12sp</dimen>
 
     <dimen name="value_chat_room_item_profile_radius">28dp</dimen>
 
-
-
+    <dimen name="img_chat_room_item_profile">64dp</dimen>
     <dimen name="img_chat_room_item_size">32dp</dimen>
     <dimen name="img_chat_room_my_profile">64dp</dimen>
 
-    <dimen name="img_chat_room_item_">64dp</dimen>
+    <!--Chat Activity-->
+    <dimen name="margin_schedule_default_horizontal">36dp</dimen>
+    <dimen name="margin_schedule_top">36dp</dimen>
+    <dimen name="margin_schedule_start_date">20dp</dimen>
+    <dimen name="margin_schedule_start_clock">32dp</dimen>
+    <dimen name="margin_schedule_top_clock">20dp</dimen>
+    <dimen name="margin_schedule_am_pm_start">16dp</dimen>
+    <dimen name="margin_schedule_am_pm_vertical">4dp</dimen>
+    <dimen name="margin_schedule_hour_start">24dp</dimen>
+    <dimen name="margin_schedule_time_start">8dp</dimen>
+    <dimen name="margin_schedule_location_top">24dp</dimen>
+    <dimen name="margin_schedule_location_start">16dp</dimen>
+    <dimen name="margin_schedule_img_btn_top">36dp</dimen>
+    <dimen name="margin_schedule_transport_img_top">12dp</dimen>
+    <dimen name="margin_schedule_transport_text_vertical">16dp</dimen>
+    <dimen name="margin_schedule_alarm_top">24dp</dimen>
+    <dimen name="margin_schedule_btn_horizontal">16dp</dimen>
+    <dimen name="margin_schedule_btn_bottom">24dp</dimen>
+
+    <dimen name="padding_schedule_img_clock">4dp</dimen>
+    <dimen name="padding_schedule_edit_horizontal">16dp</dimen>
+
+    <dimen name="img_schedule_ic">48dp</dimen>
+    <dimen name="img_schedule_clock">56dp</dimen>
+    <dimen name="img_schedule_transport">56dp</dimen>
+
+    <dimen name="text_schedule_default">24sp</dimen>
+    <dimen name="text_schedule_location">20sp</dimen>
+    <dimen name="text_schedule_transport">14sp</dimen>
+    <dimen name="text_schedule_">0sp</dimen>
+
+    <dimen name="value_schedule_am_pm_btn">64dp</dimen>
+    <dimen name="value_schedule_">0dp</dimen>
 
     <!--
     <dimen name="margin_">0dp</dimen>
