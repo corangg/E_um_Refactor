@@ -230,7 +230,6 @@
             android:paddingStart="@dimen/padding_schedule_edit_horizontal"
             android:paddingEnd="@dimen/padding_schedule_edit_horizontal"
             android:text="@={viewModel.textStartLocation}"
-            android:onClick="@{()->viewModel.onSetStartLocation()}"
             android:textSize="@dimen/text_schedule_location"
             app:layout_constraintBottom_toBottomOf="@id/img_start_location"
             app:layout_constraintEnd_toEndOf="parent"
@@ -258,7 +257,7 @@
             android:autofillHints=""
             android:hint="@string/schedule_activity_schedule_location_hint"
             android:inputType="number"
-            android:onClick="@{()->viewModel.onSetScheduleLocation()}"
+
             android:paddingStart="@dimen/padding_schedule_edit_horizontal"
             android:paddingEnd="@dimen/padding_schedule_edit_horizontal"
             android:text="@={viewModel.textScheduleLocation}"
@@ -450,7 +449,7 @@
             app:layout_constraintBottom_toBottomOf="@id/img_clock"
             app:layout_constraintStart_toEndOf="@id/text_alarm_time"
             app:layout_constraintTop_toTopOf="@id/img_clock" />
-
+<!--
         <TextView
             android:id="@+id/text_alarm"
             android:layout_width="wrap_content"
@@ -461,7 +460,7 @@
             android:textSize="@dimen/text_schedule_default"
             app:layout_constraintBottom_toBottomOf="@id/img_clock"
             app:layout_constraintStart_toEndOf="@id/edit_alarm_minute"
-            app:layout_constraintTop_toTopOf="@id/img_clock" />
+            app:layout_constraintTop_toTopOf="@id/img_clock" />-->
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_ok"

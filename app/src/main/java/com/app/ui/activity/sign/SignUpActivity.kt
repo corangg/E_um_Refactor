@@ -5,7 +5,7 @@ import androidx.activity.viewModels
 import androidx.lifecycle.LifecycleOwner
 import com.app.R
 import com.app.databinding.ActivitySignUpBinding
-import com.app.ui.activity.MapActivity
+import com.app.ui.activity.AddressActivity
 import com.app.ui.custom.showCustomToast
 import com.core.ui.BaseActivity
 import com.presentation.SignUpActivityViewModel
@@ -41,7 +41,7 @@ class SignUpActivity : BaseActivity<ActivitySignUpBinding>(ActivitySignUpBinding
     }
 
     private fun startAddressSearchActivity() {
-        val intent = Intent(this, MapActivity::class.java)
+        val intent = Intent(this, AddressActivity::class.java)
         addressResultLauncher.launch(intent)
     }
 

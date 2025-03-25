@@ -1,6 +1,13 @@
 package com.app.ui.activity
 
+import android.content.Context
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
+import android.util.Base64
+import android.util.Log
 import androidx.activity.viewModels
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
 import com.app.R
@@ -8,6 +15,7 @@ import com.app.databinding.ActivityScheduleBinding
 import com.core.ui.BaseActivity
 import com.presentation.ScheduleActivityViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import java.security.MessageDigest
 
 @AndroidEntryPoint
 class ScheduleActivity : BaseActivity<ActivityScheduleBinding>(ActivityScheduleBinding::inflate) {
@@ -20,6 +28,7 @@ class ScheduleActivity : BaseActivity<ActivityScheduleBinding>(ActivityScheduleB
 
     override fun setUpDate() {
 
+
     }
 
     override fun setObserve(lifecycleOwner: LifecycleOwner) {
@@ -27,6 +36,14 @@ class ScheduleActivity : BaseActivity<ActivityScheduleBinding>(ActivityScheduleB
     }
 
     private fun bindingOnClick() {
+        binding.btnBackActivity.setOnClickListener { finish() }
+        binding.textStartLocation.setOnClickListener{
+            val intent = Intent(this, MapActivity::class.java)
+            startActivity(intent)
+        }
+        binding.textScheduleLocation.setOnClickListener {
+            true
+        }
 
     }
 

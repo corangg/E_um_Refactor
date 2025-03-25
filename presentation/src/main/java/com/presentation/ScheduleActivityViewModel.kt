@@ -44,13 +44,13 @@ constructor(
         isAmPm.value = value
     }
 
-    fun onSetStartLocation() = onUiWork{
+ /*   fun onSetStartLocation() = onUiWork{
 
     }
 
     fun onSetScheduleLocation() = onUiWork{
 
-    }
+    }*/
 
     fun onCheckTransport(type: Int) = onUiWork {
 

@@ -297,7 +297,7 @@
     <dimen name="margin_schedule_btn_bottom">24dp</dimen>
 
     <dimen name="padding_schedule_img_clock">4dp</dimen>
-    <dimen name="padding_schedule_edit_horizontal">16dp</dimen>
+    <dimen name="padding_schedule_edit_horizontal">8dp</dimen>
 
     <dimen name="img_schedule_ic">48dp</dimen>
     <dimen name="img_schedule_clock">56dp</dimen>

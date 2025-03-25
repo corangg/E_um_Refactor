@@ -11,7 +11,7 @@
         android:id="@+id/main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.activity.MapActivity">
+        tools:context=".ui.activity.AddressActivity">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_toolbar"
@@ -20,18 +20,11 @@
             android:orientation="horizontal"
             app:layout_constraintGuide_percent="0.08" />
 
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline_horizontal_1"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.65" />
-
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/btn_back_activity"
+            android:id="@+id/img_btn_back_activity"
             android:layout_width="@dimen/img_toolbar_back_button_size"
             android:layout_height="@dimen/img_toolbar_back_button_size"
-            android:layout_marginStart="@dimen/margin_toolbar_back_btn"
+            android:layout_marginStart="10dp"
             android:background="@drawable/ic_back"
             android:backgroundTint="@color/theme_color"
             app:layout_constraintBottom_toTopOf="@id/guideline_toolbar"
@@ -42,43 +35,30 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin_toolbar_title_start"
-            android:text="@string/map_activity_title"
+            android:text="@string/address_search_title"
             android:textColor="@color/theme_color"
             android:textSize="@dimen/text_toolbar_size"
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@id/guideline_toolbar"
-            app:layout_constraintStart_toEndOf="@id/btn_back_activity"
+            app:layout_constraintStart_toEndOf="@id/img_btn_back_activity"
             app:layout_constraintTop_toTopOf="parent" />
 
         <View
-            android:id="@+id/view_guideline"
             android:layout_width="match_parent"
             android:layout_height="@dimen/layout_default_guideline_height"
+            android:id="@+id/view_guideline"
             android:background="@color/theme_color"
             app:layout_constraintEnd_toEndOf="@id/guideline_toolbar"
             app:layout_constraintStart_toStartOf="@id/guideline_toolbar"
             app:layout_constraintTop_toTopOf="@id/guideline_toolbar" />
 
-        <com.naver.maps.map.MapView
-            android:id="@+id/map_view"
+        <WebView
+            android:id="@+id/web_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/guideline_toolbar" />
-
-        <ImageView
-            android:id="@+id/btn_my_location"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_marginStart="12dp"
-            android:background="@drawable/bg_circle_white"
-            android:contentDescription="@null"
-            android:elevation="4dp"
-            android:padding="6dp"
-            app:tint="@color/theme_color"
-            android:src="@drawable/ic_my_location"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/guideline_horizontal_1" />
-
+            app:layout_constraintTop_toBottomOf="@id/view_guideline" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

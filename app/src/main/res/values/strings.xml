@@ -167,6 +167,9 @@
     <string name="schedule_activity_schedule_btn_ok">수락</string>
     <string name="schedule_activity_schedule_btn_no">거절</string>
 
+    <!--Map-->
+    <string name="map_activity_title">지도</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 

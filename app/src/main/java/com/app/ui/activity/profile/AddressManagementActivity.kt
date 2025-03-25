@@ -1,12 +1,11 @@
 package com.app.ui.activity.profile
 
 import android.content.Intent
-import android.icu.text.Transliterator.Position
 import androidx.activity.viewModels
 import androidx.lifecycle.LifecycleOwner
 import com.app.R
 import com.app.databinding.ActivityManagementAddressBinding
-import com.app.ui.activity.MapActivity
+import com.app.ui.activity.AddressActivity
 import com.app.ui.custom.showCustomToast
 import com.core.ui.BaseActivity
 import com.presentation.AddressManagementViewModel
@@ -46,7 +45,7 @@ class AddressManagementActivity : BaseActivity<ActivityManagementAddressBinding>
     }
 
     private fun startAddressSearchActivity() {
-        val intent = Intent(this, MapActivity::class.java)
+        val intent = Intent(this, AddressActivity::class.java)
         addressResultLauncher.launch(intent)
     }
 

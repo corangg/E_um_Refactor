@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
@@ -5,6 +7,13 @@ plugins {
     alias(libs.plugins.hilt)
     alias(libs.plugins.navigation.safeargs.kotlin)
     alias(libs.plugins.google.services)
+}
+
+val localProperties = Properties().apply {
+    val localPropertiesFile = rootProject.file("local.properties")
+    if (localPropertiesFile.exists()) {
+        localPropertiesFile.inputStream().use { load(it) }
+    }
 }
 
 android {
@@ -19,6 +28,8 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "NAVER_MAP_CLIENT_ID", "\"${localProperties["NAVER_MAP_CLIENT_ID"]}\"")
     }
 
     buildTypes {
@@ -41,6 +52,10 @@ android {
     dataBinding {
         enable = true
         enableForTests = true
+    }
+
+    buildFeatures {
+        buildConfig = true
     }
 }
 
@@ -82,4 +97,6 @@ dependencies {
     implementation(libs.firebase.messaging)
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.storage)
+
+    implementation(libs.naver.map)
 }
