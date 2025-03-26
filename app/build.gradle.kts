@@ -99,4 +99,5 @@ dependencies {
     implementation(libs.firebase.storage)
 
     implementation(libs.naver.map)
+    implementation(libs.play.services.location)
 }

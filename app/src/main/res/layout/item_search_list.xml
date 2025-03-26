@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/item_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/padding_friend_item_horizontal"
+        android:paddingVertical="@dimen/padding_friend_item_vertical">
+
+        <TextView
+            android:id="@+id/text_item_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textSize="@dimen/text_map_item_title_size"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toTopOf="@id/text_item_address"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="경기 도청" />
+
+        <TextView
+            android:id="@+id/text_item_address"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textSize="@dimen/text_map_item_address_size"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/text_item_distance"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_item_title"
+            tools:text="rkskfkslfjalfjlzjlfjlkzjflsafwsfasadfdasfesdfasfawefawefawfwefjdlkflsjef" />
+
+        <TextView
+            android:id="@+id/text_item_distance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_map_item_distance_size"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/text_item_address"
+            tools:text="248m" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -27,6 +27,7 @@ firebase-messaging = "24.1.0"
 firebase-analytics = "22.3.0"
 google-services = "4.4.2"
 naver-map = "3.21.0"
+play_services_location = "21.0.1"
 
 
 [libraries]
@@ -63,6 +64,7 @@ firebase-messaging = { module = "com.google.firebase:firebase-messaging-ktx", ve
 firebase-analytics = { module = "com.google.firebase:firebase-analytics-ktx", version.ref = "firebase-analytics" }
 firebase-storage = { module = "com.google.firebase:firebase-storage-ktx", version.ref = "firebase-storage"}
 naver-map = { group = "com.naver.maps", name = "map-sdk", version.ref = "naver-map" }
+play_services_location = { module = "com.google.android.gms:play-services-location", version.ref = "play_services_location" }
 
 
 [plugins]

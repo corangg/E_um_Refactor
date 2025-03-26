@@ -44,6 +44,10 @@ constructor(
         isAmPm.value = value
     }
 
+    fun changeStartAddress(address: String){
+        textStartLocation.value = address
+    }
+
  /*   fun onSetStartLocation() = onUiWork{
 
     }

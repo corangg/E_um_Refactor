@@ -1,8 +1,17 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
+}
+
+val localProperties = Properties().apply {
+    val localPropertiesFile = rootProject.file("local.properties")
+    if (localPropertiesFile.exists()) {
+        localPropertiesFile.inputStream().use { load(it) }
+    }
 }
 
 android {
@@ -14,6 +23,12 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
+
+        buildConfigField("String", "NAVER_MAP_CLIENT_ID", "\"${localProperties["NAVER_MAP_CLIENT_ID"]}\"")
+        buildConfigField("String", "NAVER_MAP_CLIENT_SECRET", "\"${localProperties["NAVER_MAP_CLIENT_SECRET"]}\"")
+
+        buildConfigField("String", "NAVER_SEARCH_CLIENT_ID", "\"${localProperties["NAVER_SEARCH_CLIENT_ID"]}\"")
+        buildConfigField("String", "NAVER_SEARCH_CLIENT_SECRET", "\"${localProperties["NAVER_SEARCH_CLIENT_SECRET"]}\"")
     }
 
     buildTypes {
@@ -31,6 +46,9 @@ android {
     }
     kotlinOptions {
         jvmTarget = "11"
+    }
+    buildFeatures {
+        buildConfig = true
     }
 }
 

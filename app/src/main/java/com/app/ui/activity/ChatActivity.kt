@@ -18,6 +18,7 @@ class ChatActivity : BaseActivity<ActivityChatBinding>(ActivityChatBinding::infl
     private val adapter by lazy { ChatAdapter() }
 
     override fun setUi() {
+        bindingOnClick()
         bindingRecyclerView()
         binding.viewModel = viewModel
         binding.scrollChat.post {
@@ -32,10 +33,12 @@ class ChatActivity : BaseActivity<ActivityChatBinding>(ActivityChatBinding::infl
     override fun setObserve(lifecycleOwner: LifecycleOwner) {
         viewModel.chatMessageList.observe(lifecycleOwner, ::updateChatList)
     }
-
-    private fun bindingRecyclerView() {
+    private fun bindingOnClick() {
         binding.btnBackActivity.setOnClickListener { finish() }
         binding.btnSend.setOnClickListener { sendChat() }
+    }
+
+    private fun bindingRecyclerView() {
         binding.recyclerAddressList.apply {
             layoutManager = LinearLayoutManager(this@ChatActivity, LinearLayoutManager.VERTICAL, false)
             adapter = this@ChatActivity.adapter

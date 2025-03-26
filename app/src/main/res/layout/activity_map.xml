@@ -5,6 +5,10 @@
 
     <data>
 
+        <variable
+            name="viewModel"
+            type="com.presentation.MapActivityViewModel" />
+
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -12,13 +16,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".ui.activity.MapActivity">
-
-        <androidx.constraintlayout.widget.Guideline
-            android:id="@+id/guideline_toolbar"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.08" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_horizontal_1"
@@ -34,7 +31,7 @@
             android:layout_marginStart="@dimen/margin_toolbar_back_btn"
             android:background="@drawable/ic_back"
             android:backgroundTint="@color/theme_color"
-            app:layout_constraintBottom_toTopOf="@id/guideline_toolbar"
+            app:layout_constraintBottom_toTopOf="@id/view_guideline"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -46,7 +43,7 @@
             android:textColor="@color/theme_color"
             android:textSize="@dimen/text_toolbar_size"
             android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@id/guideline_toolbar"
+            app:layout_constraintBottom_toTopOf="@id/view_guideline"
             app:layout_constraintStart_toEndOf="@id/btn_back_activity"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -54,17 +51,137 @@
             android:id="@+id/view_guideline"
             android:layout_width="match_parent"
             android:layout_height="@dimen/layout_default_guideline_height"
+            android:layout_marginTop="56dp"
             android:background="@color/theme_color"
-            app:layout_constraintEnd_toEndOf="@id/guideline_toolbar"
-            app:layout_constraintStart_toStartOf="@id/guideline_toolbar"
-            app:layout_constraintTop_toTopOf="@id/guideline_toolbar" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.naver.maps.map.MapView
             android:id="@+id/map_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/guideline_toolbar" />
+            app:layout_constraintTop_toBottomOf="@id/view_guideline" />
+
+        <EditText
+            android:id="@+id/edit_search"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="4dp"
+            android:layout_marginTop="4dp"
+            android:autofillHints=""
+            android:background="@drawable/bg_edit_search"
+            android:hint="장소, 주소 검색"
+            android:inputType="text"
+            android:paddingHorizontal="12dp"
+            android:paddingVertical="8dp"
+            android:text="@={viewModel.textSearchKeyword}"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toStartOf="@id/btn_search"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/view_guideline" />
+
+        <ImageView
+            android:id="@+id/btn_search"
+            android:layout_width="72dp"
+            android:layout_height="0dp"
+            android:layout_marginHorizontal="4dp"
+            android:background="@drawable/bg_btn_round"
+            android:contentDescription="@null"
+            android:paddingVertical="6dp"
+            android:src="@drawable/ic_search"
+            app:layout_constraintBottom_toBottomOf="@id/edit_search"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/edit_search"
+            app:tint="@color/white" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_search_list"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/view_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_round_top"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent">
+            <TextView
+                android:id="@+id/text_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="20dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/theme_color"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@id/text_distance"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="경기도청" />
+
+            <TextView
+                android:id="@+id/text_distance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="6dp"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="@id/text_title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/text_title"
+                app:layout_constraintTop_toTopOf="@id/text_title"
+                tools:text="246m" />
+
+            <TextView
+                android:id="@+id/text_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                android:layout_marginTop="6dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_title"
+                tools:text="경기 수원시 어쩌구 저쩌구" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_ok"
+                android:layout_width="64dp"
+                android:layout_height="32dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="12dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/bg_btn_toggle_on"
+                android:text="선택"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/btn_cancel"
+                app:layout_constraintTop_toBottomOf="@id/text_address" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btn_cancel"
+                android:layout_width="64dp"
+                android:layout_height="32dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="20dp"
+                android:layout_marginBottom="20dp"
+                android:background="@drawable/bg_btn_round_hollow"
+                android:text="취소"
+                android:textColor="@color/theme_color"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_address" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ImageView
             android:id="@+id/btn_my_location"
@@ -75,10 +192,10 @@
             android:contentDescription="@null"
             android:elevation="4dp"
             android:padding="6dp"
-            app:tint="@color/theme_color"
             android:src="@drawable/ic_my_location"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/guideline_horizontal_1" />
+            app:layout_constraintTop_toTopOf="@id/guideline_horizontal_1"
+            app:tint="@color/theme_color" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

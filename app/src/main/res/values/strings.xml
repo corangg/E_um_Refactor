@@ -169,6 +169,8 @@
 
     <!--Map-->
     <string name="map_activity_title">지도</string>
+    <string name="map_extra_start_address_key">startAddress</string>
+    <string name="map_search_address_key">searchAddress</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

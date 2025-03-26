@@ -4,6 +4,9 @@ import com.domain.model.AddressItemData
 import com.domain.model.ChatData
 import com.domain.model.ChatMessageData
 import com.domain.model.FriendItemData
+import com.domain.model.GeoCodeData
+import com.domain.model.ReverseGeoCodeData
+import com.domain.model.SearchData
 import com.domain.model.UserInfo
 import kotlinx.coroutines.flow.Flow
 
@@ -49,4 +52,10 @@ interface Repository {
     fun getAllChatData(): Flow<List<ChatData>>
 
     suspend fun deleteChat()
+
+    suspend fun getGeoCode(address: String): GeoCodeData
+
+    suspend fun getReverseGeoCode(coords: String): ReverseGeoCodeData
+
+    suspend fun getKeywordSearch(keyword: String): SearchData
 }

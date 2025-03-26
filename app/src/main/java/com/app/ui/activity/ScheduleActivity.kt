@@ -1,11 +1,13 @@
 package com.app.ui.activity
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.util.Base64
 import android.util.Log
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
@@ -20,6 +22,14 @@ import java.security.MessageDigest
 @AndroidEntryPoint
 class ScheduleActivity : BaseActivity<ActivityScheduleBinding>(ActivityScheduleBinding::inflate) {
     private val viewModel: ScheduleActivityViewModel by viewModels()
+
+    private val getSearchAddressLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val address = result.data?.getStringExtra(getString(R.string.map_search_address_key)) ?: return@registerForActivityResult
+            viewModel.changeStartAddress(address)
+        }
+    }
+
     override fun setUi() {
         binding.viewModel = viewModel
         bindingOnClick()
@@ -39,7 +49,8 @@ class ScheduleActivity : BaseActivity<ActivityScheduleBinding>(ActivityScheduleB
         binding.btnBackActivity.setOnClickListener { finish() }
         binding.textStartLocation.setOnClickListener{
             val intent = Intent(this, MapActivity::class.java)
-            startActivity(intent)
+            intent.putExtra(getString(R.string.map_extra_start_address_key),viewModel.textStartLocation.value)
+            getSearchAddressLauncher.launch(intent)
         }
         binding.textScheduleLocation.setOnClickListener {
             true

@@ -3,7 +3,10 @@ package com.data.repository
 import android.content.Context
 import com.core.di.IoDispatcher
 import com.core.di.LocalDataSources
+import com.core.di.RemoteDataSources
 import com.data.datasource.LocalDataSource
+import com.data.datasource.RemoteNaverMapDataSource
+import com.data.datasource.RemoteNaverSearchDataSource
 import com.data.datasource.local.room.LocalChatData
 import com.data.mapper.toExternal
 import com.data.mapper.toLocal
@@ -13,6 +16,8 @@ import com.domain.model.AddressSaveResult
 import com.domain.model.ChatData
 import com.domain.model.ChatMessageData
 import com.domain.model.FriendItemData
+import com.domain.model.ReverseGeoCodeData
+import com.domain.model.SearchData
 import com.domain.model.UserInfo
 import com.domain.repository.Repository
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -25,6 +30,8 @@ import javax.inject.Inject
 
 class DefaultRepository @Inject constructor(
     @LocalDataSources private val localDataSource: LocalDataSource,
+    @RemoteDataSources private val remoteNaverMapDataSource: RemoteNaverMapDataSource,
+    @RemoteDataSources private val remoteNaverSearchDataSource: RemoteNaverSearchDataSource,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
     @ApplicationContext private val context: Context
 ) : Repository {
@@ -116,5 +123,20 @@ class DefaultRepository @Inject constructor(
 
     override suspend fun deleteChat() = withContext(ioDispatcher){
         localDataSource.deleteChatData()
+    }
+
+    override suspend fun getGeoCode(address: String) = withContext(ioDispatcher) {
+        val cleanedAddress = address.trim()
+            .replace(",", "")
+            .replace(Regex("\\s+"), " ")
+        remoteNaverMapDataSource.getAddressToGeoCode(cleanedAddress).toExternal()
+    }
+
+    override suspend fun getReverseGeoCode(coords: String) = withContext(ioDispatcher) {
+        remoteNaverMapDataSource.getReverseGeoCode(coords).toExternal()
+    }
+
+    override suspend fun getKeywordSearch(keyword: String) = withContext(ioDispatcher) {
+        remoteNaverSearchDataSource.getInfoToKeyword(keyword).toExternal()
     }
 }

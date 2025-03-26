@@ -4,11 +4,13 @@
     <!--Drawable-->
     <dimen name="button_corner_radius">12dp</dimen>
     <dimen name="button_corner_toggle">8dp</dimen>
+    <dimen name="view_corner_top">24dp</dimen>
     <dimen name="edit_corner_radius">4dp</dimen>
     <dimen name="edit_chat_corner_radius">12dp</dimen>
     <dimen name="edit_stroke_width">1dp</dimen>
     <dimen name="btn_hollow_stroke_width">2dp</dimen>
     <dimen name="btn_dialog_stroke_width">1dp</dimen>
+    <dimen name="btn_thin_stroke_width">1dp</dimen>
     <dimen name="btn_conner_open_gallery_radius">16dp</dimen>
     <dimen name="img_alarm_point_radius">5dp</dimen>
     <dimen name="img_alarm_point_size">10dp</dimen>
@@ -310,6 +312,21 @@
 
     <dimen name="value_schedule_am_pm_btn">64dp</dimen>
     <dimen name="value_schedule_">0dp</dimen>
+
+
+    <!--Map Activity-->
+    <dimen name="margin_map_">0dp</dimen>
+
+    <dimen name="padding_map_">0dp</dimen>
+
+    <dimen name="img_map_">32dp</dimen>
+
+    <dimen name="text_map_item_title_size">16sp</dimen>
+    <dimen name="text_map_item_address_size">12sp</dimen>
+    <dimen name="text_map_item_distance_size">14sp</dimen>
+
+    <dimen name="value_map_">0dp</dimen>
+
 
     <!--
     <dimen name="margin_">0dp</dimen>
