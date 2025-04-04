@@ -7,6 +7,7 @@ import com.domain.model.FriendItemData
 import com.domain.model.GeoCodeData
 import com.domain.model.ReverseGeoCodeData
 import com.domain.model.SearchData
+import com.domain.model.StartEndCoordinate
 import com.domain.model.UserInfo
 import kotlinx.coroutines.flow.Flow
 
@@ -58,4 +59,10 @@ interface Repository {
     suspend fun getReverseGeoCode(coords: String): ReverseGeoCodeData
 
     suspend fun getKeywordSearch(keyword: String): SearchData
+
+    suspend fun getPublicTransPortTime(coordinate: StartEndCoordinate, startTime: String): Int?
+
+    suspend fun getCarTime(coordinate: StartEndCoordinate, startTime: String): Int?
+
+    suspend fun getWalkTime(coordinate: StartEndCoordinate): Int?
 }

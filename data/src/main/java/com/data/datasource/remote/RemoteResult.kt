@@ -118,3 +118,62 @@ data class RemotePlaceItem(
     @Expose @SerializedName("mapx") val x: Double,
     @Expose @SerializedName("mapy") val y: Double,
 )
+
+data class RemotePublicTransportRouteRequest(
+    val startX: String,
+    val startY: String,
+    val endX: String,
+    val endY: String,
+    val searchDttm: String
+)
+
+data class RemoteCarRouteRequest(
+    val startX: Double,
+    val startY: Double,
+    val endX: Double,
+    val endY: Double
+)
+
+data class RemoteWalkRouteRequest(
+    val startX: Double,
+    val startY: Double,
+    val endX: Double,
+    val endY: Double,
+    val startName: String,
+    val endName: String
+)
+
+data class RemoteWalkRouteResponse(
+    @Expose @SerializedName("features") val features: List<RemoteFeatures>
+)
+
+data class RemoteFeatures(
+    @Expose @SerializedName("type") val type: String,
+    @Expose @SerializedName("properties") val properties: RemoteProperties
+)
+
+data class RemoteProperties(
+    @Expose @SerializedName("totalTime") val totalTime: Int
+)
+
+data class RemotePublicTransportRouteResponse(
+    @Expose @SerializedName("metaData") val metaData: RemoteTMapMetaData
+)
+
+data class RemoteTMapMetaData(
+    @Expose @SerializedName("plan") val plan: RemotePlan
+)
+
+data class RemotePlan(
+    @Expose @SerializedName("itineraries") val itineraries: List<RemoteItinerary>
+)
+
+data class RemoteItinerary(
+    @Expose @SerializedName("totalTime") val totalTime: Int
+)
+
+data class RemoteCarRouteResponse(
+    @Expose @SerializedName("type") val type : String,
+    @Expose @SerializedName("usedFavoriteRouteVertices") val usedFavoriteRouteVertices: String,
+    @Expose @SerializedName("features") val features: List<RemoteFeatures>
+)

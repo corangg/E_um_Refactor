@@ -3,7 +3,6 @@ package com.app.ui.fragment
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.icu.util.Calendar
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleOwner
@@ -21,6 +20,7 @@ import com.core.ui.custom.ThreeButtonCustomDialog
 import com.domain.model.FriendItemData
 import com.presentation.FriendsFragmentViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.Locale
 
 @AndroidEntryPoint
 class FriendsFragment : BaseFragment<FragmentFriendsBinding>(FragmentFriendsBinding::inflate) {
@@ -111,7 +111,10 @@ class FriendsFragment : BaseFragment<FragmentFriendsBinding>(FragmentFriendsBind
         val datePickerDialog = DatePickerDialog(
             requireContext(),
             { _, selectedYear, selectedMonth, selectedDay ->
-                val selectedDate = "$selectedYear-${selectedMonth + 1}-$selectedDay"
+                val selectedDate = String.format(
+                    Locale.KOREA,
+                    "%04d-%02d-%02d", selectedYear, selectedMonth + 1, selectedDay
+                )
                 val intent = Intent(requireContext(), ScheduleActivity::class.java)
                 intent.putExtra(getString(R.string.schedule_extra_date_key), selectedDate)
                 intent.putExtra(getString(R.string.schedule_extra_email_key), email)
@@ -120,7 +123,7 @@ class FriendsFragment : BaseFragment<FragmentFriendsBinding>(FragmentFriendsBind
             year, month, day
         )
 
-        datePickerDialog.datePicker.minDate = System.currentTimeMillis() // 오늘 이후만 선택
+        datePickerDialog.datePicker.minDate = System.currentTimeMillis()
 
         datePickerDialog.show()
     }

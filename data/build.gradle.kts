@@ -29,6 +29,8 @@ android {
 
         buildConfigField("String", "NAVER_SEARCH_CLIENT_ID", "\"${localProperties["NAVER_SEARCH_CLIENT_ID"]}\"")
         buildConfigField("String", "NAVER_SEARCH_CLIENT_SECRET", "\"${localProperties["NAVER_SEARCH_CLIENT_SECRET"]}\"")
+
+        buildConfigField("String", "TMAP_API_KEY", "\"${localProperties["TMAP_API_KEY"]}\"")
     }
 
     buildTypes {

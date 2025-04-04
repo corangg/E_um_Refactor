@@ -208,3 +208,16 @@ data class PlaceItem(
     val y: Double,
     val distance: Double = 0.0
 )
+
+data class StartEndCoordinate(
+    val startX: Double,
+    val startY: Double,
+    val endX: Double,
+    val endY: Double,
+)
+
+sealed class SelectTransportationResult(val code: Int) {
+    data object Walk : SelectTransportationResult(1)
+    data object PublicTransport : SelectTransportationResult(2)
+    data object Car : SelectTransportationResult(3)
+}

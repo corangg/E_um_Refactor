@@ -5,9 +5,11 @@ import com.core.di.RemoteDataSources
 import com.data.datasource.LocalDataSource
 import com.data.datasource.RemoteNaverMapDataSource
 import com.data.datasource.RemoteNaverSearchDataSource
+import com.data.datasource.RemoteTMapDataSource
 import com.data.datasource.local.DefaultLocalDataSource
 import com.data.datasource.remote.NaverMapRemoteDataSource
 import com.data.datasource.remote.NaverSearchRemoteDataSource
+import com.data.datasource.remote.TMapRemoteDataSource
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -32,4 +34,9 @@ abstract class DataSourceModule {
     @Singleton
     @RemoteDataSources
     abstract fun bindDefaultRemoteNaverSearchDataSource(impl: NaverSearchRemoteDataSource): RemoteNaverSearchDataSource
+
+    @Binds
+    @Singleton
+    @RemoteDataSources
+    abstract fun bindDefaultRemoteTMapDataSource(impl: TMapRemoteDataSource): RemoteTMapDataSource
 }

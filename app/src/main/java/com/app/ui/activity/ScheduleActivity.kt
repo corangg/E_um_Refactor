@@ -1,34 +1,43 @@
 package com.app.ui.activity
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.os.Build
-import android.util.Base64
-import android.util.Log
+import android.graphics.PorterDuff
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
 import com.app.R
 import com.app.databinding.ActivityScheduleBinding
 import com.core.ui.BaseActivity
+import com.domain.model.SelectTransportationResult
 import com.presentation.ScheduleActivityViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import java.security.MessageDigest
 
 @AndroidEntryPoint
 class ScheduleActivity : BaseActivity<ActivityScheduleBinding>(ActivityScheduleBinding::inflate) {
     private val viewModel: ScheduleActivityViewModel by viewModels()
 
-    private val getSearchAddressLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            val address = result.data?.getStringExtra(getString(R.string.map_search_address_key)) ?: return@registerForActivityResult
-            viewModel.changeStartAddress(address)
+    private val getStartAddressLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val address =
+                    result.data?.getStringExtra(getString(R.string.map_search_address_key))
+                        ?: return@registerForActivityResult
+                viewModel.changeStartAddress(address)
+            }
         }
-    }
+
+    private val getScheduleAddressLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val address =
+                    result.data?.getStringExtra(getString(R.string.map_search_address_key))
+                        ?: return@registerForActivityResult
+                viewModel.changeScheduleAddress(address)
+            }
+        }
+
 
     override fun setUi() {
         binding.viewModel = viewModel
@@ -43,19 +52,24 @@ class ScheduleActivity : BaseActivity<ActivityScheduleBinding>(ActivityScheduleB
 
     override fun setObserve(lifecycleOwner: LifecycleOwner) {
         viewModel.isAmPm.observe(lifecycleOwner, ::toggleAmPm)
+        viewModel.textScheduleLocation.observe(lifecycleOwner, ::getTravelTime)
+        viewModel.selectTransportType.observe(lifecycleOwner,::selectTransport)
     }
 
     private fun bindingOnClick() {
         binding.btnBackActivity.setOnClickListener { finish() }
-        binding.textStartLocation.setOnClickListener{
+        binding.textStartLocation.setOnClickListener {
             val intent = Intent(this, MapActivity::class.java)
-            intent.putExtra(getString(R.string.map_extra_start_address_key),viewModel.textStartLocation.value)
-            getSearchAddressLauncher.launch(intent)
+            intent.putExtra(
+                getString(R.string.map_extra_start_address_key),
+                viewModel.textStartLocation.value
+            )
+            getStartAddressLauncher.launch(intent)
         }
         binding.textScheduleLocation.setOnClickListener {
-            true
+            val intent = Intent(this, MapActivity::class.java)
+            getScheduleAddressLauncher.launch(intent)
         }
-
     }
 
     private fun toggleAmPm(value: Boolean) {
@@ -75,5 +89,28 @@ class ScheduleActivity : BaseActivity<ActivityScheduleBinding>(ActivityScheduleB
     private fun setDate() {
         val date = intent.getStringExtra(getString(R.string.schedule_extra_date_key)) ?: return
         viewModel.setDateText(date)
+    }
+
+    private fun getTravelTime(location: String) {
+        if (location != "") {
+            viewModel.setTransportTime()
+        }
+    }
+
+    private fun selectTransport(type: Int) {
+        val selectColor = ContextCompat.getColor(this, R.color.theme_color)
+        val unSelectColor = ContextCompat.getColor(this, R.color.btn_gray)
+        val walkSelected = type == SelectTransportationResult.Walk.code
+        val busSelected = type == SelectTransportationResult.Car.code
+        val carSelected = type == SelectTransportationResult.PublicTransport.code
+
+        binding.imgWalk.setColorFilter(if (walkSelected) selectColor else unSelectColor)
+        binding.textWalk.setTextColor(if (walkSelected) selectColor else unSelectColor)
+
+        binding.imgBus.setColorFilter(if (busSelected) selectColor else unSelectColor)
+        binding.textBus.setTextColor(if (carSelected) selectColor else unSelectColor)
+
+        binding.imgCar.setColorFilter(if (carSelected) selectColor else unSelectColor)
+        binding.textCar.setTextColor(if (busSelected) selectColor else unSelectColor)
     }
 }

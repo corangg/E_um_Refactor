@@ -10,6 +10,7 @@ import com.data.datasource.remote.RemoteAddressData
 import com.data.datasource.remote.RemoteAddressElementData
 import com.data.datasource.remote.RemoteArea0
 import com.data.datasource.remote.RemoteArea1
+import com.data.datasource.remote.RemoteCarRouteRequest
 import com.data.datasource.remote.RemoteCenter
 import com.data.datasource.remote.RemoteCode
 import com.data.datasource.remote.RemoteCoords
@@ -17,11 +18,13 @@ import com.data.datasource.remote.RemoteGeoCodeData
 import com.data.datasource.remote.RemoteLand
 import com.data.datasource.remote.RemoteMetaData
 import com.data.datasource.remote.RemotePlaceItem
+import com.data.datasource.remote.RemotePublicTransportRouteRequest
 import com.data.datasource.remote.RemoteRegion
 import com.data.datasource.remote.RemoteResult
 import com.data.datasource.remote.RemoteReverseGeoCodeData
 import com.data.datasource.remote.RemoteSearchData
 import com.data.datasource.remote.RemoteStatus
+import com.data.datasource.remote.RemoteWalkRouteRequest
 import com.domain.model.Addition
 import com.domain.model.AddressData
 import com.domain.model.AddressElementData
@@ -42,6 +45,7 @@ import com.domain.model.Region
 import com.domain.model.Result
 import com.domain.model.ReverseGeoCodeData
 import com.domain.model.SearchData
+import com.domain.model.StartEndCoordinate
 import com.domain.model.Status
 import com.domain.model.UserInfo
 import com.google.firebase.database.DataSnapshot
@@ -171,14 +175,14 @@ fun RemoteReverseGeoCodeData.toExternal() = ReverseGeoCodeData(
 fun RemoteResult.toExternal() = Result(
     code = this.code.toExternal(),
     land = this.land.toExternal(),
-    name = this.name?:"",
+    name = this.name ?: "",
     region = this.region.toExternal()
 )
 
 fun RemoteCode.toExternal() = Code(
-    id = this.id?:"",
-    mappingId = this.mappingId?:"",
-    type = this.type?:""
+    id = this.id ?: "",
+    mappingId = this.mappingId ?: "",
+    type = this.type ?: ""
 )
 
 fun RemoteLand.toExternal() = Land(
@@ -188,15 +192,15 @@ fun RemoteLand.toExternal() = Land(
     addition3 = this.addition3.toExternal(),
     addition4 = this.addition4.toExternal(),
     coords = this.coords.toExternal(),
-    name = this.name?:"",
-    number1 = this.number1?:"",
-    number2 = this.number2?:"",
-    type = this.type?:""
+    name = this.name ?: "",
+    number1 = this.number1 ?: "",
+    number2 = this.number2 ?: "",
+    type = this.type ?: ""
 )
 
 fun RemoteAddition.toExternal() = Addition(
-    type = this.type?:"",
-    value = this.value?:""
+    type = this.type ?: "",
+    value = this.value ?: ""
 )
 
 fun RemoteCoords.toExternal() = Coords(
@@ -204,7 +208,7 @@ fun RemoteCoords.toExternal() = Coords(
 )
 
 fun RemoteCenter.toExternal() = Center(
-    crs = this.crs?:"",
+    crs = this.crs ?: "",
     x = this.x,
     y = this.y
 )
@@ -219,19 +223,19 @@ fun RemoteRegion.toExternal() = Region(
 
 fun RemoteArea0.toExternal() = Area0(
     coords = this.coords.toExternal(),
-    name = this.name?:""
+    name = this.name ?: ""
 )
 
 fun RemoteArea1.toExternal() = Area1(
-    alias = this.alias?:"",
+    alias = this.alias ?: "",
     coords = this.coords.toExternal(),
-    name = this.name?:""
+    name = this.name ?: ""
 )
 
 fun RemoteStatus.toExternal() = Status(
     code = this.code,
-    message = this.message?:"",
-    name = this.name?:""
+    message = this.message ?: "",
+    name = this.name ?: ""
 )
 
 fun RemoteSearchData.toExternal() = SearchData(
@@ -247,4 +251,29 @@ fun RemotePlaceItem.toExternal() = PlaceItem(
     roadAddress = this.roadAddress,
     x = this.x,
     y = this.y
+)
+
+fun StartEndCoordinate.toRemotePublicTransport(startTime: String) =
+    RemotePublicTransportRouteRequest(
+        startX = this.startX.toString(),
+        startY = this.startY.toString(),
+        endX = this.endX.toString(),
+        endY = this.endY.toString(),
+        searchDttm = startTime
+    )
+
+fun StartEndCoordinate.toRemoteCar() = RemoteCarRouteRequest(
+    startX = this.startX,
+    startY = this.startY,
+    endX = this.endX,
+    endY = this.endY
+)
+
+fun StartEndCoordinate.toRemoteWalk() = RemoteWalkRouteRequest(
+    startX = this.startX,
+    startY = this.startY,
+    endX = this.endX,
+    endY = this.endY,
+    startName = "출발점",
+    endName = "도착점"
 )

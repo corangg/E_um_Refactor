@@ -23,7 +23,7 @@ class MapActivityViewModel @Inject constructor(
     @DefaultDispatcher defaultDispatcher: CoroutineDispatcher,
     @IoDispatcher ioDispatcher: CoroutineDispatcher
 ) : BaseViewModel(mainDispatcher, defaultDispatcher, ioDispatcher) {
-    val coordinateLiveData = MutableLiveData(Pair(0.0, 0.0))
+    val coordinateLiveData: MutableLiveData<Pair<Double, Double>?> = MutableLiveData(null)
     val textSearchKeyword = MutableLiveData("")
     val getSelectPlace = MutableLiveData<PlaceItem>()
     val getSearchPlaceList = MutableLiveData<List<PlaceItem>>(listOf())

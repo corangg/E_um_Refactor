@@ -7,17 +7,20 @@ import com.core.di.RemoteDataSources
 import com.data.datasource.LocalDataSource
 import com.data.datasource.RemoteNaverMapDataSource
 import com.data.datasource.RemoteNaverSearchDataSource
+import com.data.datasource.RemoteTMapDataSource
 import com.data.datasource.local.room.LocalChatData
 import com.data.mapper.toExternal
 import com.data.mapper.toLocal
 import com.data.mapper.toLocalList
+import com.data.mapper.toRemoteCar
+import com.data.mapper.toRemotePublicTransport
+import com.data.mapper.toRemoteWalk
 import com.domain.model.AddressItemData
 import com.domain.model.AddressSaveResult
 import com.domain.model.ChatData
 import com.domain.model.ChatMessageData
 import com.domain.model.FriendItemData
-import com.domain.model.ReverseGeoCodeData
-import com.domain.model.SearchData
+import com.domain.model.StartEndCoordinate
 import com.domain.model.UserInfo
 import com.domain.repository.Repository
 import dagger.hilt.android.qualifiers.ApplicationContext
@@ -32,6 +35,7 @@ class DefaultRepository @Inject constructor(
     @LocalDataSources private val localDataSource: LocalDataSource,
     @RemoteDataSources private val remoteNaverMapDataSource: RemoteNaverMapDataSource,
     @RemoteDataSources private val remoteNaverSearchDataSource: RemoteNaverSearchDataSource,
+    @RemoteDataSources private val remoteTMapDataSource: RemoteTMapDataSource,
     @IoDispatcher private val ioDispatcher: CoroutineDispatcher,
     @ApplicationContext private val context: Context
 ) : Repository {
@@ -138,5 +142,23 @@ class DefaultRepository @Inject constructor(
 
     override suspend fun getKeywordSearch(keyword: String) = withContext(ioDispatcher) {
         remoteNaverSearchDataSource.getInfoToKeyword(keyword).toExternal()
+    }
+
+    override suspend fun getPublicTransPortTime(
+        coordinate: StartEndCoordinate,
+        startTime: String
+    ) = withContext(ioDispatcher) {
+        val requestBody = coordinate.toRemotePublicTransport(startTime)
+        return@withContext runCatching { remoteTMapDataSource.getPublicTransportTime(requestBody).metaData.plan.itineraries.firstOrNull()?.totalTime }.getOrNull()
+    }
+
+    override suspend fun getCarTime(coordinate: StartEndCoordinate, startTime: String) = withContext(ioDispatcher) {
+        val requestBody = coordinate.toRemoteCar()
+        return@withContext runCatching { remoteTMapDataSource.getCarTime(requestBody)?.features?.firstOrNull()?.properties?.totalTime }.getOrNull()
+    }
+
+    override suspend fun getWalkTime(coordinate: StartEndCoordinate) = withContext(ioDispatcher) {
+        val requestBody = coordinate.toRemoteWalk()
+        return@withContext runCatching { remoteTMapDataSource.getWalkTime(requestBody).features.firstOrNull()?.properties?.totalTime }.getOrNull()
     }
 }

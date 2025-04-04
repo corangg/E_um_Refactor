@@ -45,15 +45,21 @@ class MapActivity : BaseActivity<ActivityMapBinding>(ActivityMapBinding::inflate
         setMap()
     }
 
-    override fun setUpDate() {
-        val startAddress = intent.getStringExtra(getString(R.string.map_extra_start_address_key)) ?: return
-        viewModel.getCoordinateToAddress(startAddress)
-    }
+    override fun setUpDate() {}
 
     override fun setObserve(lifecycleOwner: LifecycleOwner) {
         viewModel.coordinateLiveData.observe(lifecycleOwner, ::moveCoordinate)
         viewModel.getSelectPlace.observe(lifecycleOwner, ::showDetailView)
         viewModel.getSearchPlaceList.observe(lifecycleOwner, ::updateSearchList)
+    }
+
+    private fun initLocation() {
+        val startAddress = intent.getStringExtra(getString(R.string.map_extra_start_address_key))
+        if (startAddress != null) {
+            viewModel.getCoordinateToAddress(startAddress)
+        } else {
+            enableMyLocation()
+        }
     }
 
     private fun bindingOnClick() {
@@ -81,6 +87,7 @@ class MapActivity : BaseActivity<ActivityMapBinding>(ActivityMapBinding::inflate
     }
 
     private fun enableMyLocation() {
+        naverMap?.locationSource = locationSource
         naverMap?.locationTrackingMode = LocationTrackingMode.Follow
     }
 
@@ -91,17 +98,25 @@ class MapActivity : BaseActivity<ActivityMapBinding>(ActivityMapBinding::inflate
         mapView.onCreate(null)
         mapView.getMapAsync(this)
         locationSource = FusedLocationSource(this, 1024)
-        naverMap?.locationSource = locationSource
     }
 
-    private fun moveCoordinate(coordinate: Pair<Double, Double>) {
+    private fun moveCoordinate(coordinate: Pair<Double, Double>?) {
+        coordinate ?: return
         val location = LatLng(coordinate.second, coordinate.first)
         val cameraUpdate = CameraUpdate.scrollTo(location)
         naverMap?.moveCamera(cameraUpdate)
 
-        marker = Marker().apply {
-            position = location
-            map = naverMap
+        setMarker(location)
+    }
+
+    private fun setMarker(location:LatLng){
+        if (::marker.isInitialized) {
+            marker.position = location
+        } else {
+            marker = Marker().apply {
+                position = location
+                map = naverMap
+            }
         }
     }
 
@@ -112,9 +127,13 @@ class MapActivity : BaseActivity<ActivityMapBinding>(ActivityMapBinding::inflate
             binding.viewDetail.visibility = View.GONE
             binding.recyclerSearchList.visibility = View.GONE
 
-            marker.position = latLng
-            val currentLocation = getCurrentLocation()?: return@setOnMapClickListener
-            viewModel.getAddressToCoordinate(latitude.toString(), longitude.toString(), currentLocation)
+            setMarker(latLng)
+            val currentLocation = getCurrentLocation() ?: return@setOnMapClickListener
+            viewModel.getAddressToCoordinate(
+                latitude.toString(),
+                longitude.toString(),
+                currentLocation
+            )
         }
     }
 
@@ -139,7 +158,7 @@ class MapActivity : BaseActivity<ActivityMapBinding>(ActivityMapBinding::inflate
             layoutManager = LinearLayoutManager(this@MapActivity, LinearLayoutManager.VERTICAL, false)
             adapter = this@MapActivity.adapter
         }
-        adapter.setOnItemClickListener{ item, position ->
+        adapter.setOnItemClickListener { item, position ->
             binding.recyclerSearchList.visibility = View.GONE
             showDetailView(item)
             val coordinate = Pair(changeCoordinate(item.x), changeCoordinate(item.y))
@@ -162,42 +181,36 @@ class MapActivity : BaseActivity<ActivityMapBinding>(ActivityMapBinding::inflate
     override fun onMapReady(naverMap: NaverMap) {
         this.naverMap = naverMap
         naverMap.locationSource = locationSource
-
+        initLocation()
         onMapClick(naverMap)
     }
 
     override fun onStart() {
         super.onStart()
-        Log.d("MapActivity", "onStart()")
         mapView.onStart()
     }
 
     override fun onResume() {
         super.onResume()
-        Log.d("MapActivity", "onResume()")
         mapView.onResume()
     }
 
     override fun onPause() {
-        Log.d("MapActivity", "onPause()")
         mapView.onPause()
         super.onPause()
     }
 
     override fun onStop() {
-        Log.d("MapActivity", "onStop()")
         mapView.onStop()
         super.onStop()
     }
 
     override fun onDestroy() {
-        Log.d("MapActivity", "onDestroy()")
         mapView.onDestroy()
         super.onDestroy()
     }
 
     override fun onLowMemory() {
-        Log.d("MapActivity", "onLowMemory()")
         mapView.onLowMemory()
         super.onLowMemory()
     }
