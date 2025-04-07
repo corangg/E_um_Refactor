@@ -1,6 +1,6 @@
 package com.domain.usecase
 
-import com.domain.model.AlarmData
+import com.domain.model.FriendAlarmData
 import com.domain.model.FriendItemData
 import com.domain.repository.FirebaseRepository
 import com.domain.repository.Repository
@@ -42,7 +42,7 @@ class ResponseFriendRequestUseCase @Inject constructor(
     private val firebaseRepository: FirebaseRepository,
     private val upsertFriendListUseCase: UpsertFriendListUseCase
 ) {
-    suspend operator fun invoke(data: AlarmData.RequestFriendAlarmData, value: Boolean): Boolean {
+    suspend operator fun invoke(data: FriendAlarmData.RequestFriendFriendAlarmData, value: Boolean): Boolean {
         val replaceEmail = data.email.replace("_", ".")
         return if (value) {
             firebaseRepository.updateFriendValue(replaceEmail) &&

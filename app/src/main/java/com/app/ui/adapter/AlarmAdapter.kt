@@ -9,20 +9,20 @@ import com.app.databinding.ItemRequestFriendAlarmBinding
 import com.app.databinding.ItemResponseFriendAlarmBinding
 import com.core.recyclerview.BaseRecyclerView
 import com.core.recyclerview.BaseViewHolder
-import com.data.config.REQUEST_CODE
-import com.data.config.RESPONSE_CODE
-import com.domain.model.AlarmData
+import com.data.config.FRIEND_REQUEST_CODE
+import com.data.config.FRIEND_RESPONSE_CODE
+import com.domain.model.FriendAlarmData
 
-class AlarmAdapter : BaseRecyclerView<AlarmData, BaseViewHolder<AlarmData>>(object :
-        DiffUtil.ItemCallback<AlarmData>() {
+class AlarmAdapter : BaseRecyclerView<FriendAlarmData, BaseViewHolder<FriendAlarmData>>(object :
+        DiffUtil.ItemCallback<FriendAlarmData>() {
         override fun areItemsTheSame(
-            oldItem: AlarmData,
-            newItem: AlarmData
+            oldItem: FriendAlarmData,
+            newItem: FriendAlarmData
         ) = oldItem.hashCode() == newItem.hashCode()
 
         override fun areContentsTheSame(
-            oldItem: AlarmData,
-            newItem: AlarmData
+            oldItem: FriendAlarmData,
+            newItem: FriendAlarmData
         ) = oldItem == newItem
     }) {
     private lateinit var mContext: Context
@@ -33,24 +33,24 @@ class AlarmAdapter : BaseRecyclerView<AlarmData, BaseViewHolder<AlarmData>>(obje
 
     override fun getItemViewType(position: Int): Int {
         return when (getItem(position)) {
-            is AlarmData.RequestFriendAlarmData -> REQUEST_CODE
-            is AlarmData.ResponseFriendAlarmData -> RESPONSE_CODE
+            is FriendAlarmData.RequestFriendFriendAlarmData -> FRIEND_REQUEST_CODE
+            is FriendAlarmData.ResponseFriendFriendAlarmData -> FRIEND_RESPONSE_CODE
         }
     }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): BaseViewHolder<AlarmData> {
+    ): BaseViewHolder<FriendAlarmData> {
         mContext = parent.context
         return when (viewType) {
-            REQUEST_CODE -> RequestFriendAlarmViewHolder(
+            FRIEND_REQUEST_CODE -> RequestFriendAlarmViewHolder(
                 ItemRequestFriendAlarmBinding.inflate(
                     LayoutInflater.from(mContext), parent, false
                 )
             )
 
-            RESPONSE_CODE -> ResponseFriendAlarmViewHolder(
+            FRIEND_RESPONSE_CODE -> ResponseFriendAlarmViewHolder(
                 ItemResponseFriendAlarmBinding.inflate(
                     LayoutInflater.from(mContext), parent, false
                 )
@@ -60,7 +60,7 @@ class AlarmAdapter : BaseRecyclerView<AlarmData, BaseViewHolder<AlarmData>>(obje
         }
     }
 
-    override fun onBindViewHolder(holder: BaseViewHolder<AlarmData>, position: Int) {
+    override fun onBindViewHolder(holder: BaseViewHolder<FriendAlarmData>, position: Int) {
         super.onBindViewHolder(holder, position)
         when (holder) {
             is RequestFriendAlarmViewHolder -> holder.addBind(position, onItemRequestListener)
@@ -79,14 +79,14 @@ class AlarmAdapter : BaseRecyclerView<AlarmData, BaseViewHolder<AlarmData>>(obje
 
     inner class RequestFriendAlarmViewHolder(
         private val binding: ItemRequestFriendAlarmBinding
-    ) : BaseViewHolder<AlarmData>(binding) {
+    ) : BaseViewHolder<FriendAlarmData>(binding) {
 
         override fun bind(
-            item: AlarmData,
+            item: FriendAlarmData,
             position: Int,
-            clickListener: ((AlarmData, Int) -> Unit)?
+            clickListener: ((FriendAlarmData, Int) -> Unit)?
         ) {
-            if (item is AlarmData.RequestFriendAlarmData) {
+            if (item is FriendAlarmData.RequestFriendFriendAlarmData) {
                 val defaultMessage = mContext.getString(R.string.add_friend_request_alarm_item_message)
                 val message = "${item.nickName} $defaultMessage"
                 binding.textMessage.text = message
@@ -109,14 +109,14 @@ class AlarmAdapter : BaseRecyclerView<AlarmData, BaseViewHolder<AlarmData>>(obje
 
     inner class ResponseFriendAlarmViewHolder(
         private val binding: ItemResponseFriendAlarmBinding
-    ) : BaseViewHolder<AlarmData>(binding) {
+    ) : BaseViewHolder<FriendAlarmData>(binding) {
 
         override fun bind(
-            item: AlarmData,
+            item: FriendAlarmData,
             position: Int,
-            clickListener: ((AlarmData, Int) -> Unit)?
+            clickListener: ((FriendAlarmData, Int) -> Unit)?
         ) {
-            if (item is AlarmData.ResponseFriendAlarmData) {
+            if (item is FriendAlarmData.ResponseFriendFriendAlarmData) {
                 val defaultMessage = mContext.getString(R.string.add_friend_response_alarm_item_message)
                 val message = "${item.nickName} $defaultMessage"
                 binding.textMessage.text = message

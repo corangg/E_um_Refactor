@@ -152,7 +152,7 @@ class DefaultRepository @Inject constructor(
         return@withContext runCatching { remoteTMapDataSource.getPublicTransportTime(requestBody).metaData.plan.itineraries.firstOrNull()?.totalTime }.getOrNull()
     }
 
-    override suspend fun getCarTime(coordinate: StartEndCoordinate, startTime: String) = withContext(ioDispatcher) {
+    override suspend fun getCarTime(coordinate: StartEndCoordinate) = withContext(ioDispatcher) {
         val requestBody = coordinate.toRemoteCar()
         return@withContext runCatching { remoteTMapDataSource.getCarTime(requestBody)?.features?.firstOrNull()?.properties?.totalTime }.getOrNull()
     }

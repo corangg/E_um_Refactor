@@ -9,7 +9,9 @@ import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
 import com.app.R
 import com.app.databinding.ActivityScheduleBinding
+import com.app.ui.custom.showCustomToast
 import com.core.ui.BaseActivity
+import com.core.util.setEditTextMaxValue
 import com.domain.model.SelectTransportationResult
 import com.presentation.ScheduleActivityViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,9 +23,7 @@ class ScheduleActivity : BaseActivity<ActivityScheduleBinding>(ActivityScheduleB
     private val getStartAddressLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
-                val address =
-                    result.data?.getStringExtra(getString(R.string.map_search_address_key))
-                        ?: return@registerForActivityResult
+                val address = result.data?.getStringExtra(getString(R.string.map_search_address_key)) ?: return@registerForActivityResult
                 viewModel.changeStartAddress(address)
             }
         }
@@ -31,9 +31,7 @@ class ScheduleActivity : BaseActivity<ActivityScheduleBinding>(ActivityScheduleB
     private val getScheduleAddressLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
-                val address =
-                    result.data?.getStringExtra(getString(R.string.map_search_address_key))
-                        ?: return@registerForActivityResult
+                val address = result.data?.getStringExtra(getString(R.string.map_search_address_key)) ?: return@registerForActivityResult
                 viewModel.changeScheduleAddress(address)
             }
         }
@@ -43,17 +41,16 @@ class ScheduleActivity : BaseActivity<ActivityScheduleBinding>(ActivityScheduleB
         binding.viewModel = viewModel
         bindingOnClick()
         setDate()
+        setEditFilter()
     }
 
-    override fun setUpDate() {
-
-
-    }
+    override fun setUpDate() {}
 
     override fun setObserve(lifecycleOwner: LifecycleOwner) {
         viewModel.isAmPm.observe(lifecycleOwner, ::toggleAmPm)
         viewModel.textScheduleLocation.observe(lifecycleOwner, ::getTravelTime)
         viewModel.selectTransportType.observe(lifecycleOwner,::selectTransport)
+        viewModel.isRequestResult.observe(lifecycleOwner,::onResultRequestSchedule)
     }
 
     private fun bindingOnClick() {
@@ -69,6 +66,10 @@ class ScheduleActivity : BaseActivity<ActivityScheduleBinding>(ActivityScheduleB
         binding.textScheduleLocation.setOnClickListener {
             val intent = Intent(this, MapActivity::class.java)
             getScheduleAddressLauncher.launch(intent)
+        }
+        binding.btnRequest.setOnClickListener {
+            val email = intent.getStringExtra(getString(R.string.schedule_extra_email_key))?: return@setOnClickListener
+            viewModel.requestSchedule(email)
         }
     }
 
@@ -91,6 +92,13 @@ class ScheduleActivity : BaseActivity<ActivityScheduleBinding>(ActivityScheduleB
         viewModel.setDateText(date)
     }
 
+    private fun setEditFilter(){
+        setEditTextMaxValue(binding.editHour, 12)
+        setEditTextMaxValue(binding.editMinute, 59)
+        setEditTextMaxValue(binding.editAlarmHour, 11)
+        setEditTextMaxValue(binding.editAlarmMinute, 59)
+    }
+
     private fun getTravelTime(location: String) {
         if (location != "") {
             viewModel.setTransportTime()
@@ -108,9 +116,18 @@ class ScheduleActivity : BaseActivity<ActivityScheduleBinding>(ActivityScheduleB
         binding.textWalk.setTextColor(if (walkSelected) selectColor else unSelectColor)
 
         binding.imgBus.setColorFilter(if (busSelected) selectColor else unSelectColor)
-        binding.textBus.setTextColor(if (carSelected) selectColor else unSelectColor)
+        binding.textBus.setTextColor(if (busSelected) selectColor else unSelectColor)
 
         binding.imgCar.setColorFilter(if (carSelected) selectColor else unSelectColor)
-        binding.textCar.setTextColor(if (busSelected) selectColor else unSelectColor)
+        binding.textCar.setTextColor(if (carSelected) selectColor else unSelectColor)
+    }
+
+    private fun onResultRequestSchedule(result: Boolean){
+        if(result){
+            showCustomToast(getString(R.string.schedule_request_toast_1))
+            finish()
+        }else{
+            showCustomToast(getString(R.string.schedule_request_toast_2))
+        }
     }
 }

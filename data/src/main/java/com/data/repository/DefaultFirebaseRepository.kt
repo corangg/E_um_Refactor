@@ -5,12 +5,13 @@ import androidx.core.net.toUri
 import com.core.di.IoDispatcher
 import com.core.di.LocalDataSources
 import com.core.util.getLocalTimeToString
-import com.data.config.REQUEST_CODE
-import com.data.config.RESPONSE_CODE
+import com.data.config.FRIEND_REQUEST_CODE
+import com.data.config.FRIEND_RESPONSE_CODE
+import com.data.config.SCHEDULE_REQUEST_CODE
 import com.data.datasource.LocalDataSource
 import com.data.mapper.toExternal
-import com.domain.model.AlarmData
 import com.domain.model.ChatMessageData
+import com.domain.model.FriendAlarmData
 import com.domain.model.FriendRequestResult
 import com.domain.model.SignInResult
 import com.domain.model.SignUpResult
@@ -179,17 +180,17 @@ class DefaultFirebaseRepository @Inject constructor(
         }
     }
 
-    private fun DataSnapshot.toAlarmData(): AlarmData? {
+    private fun DataSnapshot.toFriendAlarmData(): FriendAlarmData? {
         val type = child("type").getValue(Int::class.java) ?: return null
         val email = child("email").getValue(String::class.java) ?: return null
         val nickname = child("nickname").getValue(String::class.java) ?: return null
         val time = key ?: return null
 
         return when (type) {
-            REQUEST_CODE -> AlarmData.RequestFriendAlarmData(email, nickname, time)
-            RESPONSE_CODE -> {
+            FRIEND_REQUEST_CODE -> FriendAlarmData.RequestFriendFriendAlarmData(email, nickname, time)
+            FRIEND_RESPONSE_CODE -> {
                 val booleanValue = child("value").getValue(Boolean::class.java) ?: false
-                AlarmData.ResponseFriendAlarmData(email, nickname, booleanValue, time)
+                FriendAlarmData.ResponseFriendFriendAlarmData(email, nickname, booleanValue, time)
             }
             else -> null
         }
@@ -198,13 +199,13 @@ class DefaultFirebaseRepository @Inject constructor(
     override fun getAlarmListFlow() = callbackFlow {
         val replaceUserEmail = auth.currentUser?.email?.replace(".", "_") ?: return@callbackFlow
         val reference = database.getReference("alarm").child(replaceUserEmail)
-        val alarmDataList = mutableListOf<AlarmData>()
+        val friendAlarmDataList = mutableListOf<FriendAlarmData>()
 
         val initialListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                alarmDataList.clear()
-                alarmDataList.addAll(snapshot.children.mapNotNull { it.toAlarmData() })
-                trySend(alarmDataList.toList()).isSuccess
+                friendAlarmDataList.clear()
+                friendAlarmDataList.addAll(snapshot.children.mapNotNull { it.toFriendAlarmData() })
+                trySend(friendAlarmDataList.toList()).isSuccess
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -215,25 +216,25 @@ class DefaultFirebaseRepository @Inject constructor(
 
         val listener = object : ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                val newAlarm = snapshot.toAlarmData() ?: return
-                if (!alarmDataList.any { it.time == newAlarm.time }) {
-                    alarmDataList.add(newAlarm)
-                    trySend(alarmDataList.toList()).isSuccess
+                val newAlarm = snapshot.toFriendAlarmData() ?: return
+                if (!friendAlarmDataList.any { it.time == newAlarm.time }) {
+                    friendAlarmDataList.add(newAlarm)
+                    trySend(friendAlarmDataList.toList()).isSuccess
                 }
             }
 
             override fun onChildRemoved(snapshot: DataSnapshot) {
-                val removedAlarm = snapshot.toAlarmData() ?: return
-                alarmDataList.removeAll { it.time == removedAlarm.time }
-                trySend(alarmDataList.toList()).isSuccess
+                val removedAlarm = snapshot.toFriendAlarmData() ?: return
+                friendAlarmDataList.removeAll { it.time == removedAlarm.time }
+                trySend(friendAlarmDataList.toList()).isSuccess
             }
 
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
-                val updatedAlarm = snapshot.toAlarmData() ?: return
-                val index = alarmDataList.indexOfFirst { it.time == updatedAlarm.time }
+                val updatedAlarm = snapshot.toFriendAlarmData() ?: return
+                val index = friendAlarmDataList.indexOfFirst { it.time == updatedAlarm.time }
                 if (index != -1) {
-                    alarmDataList[index] = updatedAlarm
-                    trySend(alarmDataList.toList()).isSuccess
+                    friendAlarmDataList[index] = updatedAlarm
+                    trySend(friendAlarmDataList.toList()).isSuccess
                 }
             }
 
@@ -255,7 +256,7 @@ class DefaultFirebaseRepository @Inject constructor(
             database.reference.child("alarm").child(replaceEmail).child(getLocalTimeToString()).apply {
                 updateChildren(
                     mapOf(
-                        "type" to REQUEST_CODE,
+                        "type" to FRIEND_REQUEST_CODE,
                         "email" to replaceUserEmail,
                         "nickname" to userInfo.nickname
                     )
@@ -267,6 +268,33 @@ class DefaultFirebaseRepository @Inject constructor(
         }
     }
 
+    override suspend fun requestSchedule(
+        email: String,
+        dateTime: String,
+        scheduleAddress: String
+    ) = withContext(ioDispatcher) {
+        val userInfo = localDataSource.getUserInfoData() ?: return@withContext false
+        val replaceUserEmail = userInfo.email.replace(".", "_")
+        val replaceEmail = email.replace(".", "_")
+        try {
+            database.reference.child("alarm").child(replaceEmail).child(getLocalTimeToString())
+                .apply {
+                    updateChildren(
+                        mapOf(
+                            "type" to SCHEDULE_REQUEST_CODE,
+                            "email" to replaceUserEmail,
+                            "nickname" to userInfo.nickname,
+                            "dateTime" to dateTime,
+                            "address" to scheduleAddress
+                        )
+                    ).await()
+                }
+            true
+        } catch (e: Exception) {
+            false
+        }
+    }
+
     override suspend fun responseFriendRequest(email: String, value: Boolean) = withContext(ioDispatcher) {
         val userInfo = localDataSource.getUserInfoData() ?: return@withContext false
         val replaceUserEmail = userInfo.email.replace(".", "_")
@@ -274,7 +302,7 @@ class DefaultFirebaseRepository @Inject constructor(
             database.reference.child("alarm").child(email).child(getLocalTimeToString()).apply {
                 updateChildren(
                     mapOf(
-                        "type" to RESPONSE_CODE,
+                        "type" to FRIEND_RESPONSE_CODE,
                         "email" to replaceUserEmail,
                         "nickname" to userInfo.nickname,
                         "value" to value

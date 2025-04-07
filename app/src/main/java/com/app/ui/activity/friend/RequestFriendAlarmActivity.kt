@@ -8,7 +8,7 @@ import com.app.databinding.ActivityRequestFriendAlarmBinding
 import com.app.ui.adapter.AlarmAdapter
 import com.app.ui.custom.showCustomToast
 import com.core.ui.BaseActivity
-import com.domain.model.AlarmData
+import com.domain.model.FriendAlarmData
 import com.presentation.RequestFriendAlarmViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -50,7 +50,7 @@ class RequestFriendAlarmActivity :
         }
     }
 
-    private fun setRecyclerViewList(list: List<AlarmData>) {
+    private fun setRecyclerViewList(list: List<FriendAlarmData>) {
         adapter.submitList(list)
     }
 

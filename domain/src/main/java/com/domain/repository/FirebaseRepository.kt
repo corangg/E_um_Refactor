@@ -1,7 +1,7 @@
 package com.domain.repository
 
-import com.domain.model.AlarmData
 import com.domain.model.ChatMessageData
+import com.domain.model.FriendAlarmData
 import com.domain.model.SignInResult
 import com.domain.model.SignUpResult
 import com.domain.model.UserInfo
@@ -36,10 +36,9 @@ interface FirebaseRepository {
 
     suspend fun responseFriendRequest(email: String, value: Boolean): Boolean
 
-    fun getAlarmListFlow(): Flow<List<AlarmData>>
+    fun getAlarmListFlow(): Flow<List<FriendAlarmData>>
 
     suspend fun deleteAlarmMessage(time: String): Boolean
-
 
     suspend fun getChatCode(email: String): String?
 
@@ -47,7 +46,7 @@ interface FirebaseRepository {
 
     suspend fun writeChatCode(email: String, code: String): Boolean
 
-    suspend fun getChatData(code: String):List<ChatMessageData>
+    suspend fun getChatData(code: String): List<ChatMessageData>
 
     fun collectChatData(code: String): Flow<ChatMessageData>
 
@@ -55,5 +54,11 @@ interface FirebaseRepository {
 
     suspend fun getChatMemberEmail(code: String): String?
 
-    fun collectChatRoomData(email: String): Flow<Pair<String,String>>
+    fun collectChatRoomData(email: String): Flow<Pair<String, String>>
+
+    suspend fun requestSchedule(
+        email: String,
+        dateTime: String,
+        scheduleAddress: String
+    ): Boolean
 }

@@ -62,7 +62,7 @@ interface Repository {
 
     suspend fun getPublicTransPortTime(coordinate: StartEndCoordinate, startTime: String): Int?
 
-    suspend fun getCarTime(coordinate: StartEndCoordinate, startTime: String): Int?
+    suspend fun getCarTime(coordinate: StartEndCoordinate): Int?
 
     suspend fun getWalkTime(coordinate: StartEndCoordinate): Int?
 }

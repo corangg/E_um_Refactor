@@ -6,6 +6,8 @@ import androidx.lifecycle.distinctUntilChanged
 import com.core.di.DefaultDispatcher
 import com.core.di.IoDispatcher
 import com.core.di.MainDispatcher
+import com.core.util.subtractHHMMFromDateTime
+import com.core.util.toHHMMFormat
 import com.core.viewmodel.BaseViewModel
 import com.domain.model.StartEndCoordinate
 import com.domain.usecase.GetCarTimeUseCase
@@ -13,9 +15,9 @@ import com.domain.usecase.GetCoordinateToAddressUseCase
 import com.domain.usecase.GetPublicTransportTimeUseCase
 import com.domain.usecase.GetUserInfoDataUseCase
 import com.domain.usecase.GetWalkTimeUseCase
+import com.domain.usecase.RequestScheduleUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainCoroutineDispatcher
 import javax.inject.Inject
 
@@ -27,6 +29,7 @@ constructor(
     private val getPublicTransportTimeUseCase: GetPublicTransportTimeUseCase,
     private val getCarTimeUseCase: GetCarTimeUseCase,
     private val getWalkTimeUseCase: GetWalkTimeUseCase,
+    private val requestScheduleUseCase: RequestScheduleUseCase,
     @MainDispatcher mainDispatcher: MainCoroutineDispatcher,
     @DefaultDispatcher defaultDispatcher: CoroutineDispatcher,
     @IoDispatcher ioDispatcher: CoroutineDispatcher
@@ -40,10 +43,11 @@ constructor(
     val textStartLocation = MutableLiveData("")
     private val _textScheduleLocation = MutableLiveData<String>()
     val textScheduleLocation: LiveData<String> = _textScheduleLocation.distinctUntilChanged()
-    val selectTransportType = MutableLiveData(-1)
+    val selectTransportType = MutableLiveData(1)
     val textPublicTransportTime = MutableLiveData("00시간 00분")
     val textCarTime = MutableLiveData("00시간 00분")
     val textWalkTime = MutableLiveData("00시간 00분")
+    val isRequestResult = MutableLiveData<Boolean>()
 
     init {
         setStartLocation()
@@ -69,16 +73,21 @@ constructor(
         _textScheduleLocation.value = address
     }
 
-    private fun getTime(): String {
+    private fun getDateTime(): String {
         val date = dateText.value?.replace("-", "") ?: "00000000"
         val time = if (isAmPm.value == false) {
             val hour = 12 + (textScheduleHour.value?.toInt() ?: 0)
-            "${hour}${textScheduleMinute.value}"
+            val min = textScheduleMinute.value?.toInt() ?: 0
+            toHHMMFormat(hour, min)
         } else {
-            "${textScheduleHour.value}${textScheduleMinute.value}"
+            val hour = (textScheduleHour.value?.toInt() ?: 0)
+            val min = textScheduleMinute.value?.toInt() ?: 0
+            toHHMMFormat(hour, min)
         }
         return "$date$time"
     }
+
+    private fun getAlarmTime() = toHHMMFormat((textAlarmHour.value?.toInt() ?: 0), (textAlarmMinute.value?.toInt() ?: 0))
 
     fun setTransportTime() = onUiWork {
         val startLocation = textStartLocation.value?:return@onUiWork
@@ -97,20 +106,28 @@ constructor(
     }
 
     private fun setPublicTransportTime(coordinate: StartEndCoordinate) = onUiWork{
-        textPublicTransportTime.value = getPublicTransportTimeUseCase(coordinate, getTime())
+        val time = subtractHHMMFromDateTime(getDateTime(), getAlarmTime())
+        textPublicTransportTime.value = getPublicTransportTimeUseCase(coordinate, time)
     }
 
     private fun setCarTime(coordinate: StartEndCoordinate) = onUiWork {
-        textCarTime.value = getCarTimeUseCase(coordinate, getTime())
+        textCarTime.value = getCarTimeUseCase(coordinate)
     }
 
     private fun setWalkTime(coordinate: StartEndCoordinate) = onUiWork {
         textWalkTime.value = getWalkTimeUseCase(coordinate)
     }
 
-
     fun selectTransport(type: Int) = onUiWork {
         selectTransportType.value = type
+    }
+
+    fun requestSchedule(email: String) = onUiWork {
+        isRequestResult.value = requestScheduleUseCase(
+            email,
+            getDateTime(),
+            textScheduleLocation.value ?: return@onUiWork
+        )
     }
 
     fun onOk() = onUiWork {

@@ -51,19 +51,34 @@ data class ChatRoomItemData(
     val imgUrl: String
 )
 
-sealed class AlarmData(open val time: String) {
-    data class RequestFriendAlarmData(
+sealed class FriendAlarmData(open val time: String) {
+    data class RequestFriendFriendAlarmData(
         val email: String,
         val nickName: String,
         override val time: String
-    ) : AlarmData(time)
+    ) : FriendAlarmData(time)
 
-    data class ResponseFriendAlarmData(
+    data class ResponseFriendFriendAlarmData(
         val email: String,
         val nickName: String,
         val value: Boolean,
         override val time: String
-    ) : AlarmData(time)
+    ) : FriendAlarmData(time)
+}
+
+sealed class ScheduleAlarmData(open val time: String){
+
+    data class RequestScheduleAlarmData(
+        val email: String,
+        val nickName: String,
+        override val time: String
+    ) : ScheduleAlarmData(time)
+
+    data class ResponseScheduleAlarmData(
+        val email: String,
+        val nickName: String,
+        override val time: String
+    ) : ScheduleAlarmData(time)
 }
 
 sealed class SignUpResult {
@@ -217,7 +232,7 @@ data class StartEndCoordinate(
 )
 
 sealed class SelectTransportationResult(val code: Int) {
-    data object Walk : SelectTransportationResult(1)
-    data object PublicTransport : SelectTransportationResult(2)
-    data object Car : SelectTransportationResult(3)
+    data object Walk : SelectTransportationResult(3)
+    data object PublicTransport : SelectTransportationResult(1)
+    data object Car : SelectTransportationResult(2)
 }

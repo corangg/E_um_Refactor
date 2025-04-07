@@ -164,8 +164,11 @@
     <string name="schedule_activity_start_location_hint">출발 장소</string>
     <string name="schedule_activity_schedule_location_hint">약속 장소</string>
     <string name="schedule_activity_schedule_before">전</string>
+    <string name="schedule_activity_schedule_btn_request">요청</string>
     <string name="schedule_activity_schedule_btn_ok">수락</string>
     <string name="schedule_activity_schedule_btn_no">거절</string>
+    <string name="schedule_request_toast_1">약속 요청을 완료 했습니다.</string>
+    <string name="schedule_request_toast_2">오류가 발생 했습니다.</string>
 
     <!--Map-->
     <string name="map_activity_title">지도</string>
