@@ -20,6 +20,7 @@ import com.domain.model.AddressSaveResult
 import com.domain.model.ChatData
 import com.domain.model.ChatMessageData
 import com.domain.model.FriendItemData
+import com.domain.model.ScheduleData
 import com.domain.model.StartEndCoordinate
 import com.domain.model.UserInfo
 import com.domain.repository.Repository
@@ -160,5 +161,19 @@ class DefaultRepository @Inject constructor(
     override suspend fun getWalkTime(coordinate: StartEndCoordinate) = withContext(ioDispatcher) {
         val requestBody = coordinate.toRemoteWalk()
         return@withContext runCatching { remoteTMapDataSource.getWalkTime(requestBody).features.firstOrNull()?.properties?.totalTime }.getOrNull()
+    }
+
+    override suspend fun upsertScheduleData(scheduleData: ScheduleData) = withContext(ioDispatcher) {
+        localDataSource.upsertScheduleData(scheduleData.toLocal())
+    }
+
+    override fun getScheduleDataListFlow() = localDataSource.getScheduleDataListFlow().mapNotNull { data -> data.map { it.toExternal() } }
+
+    override suspend fun getScheduleData(time: String) = withContext(ioDispatcher) {
+        return@withContext localDataSource.getScheduleData(time)?.toExternal()
+    }
+
+    override suspend fun deleteScheduleData(time: String) = withContext(ioDispatcher) {
+        localDataSource.deleteScheduleData(time)
     }
 }

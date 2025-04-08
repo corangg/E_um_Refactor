@@ -7,7 +7,9 @@ import com.data.datasource.local.room.FriendDao
 import com.data.datasource.local.room.LocalAddressItemData
 import com.data.datasource.local.room.LocalChatData
 import com.data.datasource.local.room.LocalFriendData
+import com.data.datasource.local.room.LocalScheduleData
 import com.data.datasource.local.room.LocalUserInfoData
+import com.data.datasource.local.room.ScheduleDao
 import com.data.datasource.local.room.UserInfoDao
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -16,7 +18,8 @@ class DefaultLocalDataSource @Inject constructor(
     private val userInfoDao: UserInfoDao,
     private val addressDao: AddressDao,
     private val friendDao: FriendDao,
-    private val chatData: ChatDao
+    private val chatData: ChatDao,
+    private val scheduleDao: ScheduleDao
 ) : LocalDataSource {
     override suspend fun insertUserInfoData(entity: LocalUserInfoData) = userInfoDao.insertUserInfoData(entity)
     override suspend fun getUserInfoData() = userInfoDao.getUserInfoData()
@@ -43,4 +46,9 @@ class DefaultLocalDataSource @Inject constructor(
     override suspend fun getChatData(code: String) = chatData.getChatData(code)
     override fun getChatDataFlow(code: String) = chatData.getChatDataFlow(code)
     override suspend fun deleteChatData() = chatData.deleteChatAllData()
+
+    override suspend fun upsertScheduleData(entity: LocalScheduleData) = scheduleDao.upsertScheduleData(entity)
+    override fun getScheduleDataListFlow(): Flow<List<LocalScheduleData>> = scheduleDao.getScheduleDataListFlow()
+    override suspend fun getScheduleData(time: String): LocalScheduleData? = scheduleDao.getScheduleData(time)
+    override suspend fun deleteScheduleData(time: String) = scheduleDao.deleteScheduleData(time)
 }

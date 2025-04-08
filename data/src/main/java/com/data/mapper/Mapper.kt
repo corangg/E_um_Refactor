@@ -4,6 +4,7 @@ import com.data.datasource.local.room.LocalAddressItemData
 import com.data.datasource.local.room.LocalChatData
 import com.data.datasource.local.room.LocalChatMessageData
 import com.data.datasource.local.room.LocalFriendData
+import com.data.datasource.local.room.LocalScheduleData
 import com.data.datasource.local.room.LocalUserInfoData
 import com.data.datasource.remote.RemoteAddition
 import com.data.datasource.remote.RemoteAddressData
@@ -44,6 +45,7 @@ import com.domain.model.PlaceItem
 import com.domain.model.Region
 import com.domain.model.Result
 import com.domain.model.ReverseGeoCodeData
+import com.domain.model.ScheduleData
 import com.domain.model.SearchData
 import com.domain.model.StartEndCoordinate
 import com.domain.model.Status
@@ -276,4 +278,26 @@ fun StartEndCoordinate.toRemoteWalk() = RemoteWalkRouteRequest(
     endY = this.endY,
     startName = "출발점",
     endName = "도착점"
+)
+
+fun ScheduleData.toLocal() = LocalScheduleData(
+    time = this.time,
+    email = this.email,
+    nickname = this.nickname,
+    startAddress = this.startAddress,
+    scheduleAddress = this.scheduleAddress,
+    alarmTime = this.alarmTime,
+    transportType = this.transportType,
+    requestValue = this.requestValue,
+)
+
+fun LocalScheduleData.toExternal() = ScheduleData(
+    time = this.time,
+    email = this.email,
+    nickname = this.nickname,
+    startAddress = this.startAddress,
+    scheduleAddress = this.scheduleAddress,
+    alarmTime = this.alarmTime,
+    transportType = this.transportType,
+    requestValue = this.requestValue,
 )

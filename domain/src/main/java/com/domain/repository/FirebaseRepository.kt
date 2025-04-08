@@ -1,7 +1,7 @@
 package com.domain.repository
 
 import com.domain.model.ChatMessageData
-import com.domain.model.FriendAlarmData
+import com.domain.model.AlarmData
 import com.domain.model.SignInResult
 import com.domain.model.SignUpResult
 import com.domain.model.UserInfo
@@ -36,7 +36,7 @@ interface FirebaseRepository {
 
     suspend fun responseFriendRequest(email: String, value: Boolean): Boolean
 
-    fun getAlarmListFlow(): Flow<List<FriendAlarmData>>
+    fun getAlarmListFlow(): Flow<List<AlarmData>>
 
     suspend fun deleteAlarmMessage(time: String): Boolean
 

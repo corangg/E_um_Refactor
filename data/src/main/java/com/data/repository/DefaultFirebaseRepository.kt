@@ -11,7 +11,7 @@ import com.data.config.SCHEDULE_REQUEST_CODE
 import com.data.datasource.LocalDataSource
 import com.data.mapper.toExternal
 import com.domain.model.ChatMessageData
-import com.domain.model.FriendAlarmData
+import com.domain.model.AlarmData
 import com.domain.model.FriendRequestResult
 import com.domain.model.SignInResult
 import com.domain.model.SignUpResult
@@ -180,17 +180,17 @@ class DefaultFirebaseRepository @Inject constructor(
         }
     }
 
-    private fun DataSnapshot.toFriendAlarmData(): FriendAlarmData? {
+    private fun DataSnapshot.toAlarmData(): AlarmData? {
         val type = child("type").getValue(Int::class.java) ?: return null
         val email = child("email").getValue(String::class.java) ?: return null
         val nickname = child("nickname").getValue(String::class.java) ?: return null
         val time = key ?: return null
 
         return when (type) {
-            FRIEND_REQUEST_CODE -> FriendAlarmData.RequestFriendFriendAlarmData(email, nickname, time)
+            FRIEND_REQUEST_CODE -> AlarmData.RequestFriendAlarmData(email, nickname, time)
             FRIEND_RESPONSE_CODE -> {
                 val booleanValue = child("value").getValue(Boolean::class.java) ?: false
-                FriendAlarmData.ResponseFriendFriendAlarmData(email, nickname, booleanValue, time)
+                AlarmData.ResponseFriendAlarmData(email, nickname, booleanValue, time)
             }
             else -> null
         }
@@ -199,13 +199,13 @@ class DefaultFirebaseRepository @Inject constructor(
     override fun getAlarmListFlow() = callbackFlow {
         val replaceUserEmail = auth.currentUser?.email?.replace(".", "_") ?: return@callbackFlow
         val reference = database.getReference("alarm").child(replaceUserEmail)
-        val friendAlarmDataList = mutableListOf<FriendAlarmData>()
+        val alarmDataList = mutableListOf<AlarmData>()
 
         val initialListener = object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                friendAlarmDataList.clear()
-                friendAlarmDataList.addAll(snapshot.children.mapNotNull { it.toFriendAlarmData() })
-                trySend(friendAlarmDataList.toList()).isSuccess
+                alarmDataList.clear()
+                alarmDataList.addAll(snapshot.children.mapNotNull { it.toAlarmData() })
+                trySend(alarmDataList.toList()).isSuccess
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -216,25 +216,25 @@ class DefaultFirebaseRepository @Inject constructor(
 
         val listener = object : ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                val newAlarm = snapshot.toFriendAlarmData() ?: return
-                if (!friendAlarmDataList.any { it.time == newAlarm.time }) {
-                    friendAlarmDataList.add(newAlarm)
-                    trySend(friendAlarmDataList.toList()).isSuccess
+                val newAlarm = snapshot.toAlarmData() ?: return
+                if (!alarmDataList.any { it.time == newAlarm.time }) {
+                    alarmDataList.add(newAlarm)
+                    trySend(alarmDataList.toList()).isSuccess
                 }
             }
 
             override fun onChildRemoved(snapshot: DataSnapshot) {
-                val removedAlarm = snapshot.toFriendAlarmData() ?: return
-                friendAlarmDataList.removeAll { it.time == removedAlarm.time }
-                trySend(friendAlarmDataList.toList()).isSuccess
+                val removedAlarm = snapshot.toAlarmData() ?: return
+                alarmDataList.removeAll { it.time == removedAlarm.time }
+                trySend(alarmDataList.toList()).isSuccess
             }
 
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
-                val updatedAlarm = snapshot.toFriendAlarmData() ?: return
-                val index = friendAlarmDataList.indexOfFirst { it.time == updatedAlarm.time }
+                val updatedAlarm = snapshot.toAlarmData() ?: return
+                val index = alarmDataList.indexOfFirst { it.time == updatedAlarm.time }
                 if (index != -1) {
-                    friendAlarmDataList[index] = updatedAlarm
-                    trySend(friendAlarmDataList.toList()).isSuccess
+                    alarmDataList[index] = updatedAlarm
+                    trySend(alarmDataList.toList()).isSuccess
                 }
             }
 

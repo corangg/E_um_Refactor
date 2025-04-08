@@ -6,6 +6,7 @@ import com.domain.model.ChatMessageData
 import com.domain.model.FriendItemData
 import com.domain.model.GeoCodeData
 import com.domain.model.ReverseGeoCodeData
+import com.domain.model.ScheduleData
 import com.domain.model.SearchData
 import com.domain.model.StartEndCoordinate
 import com.domain.model.UserInfo
@@ -65,4 +66,12 @@ interface Repository {
     suspend fun getCarTime(coordinate: StartEndCoordinate): Int?
 
     suspend fun getWalkTime(coordinate: StartEndCoordinate): Int?
+
+    suspend fun upsertScheduleData(scheduleData: ScheduleData)
+
+    fun getScheduleDataListFlow(): Flow<List<ScheduleData>>
+
+    suspend fun getScheduleData(time: String): ScheduleData?
+
+    suspend fun deleteScheduleData(time: String)
 }

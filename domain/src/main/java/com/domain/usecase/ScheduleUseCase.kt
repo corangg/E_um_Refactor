@@ -1,5 +1,6 @@
 package com.domain.usecase
 
+import com.domain.model.ScheduleData
 import com.domain.model.StartEndCoordinate
 import com.domain.repository.FirebaseRepository
 import com.domain.repository.Repository
@@ -40,4 +41,15 @@ class RequestScheduleUseCase @Inject constructor(
         dateTime: String,
         scheduleAddress: String
     ) = firebaseRepository.requestSchedule(email, dateTime, scheduleAddress)
+}
+
+class AddScheduleUseCase @Inject constructor(
+    private val repository: Repository
+) {
+    suspend operator fun invoke(scheduleData: ScheduleData): Boolean {
+        val checkSchedule = repository.getScheduleData(scheduleData.time) == null
+        if (!checkSchedule) return false
+        repository.upsertScheduleData(scheduleData)
+        return true
+    }
 }

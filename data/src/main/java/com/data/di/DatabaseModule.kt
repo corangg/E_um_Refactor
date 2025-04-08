@@ -8,6 +8,7 @@ import com.data.datasource.local.room.AddressDao
 import com.data.datasource.local.room.ChatDao
 import com.data.datasource.local.room.Database
 import com.data.datasource.local.room.FriendDao
+import com.data.datasource.local.room.ScheduleDao
 import com.data.datasource.local.room.UserInfoDao
 import dagger.Module
 import dagger.Provides
@@ -43,6 +44,14 @@ object DatabaseModule {
         }
     }
 
+    private val MIGRATION_4_5 = object : Migration(4, 5) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL(
+                "CREATE TABLE LocalScheduleData (time TEXT PRIMARY KEY NOT NULL, email TEXT NOT NULL, nickname TEXT NOT NULL, startAddress TEXT NOT NULL, scheduleAddress TEXT NOT NULL, alarmTime TEXT NOT NULL, transportType TEXT NOT NULL, requestValue INTEGER NOT NULL DEFAULT 0)"
+            )
+        }
+    }
+
     @Provides
     @Singleton
     fun provideDatabase(@ApplicationContext context: Context) =
@@ -51,7 +60,7 @@ object DatabaseModule {
             Database::class.java,
             "Database.db"
         )
-            .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4)
+            .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5)
             .build()
 
     @Provides
@@ -64,5 +73,8 @@ object DatabaseModule {
     fun provideFriendDao(database: Database): FriendDao = database.friendDao()
 
     @Provides
-    fun provideChatDa0(database: Database): ChatDao = database.chatDao()
+    fun provideChatDao(database: Database): ChatDao = database.chatDao()
+
+    @Provides
+    fun provideScheduleDao(database: Database): ScheduleDao = database.scheduleDao()
 }

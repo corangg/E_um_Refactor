@@ -50,3 +50,15 @@ data class LocalChatMessageData(
     val time: String,
     val isRead: Boolean = false
 )
+
+@Entity
+data class LocalScheduleData(
+    @PrimaryKey val time: String,
+    val email: String,
+    val nickname: String,
+    val startAddress: String,
+    val scheduleAddress: String,
+    val alarmTime: String,
+    val transportType: String,
+    val requestValue: Boolean = false
+)

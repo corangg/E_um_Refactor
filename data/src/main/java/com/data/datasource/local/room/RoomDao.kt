@@ -88,3 +88,18 @@ interface ChatDao {
     @Query("DELETE FROM LocalChatData")
     suspend fun deleteChatAllData()
 }
+
+@Dao
+interface ScheduleDao {
+    @Upsert
+    suspend fun upsertScheduleData(entity: LocalScheduleData)
+
+    @Query("SELECT * FROM LOCALSCHEDULEDATA")
+    fun getScheduleDataListFlow(): Flow<List<LocalScheduleData>>
+
+    @Query("SELECT * FROM LOCALSCHEDULEDATA WHERE time= :time")
+    suspend fun getScheduleData(time: String): LocalScheduleData?
+
+    @Query("DELETE FROM LocalScheduleData WHERE time= :time")
+    suspend fun deleteScheduleData(time: String)
+}
