@@ -2,19 +2,23 @@ package com.app.ui.activity
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.PorterDuff
+import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.lifecycleScope
 import com.app.R
 import com.app.databinding.ActivityScheduleBinding
 import com.app.ui.custom.showCustomToast
 import com.core.ui.BaseActivity
 import com.core.util.setEditTextMaxValue
+import com.domain.model.ScheduleActivityType
+import com.domain.model.ScheduleResult
 import com.domain.model.SelectTransportationResult
 import com.presentation.ScheduleActivityViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
 
 @AndroidEntryPoint
 class ScheduleActivity : BaseActivity<ActivityScheduleBinding>(ActivityScheduleBinding::inflate) {
@@ -50,7 +54,7 @@ class ScheduleActivity : BaseActivity<ActivityScheduleBinding>(ActivityScheduleB
         viewModel.isAmPm.observe(lifecycleOwner, ::toggleAmPm)
         viewModel.textScheduleLocation.observe(lifecycleOwner, ::getTravelTime)
         viewModel.selectTransportType.observe(lifecycleOwner,::selectTransport)
-        viewModel.isRequestResult.observe(lifecycleOwner,::onResultRequestSchedule)
+        viewModel.scheduleResult.observe(lifecycleOwner,::onResultRequestSchedule)
     }
 
     private fun bindingOnClick() {
@@ -69,7 +73,20 @@ class ScheduleActivity : BaseActivity<ActivityScheduleBinding>(ActivityScheduleB
         }
         binding.btnRequest.setOnClickListener {
             val email = intent.getStringExtra(getString(R.string.schedule_extra_email_key))?: return@setOnClickListener
-            viewModel.requestSchedule(email)
+            val nickname = intent.getStringExtra(getString(R.string.schedule_extra_nickname_key))?: return@setOnClickListener
+            viewModel.requestSchedule(email, nickname)
+        }
+        binding.btnOk.setOnClickListener {
+            val email = intent.getStringExtra(getString(R.string.schedule_extra_email_key)) ?: return@setOnClickListener
+            val nickname = intent.getStringExtra(getString(R.string.schedule_extra_nickname_key)) ?: return@setOnClickListener
+            val time = intent.getStringExtra(getString(R.string.schedule_extra_alarm_key))?: return@setOnClickListener
+            viewModel.onOk(email, nickname, time)
+            finish()
+        }
+        binding.btnNo.setOnClickListener {
+            val email = intent.getStringExtra(getString(R.string.schedule_extra_email_key))?: return@setOnClickListener
+            val time = intent.getStringExtra(getString(R.string.schedule_extra_alarm_key))?: return@setOnClickListener
+            viewModel.onNo(email,time)
         }
     }
 
@@ -88,8 +105,8 @@ class ScheduleActivity : BaseActivity<ActivityScheduleBinding>(ActivityScheduleB
     }
 
     private fun setDate() {
-        val date = intent.getStringExtra(getString(R.string.schedule_extra_date_key)) ?: return
-        viewModel.setDateText(date)
+        val type = intent.getIntExtra(getString(R.string.schedule_extra_type_key),1)
+        setMode(type)
     }
 
     private fun setEditFilter(){
@@ -122,12 +139,52 @@ class ScheduleActivity : BaseActivity<ActivityScheduleBinding>(ActivityScheduleB
         binding.textCar.setTextColor(if (carSelected) selectColor else unSelectColor)
     }
 
-    private fun onResultRequestSchedule(result: Boolean){
-        if(result){
-            showCustomToast(getString(R.string.schedule_request_toast_1))
-            finish()
-        }else{
-            showCustomToast(getString(R.string.schedule_request_toast_2))
+    private fun onResultRequestSchedule(result: Int){
+        when(result){
+            ScheduleResult.Request.type->{
+                showCustomToast(getString(R.string.schedule_request_toast_1))
+                finish()
+            }
+            ScheduleResult.Fail.type->{
+                showCustomToast(getString(R.string.schedule_request_toast_2))
+            }
+            ScheduleResult.Accept.type->{
+                showCustomToast(getString(R.string.schedule_request_toast_3))
+            }
+            ScheduleResult.DuplicationSchedule.type->{
+                showCustomToast(getString(R.string.schedule_request_toast_4))
+            }
+        }
+    }
+
+    private fun setMode(type: Int){
+        when(type){
+            ScheduleActivityType.Create.type->{
+                binding.btnRequest.visibility = View.VISIBLE
+                binding.btnOk.visibility = View.GONE
+                binding.btnNo.visibility = View.GONE
+                val date = intent.getStringExtra(getString(R.string.schedule_extra_date_key)) ?: return
+                viewModel.setDateText(date)
+            }
+            ScheduleActivityType.Response.type->{
+                binding.btnRequest.visibility = View.GONE
+                binding.btnOk.visibility = View.VISIBLE
+                binding.btnNo.visibility = View.VISIBLE
+                val address = intent.getStringExtra(getString(R.string.schedule_extra_schedule_address_key)) ?: ""
+                viewModel.changeScheduleAddress(address)
+                val dateTime = intent.getStringExtra(getString(R.string.schedule_extra_date_key)) ?: return
+                viewModel.setDateText(dateTime.substring(0,8))
+                viewModel.setTime(dateTime.substring(8,12))
+                binding.btnAm.isFocusable = false
+                binding.btnPm.isFocusable = false
+                binding.editHour.isFocusable = false
+                binding.editMinute.isFocusable = false
+                binding.textScheduleLocation.isFocusable = false
+            }
+            ScheduleActivityType.Edit.type->{
+
+            }
+            else->{}
         }
     }
 }

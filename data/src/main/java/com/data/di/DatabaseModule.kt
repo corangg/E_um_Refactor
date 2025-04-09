@@ -52,6 +52,30 @@ object DatabaseModule {
         }
     }
 
+    private val MIGRATION_5_6 = object : Migration(5, 6) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL(
+                """CREATE TABLE LocalScheduleData_new (time TEXT PRIMARY KEY NOT NULL, email TEXT NOT NULL, nickname TEXT NOT NULL, startAddress TEXT NOT NULL, scheduleAddress TEXT NOT NULL, alarmTime TEXT NOT NULL, transportType INTEGER NOT NULL DEFAULT 0, requestValue INTEGER NOT NULL DEFAULT 0)""".trimIndent()
+            )
+            db.execSQL(
+                """
+            INSERT INTO LocalScheduleData_new (
+                time, email, nickname, startAddress, scheduleAddress,
+                alarmTime, transportType, requestValue
+            )
+            SELECT 
+                time, email, nickname, startAddress, scheduleAddress,
+                alarmTime,
+                CAST(transportType AS INTEGER),
+                requestValue
+            FROM LocalScheduleData
+            """.trimIndent()
+            )
+            db.execSQL("DROP TABLE LocalScheduleData")
+            db.execSQL("ALTER TABLE LocalScheduleData_new RENAME TO LocalScheduleData")
+        }
+    }
+
     @Provides
     @Singleton
     fun provideDatabase(@ApplicationContext context: Context) =
@@ -60,7 +84,7 @@ object DatabaseModule {
             Database::class.java,
             "Database.db"
         )
-            .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5)
+            .addMigrations(MIGRATION_1_2, MIGRATION_2_3, MIGRATION_3_4, MIGRATION_4_5, MIGRATION_5_6)
             .build()
 
     @Provides

@@ -8,10 +8,11 @@ import com.core.util.getLocalTimeToString
 import com.data.config.FRIEND_REQUEST_CODE
 import com.data.config.FRIEND_RESPONSE_CODE
 import com.data.config.SCHEDULE_REQUEST_CODE
+import com.data.config.SCHEDULE_RESPONSE_CODE
 import com.data.datasource.LocalDataSource
 import com.data.mapper.toExternal
-import com.domain.model.ChatMessageData
 import com.domain.model.AlarmData
+import com.domain.model.ChatMessageData
 import com.domain.model.FriendRequestResult
 import com.domain.model.SignInResult
 import com.domain.model.SignUpResult
@@ -192,6 +193,24 @@ class DefaultFirebaseRepository @Inject constructor(
                 val booleanValue = child("value").getValue(Boolean::class.java) ?: false
                 AlarmData.ResponseFriendAlarmData(email, nickname, booleanValue, time)
             }
+
+            SCHEDULE_REQUEST_CODE -> {
+                val address = child("address").getValue(String::class.java) ?: ""
+                val scheduleTime = child("dateTime").getValue(String::class.java) ?: "000000000000"
+                AlarmData.RequestScheduleAlarmData(
+                    email = email,
+                    nickName = nickname,
+                    time = time,
+                    address = address,
+                    scheduleTime = scheduleTime
+                )
+            }
+
+            SCHEDULE_RESPONSE_CODE -> {
+                val acceptance = child("value").getValue(Boolean::class.java) ?: false
+                AlarmData.ResponseScheduleAlarmData(email, nickname, time, acceptance)
+            }
+
             else -> null
         }
     }
@@ -442,6 +461,26 @@ class DefaultFirebaseRepository @Inject constructor(
 
         awaitClose {
             listenerRegistration.remove()
+        }
+    }
+
+    override suspend fun responseScheduleRequest(email: String, value: Boolean)= withContext(ioDispatcher) {
+        val userInfo = localDataSource.getUserInfoData() ?: return@withContext false
+        val replaceUserEmail = userInfo.email.replace(".", "_")
+        try {
+            database.reference.child("alarm").child(email).child(getLocalTimeToString()).apply {
+                updateChildren(
+                    mapOf(
+                        "type" to SCHEDULE_RESPONSE_CODE,
+                        "email" to replaceUserEmail,
+                        "nickname" to userInfo.nickname,
+                        "value" to value
+                    )
+                ).await()
+            }
+            true
+        } catch (e: Exception) {
+            false
         }
     }
 }

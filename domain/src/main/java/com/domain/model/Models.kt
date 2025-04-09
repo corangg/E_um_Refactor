@@ -71,13 +71,14 @@ sealed class AlarmData(open val time: String) {
         val address: String,
         val scheduleTime: String,
         override val time: String
-    ) : ScheduleAlarmData(time)
+    ) : AlarmData(time)
 
     data class ResponseScheduleAlarmData(
         val email: String,
         val nickName: String,
-        override val time: String
-    ) : ScheduleAlarmData(time)
+        override val time: String,
+        val acceptance: Boolean
+    ) : AlarmData(time)
 }
 
 sealed class ScheduleAlarmData(open val time: String){
@@ -258,6 +259,20 @@ data class ScheduleData(
     val startAddress: String,
     val scheduleAddress: String,
     val alarmTime: String,
-    val transportType: String,
+    val transportType: Int,
     val requestValue: Boolean = false
 )
+
+sealed class ScheduleActivityType(val type: Int) {
+    data object Create : ScheduleActivityType(1)
+    data object Response : ScheduleActivityType(2)
+    data object Edit : ScheduleActivityType(3)
+}
+
+sealed class ScheduleResult(val type: Int) {
+    data object Request : ScheduleActivityType(1)
+    data object Fail : ScheduleActivityType(2)
+    data object Accept : ScheduleActivityType(3)
+    data object DuplicationSchedule : ScheduleActivityType(4)
+}
+

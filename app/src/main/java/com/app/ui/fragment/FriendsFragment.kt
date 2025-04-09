@@ -3,6 +3,7 @@ package com.app.ui.fragment
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.icu.util.Calendar
+import android.provider.ContactsContract.CommonDataKinds.Nickname
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.LifecycleOwner
@@ -18,6 +19,7 @@ import com.bumptech.glide.Glide
 import com.core.ui.BaseFragment
 import com.core.ui.custom.ThreeButtonCustomDialog
 import com.domain.model.FriendItemData
+import com.domain.model.ScheduleActivityType
 import com.presentation.FriendsFragmentViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Locale
@@ -92,7 +94,7 @@ class FriendsFragment : BaseFragment<FragmentFriendsBinding>(FragmentFriendsBind
             customDialog.dismissDialog()
         }
         customDialog.setButtonClickListener(R.id.btn_2) {
-            showDatePicker(data.email)
+            showDatePicker(data.email, data.nickName)
         }
         customDialog.setButtonClickListener(R.id.btn_3) {
             customDialog.dismissDialog()
@@ -101,7 +103,7 @@ class FriendsFragment : BaseFragment<FragmentFriendsBinding>(FragmentFriendsBind
         customDialog.showDialog()
     }
 
-    private fun showDatePicker(email: String) {
+    private fun showDatePicker(email: String, nickname: String) {
         val calendar = Calendar.getInstance()
 
         val year = calendar.get(Calendar.YEAR)
@@ -118,6 +120,8 @@ class FriendsFragment : BaseFragment<FragmentFriendsBinding>(FragmentFriendsBind
                 val intent = Intent(requireContext(), ScheduleActivity::class.java)
                 intent.putExtra(getString(R.string.schedule_extra_date_key), selectedDate)
                 intent.putExtra(getString(R.string.schedule_extra_email_key), email)
+                intent.putExtra(getString(R.string.schedule_extra_nickname_key), nickname)
+                intent.putExtra(getString(R.string.schedule_extra_type_key), ScheduleActivityType.Create.type)
                 startActivity(intent)
             },
             year, month, day

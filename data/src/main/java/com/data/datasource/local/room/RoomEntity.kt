@@ -59,6 +59,6 @@ data class LocalScheduleData(
     val startAddress: String,
     val scheduleAddress: String,
     val alarmTime: String,
-    val transportType: String,
+    val transportType: Int,
     val requestValue: Boolean = false
 )

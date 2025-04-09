@@ -11,6 +11,7 @@ import com.domain.model.AlarmData
 import com.domain.usecase.DeleteAlarmUseCase
 import com.domain.usecase.GetAlarmListFlow
 import com.domain.usecase.ResponseFriendRequestUseCase
+import com.domain.usecase.ResponseScheduleUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.MainCoroutineDispatcher
@@ -21,6 +22,7 @@ class RequestFriendAlarmViewModel @Inject constructor(
     getAlarmListFlow: GetAlarmListFlow,
     private val responseFriendRequestUseCase: ResponseFriendRequestUseCase,
     private val deleteAlarmUseCase: DeleteAlarmUseCase,
+    private val responseScheduleUseCase: ResponseScheduleUseCase,
     @MainDispatcher mainDispatcher: MainCoroutineDispatcher,
     @DefaultDispatcher defaultDispatcher: CoroutineDispatcher,
     @IoDispatcher ioDispatcher: CoroutineDispatcher
@@ -37,5 +39,9 @@ class RequestFriendAlarmViewModel @Inject constructor(
     fun checkFriendResponse(position: Int) = onUiWork {
         val requestAlarmData = alarmListLiveData.value?.getOrNull(position) ?: return@onUiWork
         deleteAlarmUseCase(requestAlarmData.time)
+    }
+
+    fun refuseSchedule(alarmData: AlarmData.RequestScheduleAlarmData) = onIoWork {
+        responseScheduleUseCase(alarmData.email, alarmData.time, false)
     }
 }

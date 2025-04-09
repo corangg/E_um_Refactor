@@ -126,11 +126,12 @@
     <string name="add_friend_request_toast_2">오류가 발생 했습니다.</string>
     <string name="add_friend_request_toast_3">이미 친구 입니다.</string>
 
-    <!--Alarm Friend-->
+    <!--Alarm-->
     <string name="add_friend_request_alarm_title">알람</string>
     <string name="add_friend_request_alarm_item_btn_ok">수락</string>
     <string name="add_friend_request_alarm_item_btn_no">거절</string>
     <string name="add_friend_request_alarm_item_message">님으로 부터 친구 요청이 들어 왔습니다.</string>
+    <string name="schedule_request_alarm_item_message">님이 약속을 잡고 싶어 합니다.</string>
 
     <string name="add_friend_request_alarm_toast">친구 요청을 수락 했습니다.</string>
 
@@ -153,8 +154,12 @@
 
     <!--Schedule-->
     <string name="schedule_fragment_label">scheduleFragment</string>
+    <string name="schedule_extra_type_key">type</string>
     <string name="schedule_extra_date_key">date</string>
     <string name="schedule_extra_email_key">scheduleEmail</string>
+    <string name="schedule_extra_alarm_key">alarm</string>
+    <string name="schedule_extra_nickname_key">nickname</string>
+    <string name="schedule_extra_schedule_address_key">scheduleAddress</string>
     <string name="schedule_activity_title">약속 설정</string>
 
     <string name="schedule_activity_am">am</string>
@@ -169,6 +174,8 @@
     <string name="schedule_activity_schedule_btn_no">거절</string>
     <string name="schedule_request_toast_1">약속 요청을 완료 했습니다.</string>
     <string name="schedule_request_toast_2">오류가 발생 했습니다.</string>
+    <string name="schedule_request_toast_3">약속 요청을 수락 했습니다.</string>
+    <string name="schedule_request_toast_4">약속이 있는 시간입니다.</string>
 
     <!--Map-->
     <string name="map_activity_title">지도</string>

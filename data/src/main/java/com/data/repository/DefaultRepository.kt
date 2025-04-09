@@ -132,7 +132,7 @@ class DefaultRepository @Inject constructor(
 
     override suspend fun getGeoCode(address: String) = withContext(ioDispatcher) {
         val cleanedAddress = address.trim()
-            .replace(",", "")
+            .substringBefore(",")
             .replace(Regex("\\s+"), " ")
         remoteNaverMapDataSource.getAddressToGeoCode(cleanedAddress).toExternal()
     }

@@ -43,13 +43,32 @@ class RequestScheduleUseCase @Inject constructor(
     ) = firebaseRepository.requestSchedule(email, dateTime, scheduleAddress)
 }
 
+class CheckScheduleUseCase @Inject constructor(
+    private val repository: Repository
+) {
+    suspend operator fun invoke(time: String): Boolean {
+        return repository.getScheduleData(time) == null
+    }
+}
+
 class AddScheduleUseCase @Inject constructor(
     private val repository: Repository
 ) {
-    suspend operator fun invoke(scheduleData: ScheduleData): Boolean {
-        val checkSchedule = repository.getScheduleData(scheduleData.time) == null
-        if (!checkSchedule) return false
-        repository.upsertScheduleData(scheduleData)
-        return true
+    suspend operator fun invoke(scheduleData: ScheduleData) = repository.upsertScheduleData(scheduleData)
+}
+
+class ResponseScheduleUseCase @Inject constructor(
+    private val firebaseRepository: FirebaseRepository
+) {
+    suspend operator fun invoke(
+        email: String,
+        time: String,
+        result: Boolean
+    ):Boolean {
+        return if (firebaseRepository.responseScheduleRequest(email, result)){
+            firebaseRepository.deleteAlarmMessage(time)
+        }else{
+            false
+        }
     }
 }

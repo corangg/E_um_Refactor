@@ -217,16 +217,16 @@
     <dimen name="value_add_friend_profile_radius">28dp</dimen>
 
     <!--Alarm Activity-->
-    <dimen name="margin_request_friend_alarm_btn_top">16dp</dimen>
-    <dimen name="margin_request_friend_alarm_btn_end">24dp</dimen>
+    <dimen name="margin_request_alarm_btn_top">16dp</dimen>
+    <dimen name="margin_request_alarm_btn_end">24dp</dimen>
 
-    <dimen name="padding_request_friend_alarm_horizontal">24dp</dimen>
-    <dimen name="padding_request_friend_alarm_top">12dp</dimen>
+    <dimen name="padding_request_alarm_horizontal">24dp</dimen>
+    <dimen name="padding_request_alarm_top">12dp</dimen>
 
-    <dimen name="text_request_friend_alarm_message">18sp</dimen>
-    <dimen name="text_request_friend_alarm_btn">16sp</dimen>
+    <dimen name="text_request_alarm_message">18sp</dimen>
+    <dimen name="text_request_alarm_btn">16sp</dimen>
 
-    <dimen name="value_request_friend_alarm_btn_height">32dp</dimen>
+    <dimen name="value_request_alarm_btn_height">32dp</dimen>
 
     <!--Friend Detail Dialog-->
     <dimen name="margin_friend_detail_nickname_top">16dp</dimen>

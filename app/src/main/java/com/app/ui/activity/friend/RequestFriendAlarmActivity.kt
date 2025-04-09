@@ -1,14 +1,17 @@
 package com.app.ui.activity.friend
 
+import android.content.Intent
 import androidx.activity.viewModels
 import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.R
 import com.app.databinding.ActivityRequestFriendAlarmBinding
+import com.app.ui.activity.ScheduleActivity
 import com.app.ui.adapter.AlarmAdapter
 import com.app.ui.custom.showCustomToast
 import com.core.ui.BaseActivity
 import com.domain.model.AlarmData
+import com.domain.model.ScheduleActivityType
 import com.presentation.RequestFriendAlarmViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -47,6 +50,23 @@ class RequestFriendAlarmActivity :
 
         adapter.setOnItemResponseListener {
             viewModel.checkFriendResponse(it)
+        }
+
+        adapter.setOnItemScheduleRequestListener{position, value, alarmData ->
+            if(alarmData is AlarmData.RequestScheduleAlarmData){
+                if(value){
+                    val intent = Intent(this, ScheduleActivity::class.java)
+                    intent.putExtra(getString(R.string.schedule_extra_date_key), alarmData.scheduleTime)
+                    intent.putExtra(getString(R.string.schedule_extra_email_key), alarmData.email)
+                    intent.putExtra(getString(R.string.schedule_extra_schedule_address_key), alarmData.address)
+                    intent.putExtra(getString(R.string.schedule_extra_alarm_key), alarmData.time)
+                    intent.putExtra(getString(R.string.schedule_extra_nickname_key), alarmData.nickName)
+                    intent.putExtra(getString(R.string.schedule_extra_type_key), ScheduleActivityType.Response.type)
+                    startActivity(intent)
+                }else{
+                    viewModel.refuseSchedule(alarmData)
+                }
+            }
         }
     }
 

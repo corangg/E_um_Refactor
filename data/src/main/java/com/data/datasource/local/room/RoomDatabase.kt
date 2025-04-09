@@ -10,7 +10,7 @@ import androidx.room.RoomDatabase
         LocalFriendData::class,
         LocalChatData::class,
         LocalScheduleData::class],
-    version = 5,
+    version = 6,
     exportSchema = false
 )
 

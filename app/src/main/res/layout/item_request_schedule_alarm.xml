@@ -20,7 +20,7 @@
             android:textSize="@dimen/text_request_alarm_message"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="**님으로 부터 친구 요청이 들어 왔습니다." />
+            tools:text="**님이 약속을 잡고 싶어 합니다." />
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btn_ok"
