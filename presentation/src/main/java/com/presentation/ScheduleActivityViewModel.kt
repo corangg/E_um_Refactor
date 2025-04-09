@@ -177,11 +177,11 @@ constructor(
 
     fun onOk(email: String, nickname: String, time: String) = onUiWork {
         addSchedule(email, nickname, true)
-        responseScheduleUseCase(email, time, true)
+        responseScheduleUseCase(email, time, true, getDateTime())
         scheduleResult.value = ScheduleResult.Accept.type
     }
 
     fun onNo(email: String, time: String) = onUiWork {
-        responseScheduleUseCase(email,time,false)
+        responseScheduleUseCase(email,time,false, getDateTime())
     }
 }

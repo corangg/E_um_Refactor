@@ -8,6 +8,7 @@ import com.app.R
 import com.app.databinding.ItemRequestFriendAlarmBinding
 import com.app.databinding.ItemRequestScheduleAlarmBinding
 import com.app.databinding.ItemResponseFriendAlarmBinding
+import com.app.databinding.ItemResponseScheduleAlarmBinding
 import com.core.recyclerview.BaseRecyclerView
 import com.core.recyclerview.BaseViewHolder
 import com.data.config.FRIEND_REQUEST_CODE
@@ -34,6 +35,7 @@ class AlarmAdapter : BaseRecyclerView<AlarmData, BaseViewHolder<AlarmData>>(obje
     private var onItemRequestListener: ((Int, Boolean) -> Unit)? = null
     private var onItemResponseListener: ((Int) -> Unit)? = null
     private var onItemScheduleRequestListener: ((Int, Boolean, AlarmData) -> Unit)? = null
+    private var onItemScheduleResponseListener: ((Int, AlarmData) -> Unit)? = null
 
     override fun getItemViewType(position: Int): Int {
         return when (getItem(position)) {
@@ -68,6 +70,12 @@ class AlarmAdapter : BaseRecyclerView<AlarmData, BaseViewHolder<AlarmData>>(obje
                 )
             )
 
+            SCHEDULE_RESPONSE_CODE -> ResponseScheduleAlarmViewHolder(
+                ItemResponseScheduleAlarmBinding.inflate(
+                    LayoutInflater.from(mContext), parent, false
+                )
+            )
+
             else -> throw IllegalArgumentException("Unknown view type")
         }
     }
@@ -79,6 +87,7 @@ class AlarmAdapter : BaseRecyclerView<AlarmData, BaseViewHolder<AlarmData>>(obje
             is RequestFriendAlarmViewHolder -> holder.addBind(position, onItemRequestListener)
             is ResponseFriendAlarmViewHolder -> holder.addBind(position, onItemResponseListener)
             is RequestScheduleAlarmViewHolder -> holder.addBind(item,position, onItemScheduleRequestListener)
+            is ResponseScheduleAlarmViewHolder -> holder.addBind(item, position, onItemScheduleResponseListener)
         }
     }
 
@@ -92,6 +101,10 @@ class AlarmAdapter : BaseRecyclerView<AlarmData, BaseViewHolder<AlarmData>>(obje
 
     fun setOnItemScheduleRequestListener(listener: (Int, Boolean, AlarmData) -> Unit){
         onItemScheduleRequestListener = listener
+    }
+
+    fun setOnItemScheduleResponseListener(listener: (Int, AlarmData) -> Unit){
+        onItemScheduleResponseListener = listener
     }
 
 
@@ -178,6 +191,37 @@ class AlarmAdapter : BaseRecyclerView<AlarmData, BaseViewHolder<AlarmData>>(obje
 
             binding.btnNo.setOnClickListener {
                 requestListener?.invoke(position, true, item)
+            }
+        }
+    }
+
+    inner class ResponseScheduleAlarmViewHolder(
+        private val binding: ItemResponseScheduleAlarmBinding
+    ) : BaseViewHolder<AlarmData>(binding) {
+
+        override fun bind(
+            item: AlarmData,
+            position: Int,
+            clickListener: ((AlarmData, Int) -> Unit)?
+        ) {
+            if (item is AlarmData.ResponseScheduleAlarmData) {
+                val defaultMessage = if(item.acceptance){
+                    mContext.getString(R.string.schedule_response_schedule_accept_item_message)
+                }else{
+                    mContext.getString(R.string.schedule_response_schedule_refuse_item_message)
+                }
+                val message = "${item.nickName} $defaultMessage"
+                binding.textMessage.text = message
+            }
+        }
+
+        fun addBind(
+            item: AlarmData,
+            position: Int,
+            responseListener: ((Int, AlarmData) -> Unit)?
+        ) {
+            binding.btnResponseOk.setOnClickListener {
+                responseListener?.invoke(position, item)
             }
         }
     }

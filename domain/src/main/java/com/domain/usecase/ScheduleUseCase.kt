@@ -1,5 +1,6 @@
 package com.domain.usecase
 
+import com.domain.model.AlarmData
 import com.domain.model.ScheduleData
 import com.domain.model.StartEndCoordinate
 import com.domain.repository.FirebaseRepository
@@ -63,12 +64,27 @@ class ResponseScheduleUseCase @Inject constructor(
     suspend operator fun invoke(
         email: String,
         time: String,
-        result: Boolean
+        result: Boolean,
+        dateTime: String
     ):Boolean {
-        return if (firebaseRepository.responseScheduleRequest(email, result)){
+        return if (firebaseRepository.responseScheduleRequest(email, result, dateTime)){
             firebaseRepository.deleteAlarmMessage(time)
         }else{
             false
         }
+    }
+}
+
+class ProcessScheduleResponseUseCase @Inject constructor(
+    private val repository: Repository,
+    private val firebaseRepository: FirebaseRepository
+) {
+    suspend operator fun invoke(alarmData: AlarmData.ResponseScheduleAlarmData){
+        if(alarmData.acceptance){
+            repository.updateScheduleAccept(alarmData.dateTime)
+        }else{
+            repository.deleteScheduleData(alarmData.dateTime)
+        }
+        firebaseRepository.deleteAlarmMessage(alarmData.time)
     }
 }

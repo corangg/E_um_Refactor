@@ -74,4 +74,6 @@ interface Repository {
     suspend fun getScheduleData(time: String): ScheduleData?
 
     suspend fun deleteScheduleData(time: String)
+
+    suspend fun updateScheduleAccept(time: String)
 }

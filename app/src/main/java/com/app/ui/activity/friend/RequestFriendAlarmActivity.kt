@@ -68,6 +68,12 @@ class RequestFriendAlarmActivity :
                 }
             }
         }
+
+        adapter.setOnItemScheduleResponseListener {position, alarmData ->
+            if(alarmData is AlarmData.ResponseScheduleAlarmData){
+                viewModel.processScheduleResponse(alarmData)
+            }
+        }
     }
 
     private fun setRecyclerViewList(list: List<AlarmData>) {

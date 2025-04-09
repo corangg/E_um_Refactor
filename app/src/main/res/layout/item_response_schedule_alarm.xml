@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingHorizontal="@dimen/padding_request_alarm_horizontal"
+        android:paddingTop="@dimen/padding_request_alarm_top">
+
+        <TextView
+            android:id="@+id/text_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_request_alarm_message"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="**님이 친구 요청을 수락 했습니다." />
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btn_response_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/value_request_alarm_btn_height"
+            android:layout_marginTop="@dimen/margin_request_alarm_btn_top"
+            android:background="@drawable/bg_btn_round_hollow"
+            android:text="@string/add_friend_response_alarm_item_btn_ok"
+            android:textColor="@color/theme_color"
+            android:textSize="@dimen/text_request_alarm_btn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_message" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

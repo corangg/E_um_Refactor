@@ -62,5 +62,5 @@ interface FirebaseRepository {
         scheduleAddress: String
     ): Boolean
 
-    suspend fun responseScheduleRequest(email: String,value: Boolean): Boolean
+    suspend fun responseScheduleRequest(email: String,value: Boolean, dateTime: String): Boolean
 }

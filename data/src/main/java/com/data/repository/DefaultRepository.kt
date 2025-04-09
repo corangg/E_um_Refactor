@@ -176,4 +176,9 @@ class DefaultRepository @Inject constructor(
     override suspend fun deleteScheduleData(time: String) = withContext(ioDispatcher) {
         localDataSource.deleteScheduleData(time)
     }
+
+    override suspend fun updateScheduleAccept(time: String) = withContext(ioDispatcher) {
+        val scheduleData = localDataSource.getScheduleData(time)?: return@withContext
+        localDataSource.upsertScheduleData(scheduleData.copy(requestValue = true))
+    }
 }

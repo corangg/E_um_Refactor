@@ -208,7 +208,8 @@ class DefaultFirebaseRepository @Inject constructor(
 
             SCHEDULE_RESPONSE_CODE -> {
                 val acceptance = child("value").getValue(Boolean::class.java) ?: false
-                AlarmData.ResponseScheduleAlarmData(email, nickname, time, acceptance)
+                val dateTime = child("dateTime").getValue(String::class.java) ?: "000000000000"
+                AlarmData.ResponseScheduleAlarmData(email, nickname, time, dateTime, acceptance)
             }
 
             else -> null
@@ -464,7 +465,7 @@ class DefaultFirebaseRepository @Inject constructor(
         }
     }
 
-    override suspend fun responseScheduleRequest(email: String, value: Boolean)= withContext(ioDispatcher) {
+    override suspend fun responseScheduleRequest(email: String, value: Boolean, dateTime: String)= withContext(ioDispatcher) {
         val userInfo = localDataSource.getUserInfoData() ?: return@withContext false
         val replaceUserEmail = userInfo.email.replace(".", "_")
         try {
@@ -474,7 +475,8 @@ class DefaultFirebaseRepository @Inject constructor(
                         "type" to SCHEDULE_RESPONSE_CODE,
                         "email" to replaceUserEmail,
                         "nickname" to userInfo.nickname,
-                        "value" to value
+                        "value" to value,
+                        "scheduleTime" to dateTime
                     )
                 ).await()
             }

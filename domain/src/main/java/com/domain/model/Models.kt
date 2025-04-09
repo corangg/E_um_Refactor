@@ -77,23 +77,9 @@ sealed class AlarmData(open val time: String) {
         val email: String,
         val nickName: String,
         override val time: String,
+        val dateTime: String,
         val acceptance: Boolean
     ) : AlarmData(time)
-}
-
-sealed class ScheduleAlarmData(open val time: String){
-
-    data class RequestScheduleAlarmData(
-        val email: String,
-        val nickName: String,
-        override val time: String
-    ) : ScheduleAlarmData(time)
-
-    data class ResponseScheduleAlarmData(
-        val email: String,
-        val nickName: String,
-        override val time: String
-    ) : ScheduleAlarmData(time)
 }
 
 sealed class SignUpResult {

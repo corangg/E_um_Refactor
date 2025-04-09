@@ -137,6 +137,8 @@
 
     <string name="add_friend_response_alarm_item_btn_ok">확인</string>
     <string name="add_friend_response_alarm_item_message">님이 친구 요청을 수락 했습니다</string>
+    <string name="schedule_response_schedule_accept_item_message">님이 약속을 수락 했습니다</string>
+    <string name="schedule_response_schedule_refuse_item_message">님이 약속을 거절 했습니다</string>
 
 
     <!--Friend Detail-->
