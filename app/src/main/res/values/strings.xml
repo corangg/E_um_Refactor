@@ -46,7 +46,6 @@
 
     <!--Main-->
     <string name="main_nav_menu_chat">채팅</string>
-    <string name="main_nav_menu_schedule">일정</string>
 
     <!--Profile-->
     <string name="main_nav_menu_profile">프로필</string>
@@ -159,7 +158,9 @@
     <string name="schedule_extra_type_key">type</string>
     <string name="schedule_extra_date_key">date</string>
     <string name="schedule_extra_email_key">scheduleEmail</string>
+    <string name="schedule_extra_key_code_key">keyCode</string>
     <string name="schedule_extra_alarm_key">alarm</string>
+    <string name="schedule_extra_transport_type_key">transport</string>
     <string name="schedule_extra_nickname_key">nickname</string>
     <string name="schedule_extra_schedule_address_key">scheduleAddress</string>
     <string name="schedule_activity_title">약속 설정</string>
@@ -178,6 +179,12 @@
     <string name="schedule_request_toast_2">오류가 발생 했습니다.</string>
     <string name="schedule_request_toast_3">약속 요청을 수락 했습니다.</string>
     <string name="schedule_request_toast_4">약속이 있는 시간입니다.</string>
+
+    <string name="schedule_item_nickname">님과의 약속</string>
+    <string name="schedule_item_am">오전</string>
+    <string name="schedule_item_pm">오후</string>
+
+    <string name="main_nav_menu_schedule">약속</string>
 
     <!--Map-->
     <string name="map_activity_title">지도</string>

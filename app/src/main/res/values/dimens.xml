@@ -279,7 +279,7 @@
     <dimen name="img_chat_room_item_size">32dp</dimen>
     <dimen name="img_chat_room_my_profile">64dp</dimen>
 
-    <!--Chat Activity-->
+    <!--Schedule Activity-->
     <dimen name="margin_schedule_default_horizontal">36dp</dimen>
     <dimen name="margin_schedule_top">36dp</dimen>
     <dimen name="margin_schedule_start_date">20dp</dimen>
@@ -308,10 +308,8 @@
     <dimen name="text_schedule_default">24sp</dimen>
     <dimen name="text_schedule_location">20sp</dimen>
     <dimen name="text_schedule_transport">14sp</dimen>
-    <dimen name="text_schedule_">0sp</dimen>
 
     <dimen name="value_schedule_am_pm_btn">64dp</dimen>
-    <dimen name="value_schedule_">0dp</dimen>
 
 
     <!--Map Activity-->
@@ -327,6 +325,28 @@
 
     <dimen name="value_map_">0dp</dimen>
 
+
+    <!--Schedule Fragment-->
+    <dimen name="margin_schedule_fragment_top">10dp</dimen>
+    <dimen name="margin_schedule_fragment_horizontal">14dp</dimen>
+    <dimen name="margin_schedule_fragment_nickname_end">10dp</dimen>
+    <dimen name="margin_schedule_fragment_am_pm_end">6dp</dimen>
+    <dimen name="margin_schedule_fragment_date_end">6dp</dimen>
+    <dimen name="margin_schedule_fragment_address_top">8dp</dimen>
+
+    <dimen name="padding_schedule_fragment_horizontal">12dp</dimen>
+    <dimen name="padding_schedule_fragment_vertical">10dp</dimen>
+    <dimen name="padding_schedule_fragment_am_pm_horizontal">8dp</dimen>
+    <dimen name="padding_schedule_fragment_am_pm_vertical">2dp</dimen>
+
+    <dimen name="img_schedule_fragment_">32dp</dimen>
+
+    <dimen name="text_schedule_fragment_nickname">14sp</dimen>
+    <dimen name="text_schedule_fragment_am_pm">14sp</dimen>
+    <dimen name="text_schedule_fragment_time">14sp</dimen>
+    <dimen name="text_schedule_fragment_address">14sp</dimen>
+
+    <dimen name="value_schedule_fragment_">0dp</dimen>
 
     <!--
     <dimen name="margin_">0dp</dimen>

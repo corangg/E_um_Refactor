@@ -7,7 +7,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.lifecycleScope
 import com.app.R
 import com.app.databinding.ActivityScheduleBinding
 import com.app.ui.custom.showCustomToast
@@ -18,7 +17,6 @@ import com.domain.model.ScheduleResult
 import com.domain.model.SelectTransportationResult
 import com.presentation.ScheduleActivityViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.delay
 
 @AndroidEntryPoint
 class ScheduleActivity : BaseActivity<ActivityScheduleBinding>(ActivityScheduleBinding::inflate) {
@@ -79,15 +77,22 @@ class ScheduleActivity : BaseActivity<ActivityScheduleBinding>(ActivityScheduleB
         binding.btnOk.setOnClickListener {
             val email = intent.getStringExtra(getString(R.string.schedule_extra_email_key)) ?: return@setOnClickListener
             val nickname = intent.getStringExtra(getString(R.string.schedule_extra_nickname_key)) ?: return@setOnClickListener
-            val time = intent.getStringExtra(getString(R.string.schedule_extra_alarm_key))?: return@setOnClickListener
-            viewModel.onOk(email, nickname, time)
+            val key = intent.getStringExtra(getString(R.string.schedule_extra_key_code_key))?: return@setOnClickListener
+            viewModel.onOk(email, nickname, key)
             finish()
         }
         binding.btnNo.setOnClickListener {
             val email = intent.getStringExtra(getString(R.string.schedule_extra_email_key))?: return@setOnClickListener
-            val time = intent.getStringExtra(getString(R.string.schedule_extra_alarm_key))?: return@setOnClickListener
-            viewModel.onNo(email,time)
+            val key = intent.getStringExtra(getString(R.string.schedule_extra_key_code_key))?: return@setOnClickListener
+            viewModel.onNo(email,key)
         }
+
+        binding.btnSave.setOnClickListener {
+            val dateTime = intent.getStringExtra(getString(R.string.schedule_extra_date_key)) ?: return@setOnClickListener
+            viewModel.onSave(dateTime)
+        }
+
+        binding.btnCancel.setOnClickListener { finish() }
     }
 
     private fun toggleAmPm(value: Boolean) {
@@ -161,13 +166,10 @@ class ScheduleActivity : BaseActivity<ActivityScheduleBinding>(ActivityScheduleB
         when(type){
             ScheduleActivityType.Create.type->{
                 binding.btnRequest.visibility = View.VISIBLE
-                binding.btnOk.visibility = View.GONE
-                binding.btnNo.visibility = View.GONE
                 val date = intent.getStringExtra(getString(R.string.schedule_extra_date_key)) ?: return
                 viewModel.setDateText(date)
             }
             ScheduleActivityType.Response.type->{
-                binding.btnRequest.visibility = View.GONE
                 binding.btnOk.visibility = View.VISIBLE
                 binding.btnNo.visibility = View.VISIBLE
                 val address = intent.getStringExtra(getString(R.string.schedule_extra_schedule_address_key)) ?: ""
@@ -182,7 +184,15 @@ class ScheduleActivity : BaseActivity<ActivityScheduleBinding>(ActivityScheduleB
                 binding.textScheduleLocation.isFocusable = false
             }
             ScheduleActivityType.Edit.type->{
-
+                binding.btnSave.visibility = View.VISIBLE
+                binding.btnCancel.visibility = View.VISIBLE
+                binding.btnAm.isFocusable = false
+                binding.btnPm.isFocusable = false
+                binding.editHour.isFocusable = false
+                binding.editMinute.isFocusable = false
+                binding.textScheduleLocation.isFocusable = false
+                val dateTime = intent.getStringExtra(getString(R.string.schedule_extra_date_key)) ?: return
+                viewModel.setSchedule(dateTime)
             }
             else->{}
         }

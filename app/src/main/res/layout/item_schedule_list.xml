@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/item_friend"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingHorizontal="@dimen/padding_schedule_fragment_horizontal"
+        android:paddingBottom="@dimen/padding_schedule_fragment_vertical">
+
+        <TextView
+            android:id="@+id/text_item_nickname"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_schedule_fragment_horizontal"
+            android:layout_marginTop="@dimen/margin_schedule_fragment_top"
+            android:layout_marginEnd="@dimen/margin_schedule_fragment_nickname_end"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textSize="@dimen/text_schedule_fragment_nickname"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@+id/text_date"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="이강현님과 의 약속" />
+
+        <TextView
+            android:id="@+id/text_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_schedule_fragment_date_end"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textSize="@dimen/text_schedule_fragment_time"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/text_time"
+            app:layout_constraintEnd_toStartOf="@id/text_am_pm"
+            app:layout_constraintTop_toTopOf="@id/text_time"
+            tools:text="2025-10-05" />
+
+
+        <TextView
+            android:id="@+id/text_am_pm"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_friend_my_nickname_start"
+            android:layout_marginEnd="@dimen/margin_schedule_fragment_am_pm_end"
+            android:background="@drawable/bg_btn_toggle_on"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:paddingHorizontal="@dimen/padding_schedule_fragment_am_pm_horizontal"
+            android:paddingVertical="@dimen/padding_schedule_fragment_am_pm_vertical"
+            android:textColor="@color/white"
+            android:textSize="@dimen/text_schedule_fragment_am_pm"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@id/text_time"
+            app:layout_constraintEnd_toStartOf="@id/text_time"
+            app:layout_constraintTop_toTopOf="@id/text_time"
+            tools:text="오전" />
+
+        <TextView
+            android:id="@+id/text_time"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_schedule_fragment_horizontal"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textSize="@dimen/text_schedule_fragment_time"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/text_item_nickname"
+            tools:text="10:14" />
+
+        <TextView
+            android:id="@+id/text_item_address"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/margin_schedule_fragment_horizontal"
+            android:layout_marginTop="@dimen/margin_schedule_fragment_address_top"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textSize="@dimen/text_schedule_fragment_address"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_item_nickname"
+            tools:text="서울 영등포구 어쩌구 저쩌구" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

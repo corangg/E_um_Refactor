@@ -1,60 +1,72 @@
 package com.app.ui.fragment
 
-import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
+import android.content.Intent
 import android.view.View
-import android.view.ViewGroup
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.LifecycleOwner
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.app.R
+import com.app.databinding.FragmentScheduleBinding
+import com.app.ui.activity.ScheduleActivity
+import com.app.ui.activity.friend.RequestFriendAlarmActivity
+import com.app.ui.adapter.ScheduleListAdapter
+import com.core.ui.BaseFragment
+import com.domain.model.ScheduleActivityType
+import com.domain.model.ScheduleData
+import com.presentation.ScheduleFragmentViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
+@AndroidEntryPoint
+class ScheduleFragment : BaseFragment<FragmentScheduleBinding>(FragmentScheduleBinding::inflate) {
+    val viewModel: ScheduleFragmentViewModel by viewModels()
+    private val adapter by lazy { ScheduleListAdapter() }
 
-/**
- * A simple [Fragment] subclass.
- * Use the [ScheduleFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class ScheduleFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+    override fun setUi() {
+        bindingRecyclerView()
+        bindingOnClick()
+    }
+
+    override fun setUpDate() {}
+
+    override fun setObserve(lifecycleOwner: LifecycleOwner) {
+        viewModel.scheduleListData.observe(lifecycleOwner, ::updateScheduleList)
+        viewModel.alarmListLiveData.observe(lifecycleOwner,::setFriendRequestAlarm)
+    }
+
+    private fun bindingOnClick() {
+        binding.btnAlarm.setOnClickListener {
+            val intent = Intent(requireContext(), RequestFriendAlarmActivity::class.java)
+            startActivity(intent)
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_schedule, container, false)
+    private fun bindingRecyclerView() {
+        binding.recyclerSchedule.apply { layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+            adapter = this@ScheduleFragment.adapter
+        }
+
+        adapter.setOnItemClickListener { item, position ->
+            setScheduleData(item)
+        }
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ScheduleFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ScheduleFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+    private fun updateScheduleList(list: List<ScheduleData>) {
+        adapter.submitList(list)
+    }
+
+    private fun setFriendRequestAlarm(alarmSize: Int) {
+        binding.viewAlarm.visibility = if (alarmSize > 0) View.VISIBLE else View.GONE
+    }
+
+    private fun setScheduleData(data: ScheduleData){
+        val intent = Intent(requireContext(), ScheduleActivity::class.java)
+        intent.putExtra(getString(R.string.schedule_extra_date_key), data.time)
+        /*intent.putExtra(getString(R.string.schedule_extra_email_key), data.email)
+        intent.putExtra(getString(R.string.schedule_extra_schedule_address_key), data.scheduleAddress)
+        intent.putExtra(getString(R.string.schedule_extra_alarm_key), data.alarmTime)
+        intent.putExtra(getString(R.string.schedule_extra_transport_type_key), data.transportType)
+        intent.putExtra(getString(R.string.schedule_extra_type_key), ScheduleActivityType.Edit.type)*/
+        startActivity(intent)
     }
 }

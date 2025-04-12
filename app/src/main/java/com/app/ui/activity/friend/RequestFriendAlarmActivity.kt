@@ -59,7 +59,7 @@ class RequestFriendAlarmActivity :
                     intent.putExtra(getString(R.string.schedule_extra_date_key), alarmData.scheduleTime)
                     intent.putExtra(getString(R.string.schedule_extra_email_key), alarmData.email)
                     intent.putExtra(getString(R.string.schedule_extra_schedule_address_key), alarmData.address)
-                    intent.putExtra(getString(R.string.schedule_extra_alarm_key), alarmData.time)
+                    intent.putExtra(getString(R.string.schedule_extra_key_code_key), alarmData.time)
                     intent.putExtra(getString(R.string.schedule_extra_nickname_key), alarmData.nickName)
                     intent.putExtra(getString(R.string.schedule_extra_type_key), ScheduleActivityType.Response.type)
                     startActivity(intent)

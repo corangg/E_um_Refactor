@@ -17,6 +17,7 @@ import com.domain.usecase.CheckScheduleUseCase
 import com.domain.usecase.GetCarTimeUseCase
 import com.domain.usecase.GetCoordinateToAddressUseCase
 import com.domain.usecase.GetPublicTransportTimeUseCase
+import com.domain.usecase.GetScheduleDataUseCase
 import com.domain.usecase.GetUserInfoDataUseCase
 import com.domain.usecase.GetWalkTimeUseCase
 import com.domain.usecase.RequestScheduleUseCase
@@ -38,6 +39,7 @@ constructor(
     private val checkScheduleUseCase: CheckScheduleUseCase,
     private val addScheduleUseCase: AddScheduleUseCase,
     private val responseScheduleUseCase: ResponseScheduleUseCase,
+    private val getScheduleDataUseCase: GetScheduleDataUseCase,
     @MainDispatcher mainDispatcher: MainCoroutineDispatcher,
     @DefaultDispatcher defaultDispatcher: CoroutineDispatcher,
     @IoDispatcher ioDispatcher: CoroutineDispatcher
@@ -91,6 +93,25 @@ constructor(
 
     fun changeScheduleAddress(address: String) = onUiWork {
         _textScheduleLocation.value = address
+    }
+
+    fun setSchedule(time: String) = onUiWork {
+        val scheduleData = getScheduleDataUseCase(time)?: return@onUiWork
+        changeStartAddress(scheduleData.startAddress)
+        changeScheduleAddress(scheduleData.scheduleAddress)
+        setDateText(scheduleData.time.substring(0,8))
+        setTime(scheduleData.time.substring(8,12))
+        setTransportType(scheduleData.transportType)
+        setAlarmTime(scheduleData.alarmTime)
+    }
+
+    private fun setTransportType(type: Int) = onUiWork {
+        selectTransportType.value = type
+    }
+
+    private fun setAlarmTime(alarmTime: String) {
+        textAlarmHour.value = alarmTime.substring(0, 2)
+        textAlarmMinute.value = alarmTime.substring(2, 4)
     }
 
     private fun getDateTime(): String {
@@ -183,5 +204,10 @@ constructor(
 
     fun onNo(email: String, time: String) = onUiWork {
         responseScheduleUseCase(email,time,false, getDateTime())
+    }
+
+    fun onSave(time: String) = onUiWork {
+        val scheduleData = getScheduleDataUseCase(time)?:return@onUiWork
+        addSchedule(scheduleData.email, scheduleData.nickname, true)
     }
 }

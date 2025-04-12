@@ -88,3 +88,15 @@ class ProcessScheduleResponseUseCase @Inject constructor(
         firebaseRepository.deleteAlarmMessage(alarmData.time)
     }
 }
+
+class GetScheduleListFlowUseCase @Inject constructor(
+    private val repository: Repository
+){
+    operator fun invoke() = repository.getScheduleDataListFlow()
+}
+
+class GetScheduleDataUseCase @Inject constructor(
+    private val repository: Repository
+){
+    suspend operator fun invoke(time: String) = repository.getScheduleData(time)
+}
